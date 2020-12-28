@@ -1,0 +1,27 @@
+p {
+    margin-top: 0;
+    margin-bottom: 0.1rem;
+    box-shadow: 0px 0px 20px #00000020;
+    padding: 0px;
+    border-radius: 8px;
+    /* width: 10vw; */
+    max-width: 25vw;
+    font-size: 1vw;
+}
+
+li {
+    list-style-type:none;
+  }
+  
+/* .tooltip-content .arrow {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 10px solid transparent;
+    border-bottom-color: rgb(255, 255, 255);
+    padding-right: calc(5px+1vw);
+    top: 85px;
+    left: 70%;
+    transform: translate(-130%, -150%) rotate(180deg);
+} */
+
