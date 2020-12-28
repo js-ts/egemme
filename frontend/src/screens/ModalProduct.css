@@ -84,6 +84,7 @@
     position: absolute;
     width: calc(50px+10vw);
     height: calc(50px+20vw);
+    z-index: 2;
   }
   
   #main1 {

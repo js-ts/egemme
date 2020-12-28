@@ -84,7 +84,8 @@ const ModalProduct = ({
 };
 
   const sproduct = getsProductById(pid)
- console.log(sproduct)
+  console.log(sproduct)
+  const [currId, setId] = useState(sproduct._id);
 
   // const ModalProducts = sproduct;
 
@@ -99,9 +100,10 @@ const ModalProduct = ({
   }
   const [currImg, setImg] = useState(sproduct.image);
 
+
   const props = {
     width: 200,
-    height: 300,
+    height: 200,
     zoomWidth: 350,
     zoomPosition: 'right',
     img: currImg
@@ -109,6 +111,9 @@ const ModalProduct = ({
 
   function changeImage(i) {
     setImg(i);
+  }
+  function changeProduct(i) {
+    setId(i);
   }
   return (
     <Root>
@@ -121,9 +126,9 @@ const ModalProduct = ({
           <Row>
 
           <Col md={3}>
-      {/* <div id="box"> */}
+      <div id="box">
               <ReactImageZoom {...props} />
-            {/* </div> */}
+            </div>
             </Col>
           {/* <div className="center">
           <Meta title={product.name} />
@@ -146,26 +151,26 @@ const ModalProduct = ({
         
 
             
-                <ListGroup.Item> <Col> {product.name} </Col></ListGroup.Item>
+                <ListGroup.Item> <Col> {sproduct.name} </Col></ListGroup.Item>
                 <ListGroup.Item>
                   <Col>Size:64GB</Col></ListGroup.Item>
                   <ListGroup.Item>
                   <Col> Color:
                 <br />
-                {product.color}</Col></ListGroup.Item>
-                <ListGroup.Item><Col>Price: {product.price}</Col> </ListGroup.Item>
+                {sproduct.color}</Col></ListGroup.Item>
+                <ListGroup.Item><Col>Price: {sproduct.price}</Col> </ListGroup.Item>
                 
             </Col>
             <Col md={3}>
                   <ListGroup.Item>
                   <Col>Status :  
                   <br/>
-                  {product.countInStock > 0 ? "In Stock" : "Out Of Stock"}</Col>
+                  {sproduct.countInStock > 0 ? "In Stock" : "Out Of Stock"}</Col>
                   </ListGroup.Item>
                 
                  
  
- {product.countInStock > 0 && (
+ {sproduct.countInStock > 0 && (
    <ListGroup.Item>
                       <Row>
                         <Col>Qty</Col>
@@ -175,7 +180,7 @@ const ModalProduct = ({
                             value={qty}
                             onChange={(e) => setQty(e.target.value)}
                             >
-                            {[...Array(product.countInStock).keys()].map(
+                            {[...Array(sproduct.countInStock).keys()].map(
                               (x) => (
                                 <option key={x + 1} value={x + 1}>
                                   {x + 1}
@@ -215,6 +220,7 @@ const ModalProduct = ({
         {/* <div id="main1">
           <MovieList movies={otherMovies} />
         </div> */}
+      <Row>
         <div id="main1">
           {otherProducts.map(products => (
             <div key={products.id}>
@@ -223,6 +229,7 @@ const ModalProduct = ({
                   className="cell"
                   onClick={() => {
                     changeImage(products.image);
+                    changeProduct(products._id); 
                   }}
                   >
                   <img src={products.image} />{' '}
@@ -237,6 +244,7 @@ const ModalProduct = ({
             </div>
           ))}
         </div>
+        </Row>
           {/* </Row> */}
 
       {/* <Typography variant="h6">{product.title}</Typography>
