@@ -81,6 +81,8 @@ const products = [
     x: 13,
     y: 21,
     name: "Mac mini",
+    iscollection:false,
+
     image: 
       "/images/macmini.jpg",
     description:"Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
@@ -97,8 +99,9 @@ const products = [
   {
     x: 28,
     y: 30,
-   
+    
     name: "Apple iphone 11 pro",
+    iscollection:false,
     image: 
       "/images/iphonepro1.jpg",
       description:"Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
@@ -115,7 +118,9 @@ const products = [
   {
     x: 43,
     y: 10,
+
     name: "Macbook air",
+    iscollection:false,
     image: 
       "/images/macbookair.jpg",
      
@@ -132,8 +137,9 @@ const products = [
   {
     x: 57,
     y: 40,
-   
+    
     name: "Apple Watch series 5",
+    iscollection:false,
     image: 
       "/images/Applewatch.jpeg",
       description:"Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
@@ -150,7 +156,9 @@ const products = [
   {
     x: 70,
     y: 20,
+    
     name: "Apple Homepod",
+    iscollection:false,
     image: 
       "/images/Applehomepod.jpg",
       description:"Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",

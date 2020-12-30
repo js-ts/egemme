@@ -82,10 +82,10 @@ const ModalProduct = ({
  
          return allsProducts.find(product => product._id ===productId);
 };
-
-  const sproduct = getsProductById(pid)
+const [currId, setId] = useState(pid);
+  const sproduct = getsProductById(currId)
+ 
   console.log(sproduct)
-  const [currId, setId] = useState(sproduct._id);
 
   // const ModalProducts = sproduct;
 
@@ -224,7 +224,7 @@ const ModalProduct = ({
         <div id="main1">
           {otherProducts.map(products => (
             <div key={products.id}>
-              <ModalLink to={`/product/${sproduct._id}/${products._id}`}>
+              <ModalLink to={`${sproduct._id}/${products._id}`}>
                 <div
                   className="cell"
                   onClick={() => {
