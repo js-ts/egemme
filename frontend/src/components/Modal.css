@@ -118,3 +118,11 @@ body {
   background-color: black;
   text-decoration: underline;
 }
+.brand-logo {
+  text-transform: lowercase;
+  color: #fff;
+
+ 
+  font-family: 'Pacifico', cursive;
+ 
+}

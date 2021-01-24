@@ -16,7 +16,7 @@ const products = [
     name: 'iPhone 11 Pro 256GB Memory',
     iscollection:false,
     image: '/images/phone.jpg',
-    description:
+    description: 
       'Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life',
     brand: 'Apple',
     category: 'Electronics',
@@ -80,6 +80,7 @@ const products = [
   {
     x: 13,
     y: 21,
+    _id:'5fff196b7e40de3160439ccc',
     name: "Mac mini",
     iscollection:false,
 
@@ -99,7 +100,7 @@ const products = [
   {
     x: 28,
     y: 30,
-    
+    _id:'5fff196b7e40de3160439ccd',
     name: "Apple iphone 11 pro",
     iscollection:false,
     image: 
@@ -123,7 +124,7 @@ const products = [
     iscollection:false,
     image: 
       "/images/macbookair.jpg",
-     
+      _id:'5fff196b7e40de3160439cce',
       description: "Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
     brand: "Apple",
     category: "Electronics",
@@ -137,7 +138,7 @@ const products = [
   {
     x: 57,
     y: 40,
-    
+    _id:'5fff196b7e40de3160439ccf',
     name: "Apple Watch series 5",
     iscollection:false,
     image: 
@@ -156,7 +157,7 @@ const products = [
   {
     x: 70,
     y: 20,
-    
+    _id:'5fff196b7e40de3160439cd0',
     name: "Apple Homepod",
     iscollection:false,
     image: 
@@ -193,6 +194,8 @@ const products = [
         "Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
 
       rating: 4.0,
+      _id:'5fff196b7e40de3160439ccc',
+
       price: 1099.99,
       color: "Black",
       countInStock: 7,
@@ -212,6 +215,8 @@ const products = [
         "Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
 
       rating: 4.0,
+      _id:'5fff196b7e40de3160439ccd',
+
       price: 999.99,
       color: "Midnight Green",
       countInStock: 7,
@@ -230,7 +235,9 @@ const products = [
         "Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
 
       rating: 4.0,
-      price: 399.99,
+      _id:'5fff196b7e40de3160439cce',
+
+      price: 999.99,
       color: "Black",
       countInStock: 7,
       numReviews: 8,
@@ -249,6 +256,8 @@ const products = [
         "Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
 
       rating: 4.0,
+      _id:'5fff196b7e40de3160439ccf',
+
       price: 399.99,
       color: "Black",
       countInStock: 7,
@@ -267,6 +276,7 @@ const products = [
         "Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
 
       rating: 4.0,
+      _id:'5fff196b7e40de3160439cd0',
       price: 399.99,
       color: "Black",
       countInStock: 7,

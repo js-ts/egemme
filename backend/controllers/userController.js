@@ -31,12 +31,18 @@ const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body
 
   const userExists = await User.findOne({ email })
-
+  const email_regexp = /[0-9a-zа-я_A-ZА-Я]+@[0-9a-zа-я_A-ZА-Я^.]+\.[a-zа-яА-ЯA-Z]{2,4}/i;
+  const password_regexp=/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$/gm;
   if (userExists) {
     res.status(400)
     throw new Error('User already exists')
   }
-
+  if (!password_regexp.test(password)) {
+    throw new Error('password must contain 1 number (0-9) password must contain 1 uppercase letters password must contain 1 lowercase letters password must contain 1 non-alpha numeric number password is 8-16 characters with no space')
+                                        }
+  if (!email_regexp.test(email)) {
+    throw new Error('Enter correct email address')
+                                   }
   const user = await User.create({
     name,
     email,
@@ -81,10 +87,14 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @access  Private
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
-
+  const email_regexp = /[0-9a-zа-я_A-ZА-Я]+@[0-9a-zа-я_A-ZА-Я^.]+\.[a-zа-яА-ЯA-Z]{2,4}/i;
+  const password_regexp=/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$/gm;
   if (user) {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
+
+
+    console.log(user)
     if (req.body.password) {
       user.password = req.body.password
     }

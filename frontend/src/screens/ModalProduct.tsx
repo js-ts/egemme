@@ -60,9 +60,7 @@ const ModalProduct = ({
     dispatch(listProductDetails(match.params.id))
   }, [dispatch, match, successProductReview])
 
-  const addToCartHandler = () => {
-    history.push(`/cart/${match.params.id}?qty=${qty}`)
-  }
+  
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -114,6 +112,9 @@ const [currId, setId] = useState(pid);
   }
   function changeProduct(i) {
     setId(i);
+  }
+  const addToCartHandler = () => {
+    history.push(`/cart/${sproduct._id}?qty=${qty}`)
   }
   return (
     <Root>
@@ -190,6 +191,16 @@ const [currId, setId] = useState(pid);
                           </Form.Control>
                         </Col>
                       </Row>
+                      <ListGroup.Item>
+                <Button
+                      onClick={addToCartHandler}
+                      className='btn-block'
+                      type='button'
+                      disabled={product.countInStock === 0}
+                    >
+                  Add to Cart
+                </Button>
+              </ListGroup.Item>
                     </ListGroup.Item>
                     
                     )}

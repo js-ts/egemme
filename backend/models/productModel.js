@@ -41,6 +41,7 @@ const sProductSchema=mongoose.Schema(
       type: Number,
       default: 0,
     },
+   
     numReviews: {
       type: Number,
       default: 0,

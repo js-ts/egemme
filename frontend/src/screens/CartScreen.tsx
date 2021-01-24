@@ -6,16 +6,32 @@ import Message from '../components/Message'
 import { addToCart, removeFromCart } from '../actions/cartActions'
 
 const CartScreen = ({ match, location, history }) => {
+  let url=window.location.href.split("/")[4]
+  if( /&/g.test(url)){
+    url=url.split("&")
+    console.log(url[0].split("?"))
+  }
+  console.log(match)
+  console.log(location)
+  console.log(history)
+  
   const productId = match.params.id
-
   const qty = location.search ? Number(location.search.split('=')[1]) : 1
 
   const dispatch = useDispatch()
 
   const cart = useSelector((state) => state.cart)
   const { cartItems } = cart
+  console.log(cartItems)
 
   useEffect(() => {
+    if(typeof(url)==='object'){
+    for(let i=0;i<url.length;i++){
+      const tid=url[i].split("?")[0]
+      const n=+url[i].split("?")[1].split("qty=")[1]
+      dispatch(addToCart(tid, n))
+    }
+    }
     if (productId) {
       dispatch(addToCart(productId, qty))
     }
