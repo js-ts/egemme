@@ -92,12 +92,14 @@ const createProduct = asyncHandler(async (req, res) => {
     name: 'Sample name',
     price: 0,
     user: req.user._id,
+    iscollection:false,
     image: '/images/sample.jpg',
     brand: 'Sample brand',
     category: 'Sample category',
     countInStock: 0,
     numReviews: 0,
     description: 'Sample description',
+    sProducts:[]
   })
 
   const createdProduct = await product.save()
@@ -112,10 +114,13 @@ const updateProduct = asyncHandler(async (req, res) => {
     name,
     price,
     description,
+    iscollection,
+    livep,
     image,
     brand,
     category,
     countInStock,
+    sProducts
   } = req.body
 
   const product = await Product.findById(req.params.id)
@@ -125,9 +130,12 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.price = price
     product.description = description
     product.image = image
+    product.livep=livep
     product.brand = brand
     product.category = category
     product.countInStock = countInStock
+    product.iscollection=iscollection
+    product.sProducts=sProducts
 
     const updatedProduct = await product.save()
     res.json(updatedProduct)

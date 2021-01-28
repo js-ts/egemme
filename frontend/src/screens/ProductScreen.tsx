@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form'
 import Rating from '../components/Rating'
 import Message from '../components/Message'
 import ImageHotspots from 'react-image-hotspots'
+import Iframe from 'react-iframe'
 // import Loader from '../components/Loader'
 import LoadingProducts from '../components/LoadingProducts'
 import Meta from '../components/Meta'
@@ -106,6 +107,7 @@ history.push('/cart/'+parray[0].replace(/false,/g,"").replace(/false/g,"").repla
 //md
 const arr = [];
 const pricesArr=[];
+const livep=product.livep
 console.log(history)
 
 if(product.iscollection){product.sProducts.map(data =>
@@ -170,14 +172,22 @@ console.log(arr)
   hideFullscreenControl={true}
                 hideZoomControls={true}
                 hideMinimap={true}
-/>):(<ImageHotspots
+/>):(livep!=="" ? 
+  <div id="outerdiv"> 
+<Iframe url={livep}
+        id="innerIframe"
+        display="initial"
+        position="absolute"
+        scrolling="no"/>
+    </div>:<ImageHotspots
   src={product.image}
   alt='Sample image'
   
   hideFullscreenControl={true}
                 hideZoomControls={true}
                 hideMinimap={true}
-/>)
+/>
+    )
              
               }
             </Col>

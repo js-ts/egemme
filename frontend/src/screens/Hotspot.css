@@ -229,3 +229,30 @@ input[type="submit"]:hover {
       opacity: 0;
   }
 }
+
+
+
+
+
+
+
+
+#outerdiv 
+{ 
+width:120vw; 
+height:80vh; 
+overflow:hidden; 
+position:relative; 
+
+}
+
+#innerIframe 
+{ 
+position:absolute; 
+top:-400px; 
+left:-800px; 
+width:1500px; 
+height:1425px; 
+overflow:hidden; 
+zoom: 0.5;
+}

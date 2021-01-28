@@ -3,6 +3,7 @@ const products = [
     name: 'Airpods Wireless Bluetooth Headphones',
     iscollection:false,
     image: '/images/airpods.jpg',
+    livep:'',
     description:
       'Bluetooth technology lets you connect it with compatible devices wirelessly High-quality AAC audio offers immersive listening experience Built-in microphone allows you to take calls while working',
     brand: 'Apple',
@@ -16,6 +17,7 @@ const products = [
     name: 'iPhone 11 Pro 256GB Memory',
     iscollection:false,
     image: '/images/phone.jpg',
+    livep:'',
     description: 
       'Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life',
     brand: 'Apple',
@@ -29,6 +31,7 @@ const products = [
     name: 'Cannon EOS 80D DSLR Camera',
     iscollection:false,
     image: '/images/camera.jpg',
+    livep:'',
     description:
       'Characterized by versatile imaging specs, the Canon EOS 80D further clarifies itself using a pair of robust focusing systems and an intuitive design',
     brand: 'Cannon',
@@ -42,6 +45,7 @@ const products = [
     name: 'Sony Playstation 4 Pro White Version',
     iscollection:false,
     image: '/images/playstation.jpg',
+    livep:'',
     description:
       'The ultimate home entertainment center starts with PlayStation. Whether you are into gaming, HD movies, television, music',
     brand: 'Sony',
@@ -55,6 +59,7 @@ const products = [
     name: 'Logitech G-Series Gaming Mouse',
     iscollection:false,
     image: '/images/mouse.jpg',
+    livep:'',
     description:
       'Get a better handle on your games with this Logitech LIGHTSYNC gaming mouse. The six programmable buttons allow customization for a smooth playing experience',
     brand: 'Logitech',
@@ -68,6 +73,7 @@ const products = [
     name: 'Amazon Echo Dot 3rd Generation',
     iscollection:false,
     image: '/images/alexa.jpg',
+    livep:'',
     description:
       'Meet Echo Dot - Our most popular smart speaker with a fabric design. It is our most compact smart speaker that fits perfectly into small space',
     brand: 'Amazon',
@@ -86,7 +92,9 @@ const products = [
 
     image: 
       "/images/macmini.jpg",
-    description:"Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
+      livep:'',
+
+      description:"Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
     
     brand: "Apple",
     category: "Electronics",
@@ -105,6 +113,8 @@ const products = [
     iscollection:false,
     image: 
       "/images/iphonepro1.jpg",
+    livep:'',
+
       description:"Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
       
       brand: "Apple",
@@ -124,6 +134,8 @@ const products = [
     iscollection:false,
     image: 
       "/images/macbookair.jpg",
+    livep:'',
+
       _id:'5fff196b7e40de3160439cce',
       description: "Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
     brand: "Apple",
@@ -143,6 +155,8 @@ const products = [
     iscollection:false,
     image: 
       "/images/Applewatch.jpeg",
+    livep:'',
+
       description:"Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
      
     brand: "Apple",
@@ -162,6 +176,8 @@ const products = [
     iscollection:false,
     image: 
       "/images/Applehomepod.jpg",
+    livep:'',
+
       description:"Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
     brand: "Apple",
      
@@ -178,6 +194,8 @@ const products = [
     name: 'Apple collection',
     iscollection:true,
     image: '/images/AppleCollection.jpg',
+    livep:'',
+
     description:
       'Apple collection',
     sProducts:[
@@ -208,6 +226,8 @@ const products = [
       name: "Apple iphone 11 pro",
       image: 
         "/images/iphonepro1.jpg",
+    livep:'',
+
        
       brand: "Apple",
       category: "Electronics",
@@ -228,6 +248,8 @@ const products = [
       name: "Macbook air",
       image: 
         "/images/macbookair.jpg",
+    livep:'',
+
        
       brand: "Apple",
       category: "Electronics",
@@ -249,6 +271,7 @@ const products = [
       name: "Apple Watch series 5",
       image: 
         "/images/Applewatch.jpeg",
+    livep:'',
        
       brand: "Apple",
       category: "Electronics",
@@ -269,6 +292,8 @@ const products = [
       name: "Apple Homepod",
       image: 
         "/images/Applehomepod.jpg",
+    livep:'',
+
        
       model: "Apple Homepod",
       category: "Electronics",

@@ -26,7 +26,9 @@ const sProductSchema=mongoose.Schema(
     image: {
       type: String,
     },
-    
+    livep:{
+      type:String
+    },
     brand: {
       type: String,
     },
@@ -78,7 +80,9 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    
+    livep:{
+      type:String
+    },
     brand: {
       type: String,
       required: true,

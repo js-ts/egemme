@@ -28,13 +28,16 @@ const CartScreen = ({ match, location, history }) => {
     if(typeof(url)==='object'){
     for(let i=0;i<url.length;i++){
       const tid=url[i].split("?")[0]
-      const n=+url[i].split("?")[1].split("qty=")[1]
+      const n=+url[i].split("?")[1].split("qty=")[1] || 1
+      console.log(n)
       dispatch(addToCart(tid, n))
     }
     }
+    if(typeof(url)==='string'){
     if (productId) {
       dispatch(addToCart(productId, qty))
     }
+  }
   }, [dispatch, productId, qty])
 
   const removeFromCartHandler = (id) => {
