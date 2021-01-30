@@ -81,16 +81,30 @@ const ModalProduct = ({
          return allsProducts.find(product => product._id ===productId);
 };
 const [currId, setId] = useState(pid);
+const [clickId,setClickid]=useState()
   const sproduct = getsProductById(currId)
  
   console.log(sproduct)
+  function mChange(products){
+    changeImage(products.image);
+    changeProduct(products._id); 
+    setClickid(products._id)
+  }
 
   // const ModalProducts = sproduct;
 
   const otherProducts = product.sProducts.filter(
-    product => product._id !== pid
+    product => product._id !== clickId
+    //pid
   );
-
+        
+  
+  
+  
+  
+  
+  
+  console.log(otherProducts)
   {
     /*display: "flex",
     justifyContent: "center",
@@ -238,11 +252,11 @@ const [currId, setId] = useState(pid);
               <ModalLink to={`${sproduct._id}/${products._id}`}>
                 <div
                   className="cell"
-                  onClick={() => {
-                    changeImage(products.image);
-                    changeProduct(products._id); 
-                  }}
+                  onClick={()=>mChange(products)}
                   >
+                    {/* () => {
+                    changeImage(products.image);
+                    changeProduct(products._id); } */}
                   <img src={products.image} />{' '}
                   <p>
                     {' '}

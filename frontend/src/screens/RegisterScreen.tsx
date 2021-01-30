@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useReducer } from 'react'
+import './passwordValidation.css'
 import { Link } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,10 +9,95 @@ import FormContainer from '../components/FormContainer'
 import { register } from '../actions/userActions'
 // import TextField from '@material-ui/core/TextField';
 // import InputLabel from '@material-ui/core/InputLabel';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 // import LockIcon from '@material-ui/icons/Lock';
 // import '../components/password-strength/index.scss';
 // import NiceInputPassword from '../components/password-strength/NiceInputPassword';
+
+const validationNames = [
+  { id: 'lowercase', name: 'Lower-case' },
+  { id: 'uppercase', name: 'Upper-case' },
+  { id: 'number', name: 'Number' },
+  { id: 'minChar', name: 'More than 8 characters' },
+];
+
+const validationObj = {
+  lowercase: false,
+  uppercase: false,
+  number: false,
+  minChar: false,
+};
+
+const validationReducer = (state, action) => {
+  switch (action.type) {
+    case 'lowercase':
+      return { ...state, lowercase: action.payload };
+    case 'uppercase':
+      return { ...state, uppercase: action.payload };
+    case 'number':
+      return { ...state, number: action.payload };
+    case 'minChar':
+      return { ...state, minChar: action.payload };
+    default:
+      return state;
+  }
+};
+
+
+const ValidationIcon = ({ isDone }) => {
+  return isDone ? (
+    <svg width="14" height="12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polyline
+        className="check"
+        points="1,7 5,11 13,1"
+        fill="none"
+        stroke="#FFFFFF"
+        strokeWidth="2px"
+        strokeLinecap="round"
+      />
+    </svg>
+  ) : (
+    <svg width="12" height="12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 6A6 6 0 110 6a6 6 0 0112 0z" fill="#5B9A78" />
+    </svg>
+  );
+};
+
+const ValidationItems = ({ state }) => (
+  <ul className="validation-box">
+    {validationNames.map((item) => (
+      <li
+        className={
+          state[item.id] === true ? `done validation-item` : 'validation-item'
+        }
+        key={item.id}>
+        <span className="validation-icon">
+          <ValidationIcon isDone={state[item.id]} />
+        </span>
+        {item.name}
+      </li>
+    ))}
+  </ul>
+);
+
+const FormField = ({ handleChange }) => {
+  return (
+    <div className="form-field">
+      <input
+        className="form-input"
+        id="password"
+        type="password"
+        onChange={handleChange}
+      />
+    </div>
+  );
+};
+
+
+
+
+
+
 const RegisterScreen = ({ location, history }) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -25,6 +111,49 @@ const RegisterScreen = ({ location, history }) => {
   const { loading, error, userInfo } = userRegister
 
   const redirect = location.search ? location.search.split('=')[1] : '/'
+  const [state, dispatche] = useReducer(validationReducer, validationObj);
+
+  const handleChange = (e) => {
+    validate(e.target.value.trim());
+    setPassword(e.target.value)
+};
+
+  const validate = (value) => {
+    const checkLength = value.length >= 8;
+    const checkLowerCase = /[a-z|ç|ş|ö|ü|ı|ğ]/u.test(value);
+    const checkUpperCase = /[A-Z|Ç|Ş|Ö|Ü|İ|Ğ]/u.test(value);
+    const checkNumber = /[0-9]/.test(value);
+
+    if (checkLength) {
+      dispatche({ type: 'minChar', payload: true });
+    } else {
+      dispatche({ type: 'minChar', payload: false });
+    }
+
+    if (checkLowerCase) {
+      dispatche({ type: 'lowercase', payload: true });
+    } else {
+      dispatche({ type: 'lowercase', payload: false });
+    }
+
+    if (checkUpperCase) {
+      dispatche({ type: 'uppercase', payload: true });
+    } else {
+      dispatche({ type: 'uppercase', payload: false });
+    }
+
+    if (checkNumber) {
+      dispatche({ type: 'number', payload: true });
+    } else {
+      dispatche({ type: 'number', payload: false });
+    }
+
+    const isAllGood =
+      checkLength && checkUpperCase && checkLowerCase && checkNumber;
+
+    return isAllGood;
+  };
+
 
   useEffect(() => {
     if (userInfo) {
@@ -41,35 +170,7 @@ const RegisterScreen = ({ location, history }) => {
       dispatch(register(name, email, password))
     }
   }
-  const levelBarCss = level => ({
-    height: '8px',
-    width: level > 0 ? `${((100 / 4) * level)}%` : '100%',
-    marginTop: 16,
-    transition: 'width 0.5s ease',
-    backgroundColor: ['#EFEFEF', 'red', 'orange', 'yellow', 'green'][level],
-    borderRadius: 0,
-  });
-  
-  const CustomLevelBar = levels => <div style={levelBarCss(levels)} />;
-  const securityLevels = [
-    {
-      descriptionLabel: <Typography>1 number</Typography>,
-      validator: /.*[0-9].*/,
-    },
-    {
-      descriptionLabel: <Typography>1 lowercase letter</Typography>,
-      validator: /.*[a-z].*/,
-    },
-    {
-      descriptionLabel: <Typography>1 uppercase letter</Typography>,
-      validator: /.*[A-Z].*/,
-    },
-    {
-      descriptionLabel: <Typography>8 of length</Typography>,
-      validator: /^.{8,}$/,
-    },
-  ];
-
+ 
   return (
     <FormContainer>
       <h1>Sign Up</h1>
@@ -102,22 +203,15 @@ const RegisterScreen = ({ location, history }) => {
         <div className="wrap">
             <Form.Group controlId='password'>
           <Form.Label>Password</Form.Label>
+            <ValidationItems state={state} />
           <Form.Control
             type='password'
             placeholder='Enter password'
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleChange}
           ></Form.Control>
         </Form.Group>
-      {/* <NiceInputPassword
-         label="Password"
-         name="password"
-         showSecurityLevelBar
-         showSecurityLevelDescription
-         securityLevels={securityLevels}
-         value={password}
-         onChange={(e) => setPassword(e.target.value)}
-       /> */}
+   
      </div>
         </Form.Group>
         

@@ -92,7 +92,9 @@ const trycatchHandle = (jsonStr: string) => {
   return result;
 };
 const { imgSrc, postmessage } = getUrlParams();
-  const [img, setImg] = useState<string>(imgSrc || EXAMPLE);
+  const [img, setImg] = useState<string>(imgSrc || image);
+  // const [img, setImg] = useState<string>(imgSrc || EXAMPLE);
+
   const [mapArea, setMapArea] = useState<AreaType[]>(EXAMPLE_AREA);
   const [crop, setCrop] = useState<ReactCrop.Crop>(CROP);
   const [mapAreaString, setMapAreaString] = useState<string>(
@@ -181,6 +183,7 @@ const { imgSrc, postmessage } = getUrlParams();
         setCountInStock(product.countInSock)
         setDescription(product.description)
         setInputList(inputList)
+       
       }
     }
   
@@ -315,8 +318,9 @@ for(let i=0;i<sProducts.length;i++){
 }}
   const submitHandler = (e) => {
     e.preventDefault()
+    
     dispatch(
-     checked? updateProduct({
+     (checked)? updateProduct({
         _id: productId,
         name,
         price,
@@ -328,7 +332,8 @@ for(let i=0;i<sProducts.length;i++){
         description,
         countInStock,
         sProducts
-      }):updateProduct({
+      })
+     :updateProduct({
         _id: productId,
         name,
         price,
@@ -338,9 +343,22 @@ for(let i=0;i<sProducts.length;i++){
         brand,
         category,
         description,
-        countInStock,
+        countInStock
       })
     )
+    // if(checked){
+    //   sProducts.map((sp)=>updateProduct({  
+    //     _id: sp.productId,
+    //     sp.name,
+    //     sp.price,
+    //     sp.iscollection,
+    //     sp.image,
+    //     sp.livep,
+    //     sp.brand,
+    //     sp.category,
+    //     sp.description,
+    //     sp.countInStock})
+    //   )}
   }
   // console.log(listProductDetails(`5fff196b7e40de3160439ccc`))
 
