@@ -52,7 +52,7 @@ const ProductScreen = ({ history, match }) => {
 
   const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product } = productDetails
-
+console.log(useSelector((state) => state.productDetails))
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
@@ -71,6 +71,8 @@ const ProductScreen = ({ history, match }) => {
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
     }
     dispatch(listProductDetails(match.params.id))
+    
+    console.log(dispatch(listProductDetails(match.params.id)))
   }, [dispatch, match, successProductReview])
   let parray=[];
   const { register, handleSubmit } = useForm();

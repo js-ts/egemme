@@ -20,6 +20,7 @@ import { Area } from '../component/image-map/index.d';
 
 import EXAMPLE from './images/example.png';
 import { getUrlParams } from '../common';
+import { arrayOf } from 'prop-types'
 
 const ProductEditScreen = ({ match, history }) => {
   const productId = match.params.id
@@ -34,13 +35,27 @@ const ProductEditScreen = ({ match, history }) => {
   const [countInStock, setCountInStock] = useState(0)
   const [description, setDescription] = useState('')
   const [uploading, setUploading] = useState(false)
-  const [inputList, setInputList] = useState([{ x:"",y:"",name: "",price:"", image: "",livep:"",brand:"",qty:"" ,category:"",description:"" }]);
+  const [inputList, setInputList] = useState([{ x:"",y:"",name: "",price:"", image: "",livep:"",brand:"",qty:"" ,category:"",description:"" ,url:"" }]);
+  const [urla,setUrla]=useState([])
 
   const dispatch = useDispatch()
-
-  const productDetails = useSelector((state) => state.productDetails)
+  // const dispatche=useDispatch()
+const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product } = productDetails
+console.log(product)
 
+const addUrla=(addl)=>{
+  dispatch(listProductDetails(addl))
+
+if(addl===product._id){
+  setUrla([...urla,product])
+                      }
+}
+
+
+// dispatch(listProductDetails("5fff196b7e40de3160439cce"))
+// const { data } = axios.get(`/api/products/5fff196b7e40de3160439cce`)
+// console.log(dispatch(listProductDetails("5fff196b7e40de3160439cce")))
   const productUpdate = useSelector((state) => state.productUpdate)
   const {
     loading: loadingUpdate,
@@ -140,10 +155,12 @@ const { imgSrc, postmessage } = getUrlParams();
   };
   // handle click event of the Add button
   const handleAddClick = () => {
-    setInputList([...inputList, { x:"",y:"",name: "",price:"", image: "",livep:"",brand:"",qty:"" ,category:"",description:"" }]);
+    setInputList([...inputList, { x:"",y:"",name: "",price:"", image: "",livep:"",brand:"",qty:"" ,category:"",description:"",url:"" }]);
    
   };
   const [checked, setChecked] = useState(false);
+  const [canda,setCanda]=useState(false)
+  console.log(canda)
   const [final,finalize]=useState(false)
   console.log(final)
   const makeFinal=()=>{
@@ -152,6 +169,7 @@ const { imgSrc, postmessage } = getUrlParams();
   const count=checked? inputList.length:0
   const handleChange = () => {
     setChecked(!checked);
+   
   };
   const iscollection=checked;
   useEffect(() => {
@@ -174,6 +192,7 @@ const { imgSrc, postmessage } = getUrlParams();
     } else {
       if (!product.name || product._id !== productId) {
         dispatch(listProductDetails(productId))
+        // dispatch(listProductDetails("5fff196b7e40de3160439cce"))
       } else {
         setName(product.name)
         setPrice(product.price)
@@ -189,8 +208,9 @@ const { imgSrc, postmessage } = getUrlParams();
   
  
 
-  }, [dispatch, history, productId, product, successUpdate])
+  }, [dispatch, history, productId, product,urla, successUpdate])
 
+  
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader: FileReader = new FileReader();
@@ -303,10 +323,12 @@ const { imgSrc, postmessage } = getUrlParams();
       setUploading(false)
     }
   }
-const sProducts=inputList
+
+  console.log(urla)
+const sProducts=(canda)? inputList:urla
 console.log(sProducts)
 console.log(mapArea)
-if(final){
+if(final && canda){
 for(let i=0;i<sProducts.length;i++){
   sProducts[i].x=mapArea[i].left
   sProducts[i].y=mapArea[i].top
@@ -316,6 +338,15 @@ for(let i=0;i<sProducts.length;i++){
   
   console.log(sProducts)
 }}
+if(final && !canda){
+  for(let i=0;i<sProducts.length;i++){
+    sProducts[i].x=mapArea[i].left
+    sProducts[i].y=mapArea[i].top
+    
+    
+    
+    console.log(sProducts)
+  }}
   const submitHandler = (e) => {
     e.preventDefault()
     
@@ -477,10 +508,28 @@ for(let i=0;i<sProducts.length;i++){
       />
      {checked && (
         <div className="box">
+           
+           
+            <label
+        htmlFor="inputVacationPercentage"
+        className="switch switch-default"
+      >
+      Create and add{" "}
+      </label>
+      <input
+        id="inputVacationPercentage"
+        type="checkbox"
+        checked={canda}
+        onChange={()=>setCanda(!canda)}
+      />
+          
+          
           {inputList.map((x, i) => {
             return (
               <div key={i}>
-                <input
+          { canda &&
+          <div>
+          <input
                   name="name"
                   placeholder="Product Name"
                   value={x.name}
@@ -545,13 +594,26 @@ for(let i=0;i<sProducts.length;i++){
               onChange={(e) => handleInputChange(e, i)}
             />
                   <input
-              
-              name="description"
+            name="description"
               placeholder="Description"
               value={x.description}
               onChange={(e) => handleInputChange(e, i)}
             />
-
+            </div>  }
+            { !canda && 
+            <div>
+            <input
+                name="url"
+              placeholder="Add product Url"
+              value={x.url}
+              onChange={(e) => handleInputChange(e, i)}
+            />
+            <Button
+            onClick={()=> addUrla(inputList[i].url.split('/').slice(-1)[0])}>
+               Add product
+            </Button>
+            </div>
+}
                 <div className="btn-box">
                   {inputList.length !== 1 && (
                    <button className="mr10" onClick={() => handleRemoveClick(i)}>X</button> 
@@ -642,6 +704,10 @@ for(let i=0;i<sProducts.length;i++){
         >
           Add map
         </Button>
+        {/* <Button
+        onClick={()=> console.log(dispatch(listProductDetails("http://localhost:3000/product/5fff196b7e40de3160439cce".split('/').slice(-1)[0])))}>
+            get product
+        </Button> */}
         {/* <CopyToClipboard text={mapAreaString} onCopy={() => message.success('copy success')}>
           <Button className="opt-box-btn" icon={<i className="cad-iconfont icon-copy" />}>
             Copy
@@ -674,7 +740,7 @@ for(let i=0;i<sProducts.length;i++){
 
         </div>
       )}
-      <div style={{ marginTop: 20 }}>{JSON.stringify(inputList)}</div>
+      <div style={{ marginTop: 20 }}>{JSON.stringify(sProducts)}</div>
       <div>{count}
      {mapArea.length}
       </div>
