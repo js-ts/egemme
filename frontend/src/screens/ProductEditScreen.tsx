@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -21,101 +21,98 @@ import { Area } from '../component/image-map/index.d';
 import EXAMPLE from './images/example.png';
 import { getUrlParams } from '../common';
 import { arrayOf } from 'prop-types'
+import { Label } from '@material-ui/icons'
 
 const ProductEditScreen = ({ match, history }) => {
   const productId = match.params.id
- 
+
   const [name, setName] = useState('')
   const [price, setPrice] = useState(0)
   const [image, setImage] = useState('')
+  console.log(image)
   const [livep, setLivep] = useState('')
-
+  const [youtubeId, setYoutubeId] = useState('')
   const [brand, setBrand] = useState('')
   const [category, setCategory] = useState('')
   const [countInStock, setCountInStock] = useState(0)
   const [description, setDescription] = useState('')
   const [uploading, setUploading] = useState(false)
-  const [inputList, setInputList] = useState([{ x:"",y:"",name: "",price:"", image: "",livep:"",brand:"",qty:"" ,category:"",description:"" ,url:"" }]);
-  const [urla,setUrla]=useState([])
+  const [inputList, setInputList] = useState([{ x: "", y: "", name: "", price: "", image: "", livep: "", brand: "", qty: "", category: "", description: "", url: "" }]);
+  const [urla, setUrla] = useState([])
 
   const dispatch = useDispatch()
   // const dispatche=useDispatch()
-const productDetails = useSelector((state) => state.productDetails)
-  const { loading, error, product } = productDetails
-console.log(product)
-
-const addUrla=(addl)=>{
-  dispatch(listProductDetails(addl))
-
-if(addl===product._id){
-  setUrla([...urla,product])
-                      }
-}
+  const productDetails = useSelector((state) => state.productDetails)
+  const { loading, error, product } = productDetails;
+  console.log(product)
 
 
-// dispatch(listProductDetails("5fff196b7e40de3160439cce"))
-// const { data } = axios.get(`/api/products/5fff196b7e40de3160439cce`)
-// console.log(dispatch(listProductDetails("5fff196b7e40de3160439cce")))
+
+
+  // dispatch(listProductDetails("5fff196b7e40de3160439cce"))
+  // const { data } = axios.get(`/api/products/5fff196b7e40de3160439cce`)
+  // console.log(dispatch(listProductDetails("5fff196b7e40de3160439cce")))
   const productUpdate = useSelector((state) => state.productUpdate)
   const {
     loading: loadingUpdate,
     error: errorUpdate,
     success: successUpdate,
   } = productUpdate
-  
-interface AreaType extends Area {
-  href?: string;
-}
 
-// {
-//   left: '6',
-//   top: '6',
-//   height: '6',
-//   width: '6'
-// }
-
-const EXAMPLE_AREA: AreaType[] = [
-
-];
-
-const CROP: ReactCrop.Crop = {
-  unit: '%',
-  x: 0,
-  y: 20,
-  height:12,
-  width:18
-};
-
-const formatMapArea = (mapArea: any): AreaType[] => {
-  return mapArea.map((area: AreaType & { [k: string]: string }) => {
-    let result: any = {};
-    Object.keys(area).forEach((key: string) => {
-      result[key] = key !== 'href' ? `${parseFloat(area[key])}%` : area[key];
-    });
-    return result;
-  });
-};
-
-// JSON数据处理
-const trycatchHandle = (jsonStr: string) => {
-  let result = [];
-  try {
-    result = JSON.parse(jsonStr);
-  } catch (err) {
-    console.log(err);
+  interface AreaType extends Area {
+    href?: string;
   }
-  return result;
-};
-const { imgSrc, postmessage } = getUrlParams();
-  const [img, setImg] = useState<string>(imgSrc || image);
-  // const [img, setImg] = useState<string>(imgSrc || EXAMPLE);
+
+  // {
+  //   left: '6',
+  //   top: '6',
+  //   height: '6',
+  //   width: '6'
+  // }
+
+  const EXAMPLE_AREA: AreaType[] = [
+
+  ];
+
+  const CROP: ReactCrop.Crop = {
+    unit: '%',
+    x: 0,
+    y: 20,
+    height: 12,
+    width: 18
+  };
+
+  const formatMapArea = (mapArea: any): AreaType[] => {
+    return mapArea.map((area: AreaType & { [k: string]: string }) => {
+      let result: any = {};
+      Object.keys(area).forEach((key: string) => {
+        result[key] = key !== 'href' ? `${parseFloat(area[key])}%` : area[key];
+      });
+      return result;
+    });
+  };
+
+  // JSON数据处理
+  const trycatchHandle = (jsonStr: string) => {
+    let result = [];
+    try {
+      result = JSON.parse(jsonStr);
+    } catch (err) {
+      console.log(err);
+    }
+    return result;
+  };
+  const { imgSrc, postmessage } = getUrlParams();
+  // const [img, setImg] = useState(image);
+
+  const [img, setImg] = useState<string>(imgSrc || EXAMPLE);
 
   const [mapArea, setMapArea] = useState<AreaType[]>(EXAMPLE_AREA);
   const [crop, setCrop] = useState<ReactCrop.Crop>(CROP);
   const [mapAreaString, setMapAreaString] = useState<string>(
     JSON.stringify(formatMapArea(mapArea))
   );
-   console.log(mapAreaString)
+  console.log(mapAreaString)
 
   const [mapAreaFormatString, setMapAreaFormatString] = useState<string>(
     JSON.stringify(formatMapArea(mapArea), null, 4)
@@ -136,7 +133,7 @@ const { imgSrc, postmessage } = getUrlParams();
       false
     );
 
- 
+
 
   // handle input change
   const handleInputChange = (e, index) => {
@@ -145,33 +142,37 @@ const { imgSrc, postmessage } = getUrlParams();
     list[index][name] = value;
     setInputList(list);
   };
-  
+
   // handle click event of the Remove button
   const handleRemoveClick = (index) => {
     const list = [...inputList];
     list.splice(index, 1);
     setInputList(list);
-   
+    const Ap=[...urla]
+    Ap.splice(index,1);
+    setUrla(Ap)
+
+
   };
   // handle click event of the Add button
   const handleAddClick = () => {
-    setInputList([...inputList, { x:"",y:"",name: "",price:"", image: "",livep:"",brand:"",qty:"" ,category:"",description:"",url:"" }]);
-   
+    setInputList([...inputList, { x: "", y: "", name: "", price: "", image: "", livep: "", brand: "", qty: "", category: "", description: "", url: "" }]);
+
   };
   const [checked, setChecked] = useState(false);
-  const [canda,setCanda]=useState(false)
+  const [canda, setCanda] = useState(false)
   console.log(canda)
-  const [final,finalize]=useState(false)
+  const [final, finalize] = useState(false)
   console.log(final)
-  const makeFinal=()=>{
+  const makeFinal = () => {
     finalize(!final)
   }
-  const count=checked? inputList.length:0
+  const count = checked ? inputList.length : 0
   const handleChange = () => {
     setChecked(!checked);
-   
+
   };
-  const iscollection=checked;
+  const iscollection = checked;
   useEffect(() => {
     
     const cropBoxEle: HTMLElement | null = document.querySelector('.ReactCrop');
@@ -202,15 +203,23 @@ const { imgSrc, postmessage } = getUrlParams();
         setCountInStock(product.countInSock)
         setDescription(product.description)
         setInputList(inputList)
-       
+
       }
     }
-  
- 
 
-  }, [dispatch, history, productId, product,urla, successUpdate])
 
-  
+
+  }, [dispatch, history, productId, product, urla, successUpdate])
+
+  const addUrla = (addl) => {
+    dispatch(listProductDetails(addl))
+
+    if (addl === product._id) {
+      setUrla([...urla, product])
+    }
+  }
+
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader: FileReader = new FileReader();
@@ -236,7 +245,7 @@ const { imgSrc, postmessage } = getUrlParams();
   const addSubArea = (type: string, index: number = 0) => () => {
     let newArea = {},
       mapAreaNew: any = [];
-      // mapAreaNew.length=count
+    // mapAreaNew.length=count
     if (type === 'add') {
       const { x, y, width, height } = crop;
       newArea = {
@@ -244,13 +253,13 @@ const { imgSrc, postmessage } = getUrlParams();
         height: 6,
         left: x,
         top: y,
-     
+
       };
       console.log(newArea)
-  
+
       // .slice(0,count);
 
-      mapAreaNew = [...mapArea, newArea].slice(0,count);
+      mapAreaNew = [...mapArea, newArea].slice(0, count);
       console.log(mapAreaNew)
 
     } else {
@@ -289,17 +298,17 @@ const { imgSrc, postmessage } = getUrlParams();
       // message.error(error);
     }
   };
-  
+
   const ImageMapComponent = React.useMemo(
     () => (
       <ImageMap
         className="usage-map"
-        src={img}
+        src={image}
         map={formatMapArea(mapArea)}
         onMapClick={onMapClick}
       />
     ),
-    [mapArea, img]
+    [mapArea, image]
   );
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0]
@@ -325,38 +334,41 @@ const { imgSrc, postmessage } = getUrlParams();
   }
 
   console.log(urla)
-const sProducts=(canda)? inputList:urla
-console.log(sProducts)
-console.log(mapArea)
-if(final && canda){
-for(let i=0;i<sProducts.length;i++){
-  sProducts[i].x=mapArea[i].left
-  sProducts[i].y=mapArea[i].top
-  sProducts[i].price=+sProducts[i].price
-  sProducts[i].qty=+sProducts[i].qty 
-  
-  
+  const sProducts = (canda) ? inputList : urla
   console.log(sProducts)
-}}
-if(final && !canda){
-  for(let i=0;i<sProducts.length;i++){
-    sProducts[i].x=mapArea[i].left
-    sProducts[i].y=mapArea[i].top
-    
-    
-    
-    console.log(sProducts)
-  }}
+  console.log(mapArea)
+  if (final && canda) {
+    for (let i = 0; i < sProducts.length; i++) {
+      sProducts[i].x = mapArea[i].left
+      sProducts[i].y = mapArea[i].top
+      sProducts[i].price = +sProducts[i].price
+      sProducts[i].qty = +sProducts[i].qty
+
+
+      console.log(sProducts)
+    }
+  }
+  if (final && !canda) {
+    for (let i = 0; i < sProducts.length; i++) {
+      sProducts[i].x = mapArea[i].left
+      sProducts[i].y = mapArea[i].top
+
+
+
+      console.log(sProducts)
+    }
+  }
   const submitHandler = (e) => {
     e.preventDefault()
-    
+
     dispatch(
-     (checked)? updateProduct({
+      (checked) ? updateProduct({
         _id: productId,
         name,
         price,
         iscollection,
         image,
+        youtubeId,
         livep,
         brand,
         category,
@@ -364,18 +376,19 @@ if(final && !canda){
         countInStock,
         sProducts
       })
-     :updateProduct({
-        _id: productId,
-        name,
-        price,
-        iscollection,
-        image,
-        livep,
-        brand,
-        category,
-        description,
-        countInStock
-      })
+        : updateProduct({
+          _id: productId,
+          name,
+          price,
+          iscollection,
+          image,
+          youtubeId,
+          livep,
+          brand,
+          category,
+          description,
+          countInStock
+        })
     )
     // if(checked){
     //   sProducts.map((sp)=>updateProduct({  
@@ -393,11 +406,11 @@ if(final && !canda){
   }
   // console.log(listProductDetails(`5fff196b7e40de3160439ccc`))
 
- 
+
   return (
     <>
       <Link to='/admin/productlist' className='btn btn-light my-3'>
-      <i className="fas fa-long-arrow-alt-left fa-5x"></i>
+        <i className="fas fa-long-arrow-alt-left fa-5x"></i>
       </Link>
       <FormContainer>
         <h1>Edit Product</h1>
@@ -408,254 +421,280 @@ if(final && !canda){
         ) : error ? (
           <Message variant='danger'>{error}</Message>
         ) : (
-          <Form onSubmit={submitHandler}>
-            <Form.Group controlId='name'>
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type='name'
-                placeholder='Enter name'
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              <Form onSubmit={submitHandler}>
+                <Form.Group controlId='name'>
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    type='name'
+                    placeholder='Enter name'
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
 
-            <Form.Group controlId='price'>
-              <Form.Label>Price</Form.Label>
-              <Form.Control
-                type='number'
-                placeholder='Enter price'
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+                <Form.Group controlId='price'>
+                  <Form.Label>Price</Form.Label>
+                  <Form.Control
+                    type='number'
+                    placeholder='Enter price'
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
 
-            <Form.Group controlId='image'>
-              <Form.Label>Image</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter image url'
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
-              <Form.File
-                id='image-file'
-                label='Choose File'
-                custom
-                onChange={uploadFileHandler}
-              ></Form.File>
-              {uploading && <Loader />}
-            </Form.Group>
-            <Form.Group controlId='livep'>
-              <Form.Label>live Product</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter livep url'
-                value={livep}
-                onChange={(e) => setLivep(e.target.value)}
-              ></Form.Control>
-             
-            </Form.Group>
-            <Form.Group controlId='brand'>
-              <Form.Label>Brand</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter brand'
-                value={brand}
-                onChange={(e) => setBrand(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+                <Form.Group controlId='image'>
+                  <Form.Label>Image</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='Enter image url'
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
+                  ></Form.Control>
+                  <Form.File
+                    id='image-file'
+                    label='Choose File'
+                    custom
+                    onChange={uploadFileHandler}
+                  ></Form.File>
+                  {uploading && <Loader />}
+                </Form.Group>
+                <Form.Group controlId='livep'>
+                  <Form.Label>live Product</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='Enter livep url'
+                    value={livep}
+                    onChange={(e) => setLivep(e.target.value)}
+                  ></Form.Control>
 
-            <Form.Group controlId='countInStock'>
-              <Form.Label>Count In Stock</Form.Label>
-              <Form.Control
-                type='number'
-                placeholder='Enter countInStock'
-                value={countInStock}
-                onChange={(e) => setCountInStock(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+                </Form.Group>
+                <Form.Group controlId='youtubeId'>
+                  <Form.Label>Video url</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='Enter Youtube url'
+                    value={youtubeId.replace('https://www.youtube.com/watch?v=', '')}
+                    onChange={(e) => setYoutubeId(e.target.value)}
+                  ></Form.Control>
 
-            <Form.Group controlId='category'>
-              <Form.Label>Category</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter category'
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+                </Form.Group>
+                <Form.Group controlId='brand'>
+                  <Form.Label>Brand</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='Enter brand'
+                    value={brand}
+                    onChange={(e) => setBrand(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
 
-            <Form.Group controlId='description'>
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter description'
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <label
-        htmlFor="inputVacationPercentage"
-        className="switch switch-default"
-      >
-       isCollection{" "}
-      </label>
-      <input
-        id="inputVacationPercentage"
-        type="checkbox"
-        checked={checked}
-        onChange={handleChange}
-      />
-     {checked && (
-        <div className="box">
-           
-           
-            <label
-        htmlFor="inputVacationPercentage"
-        className="switch switch-default"
-      >
-      Create and add{" "}
-      </label>
-      <input
-        id="inputVacationPercentage"
-        type="checkbox"
-        checked={canda}
-        onChange={()=>setCanda(!canda)}
-      />
-          
-          
-          {inputList.map((x, i) => {
-            return (
-              <div key={i}>
-          { canda &&
-          <div>
-          <input
-                  name="name"
-                  placeholder="Product Name"
-                  value={x.name}
-                  onChange={(e) => handleInputChange(e, i)}
-                />
+                <Form.Group controlId='countInStock'>
+                  <Form.Label>Count In Stock</Form.Label>
+                  <Form.Control
+                    type='number'
+                    placeholder='Enter countInStock'
+                    value={countInStock}
+                    onChange={(e) => setCountInStock(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+
+                <Form.Group controlId='category'>
+                  <Form.Label>Category</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='Enter category'
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+
+                <Form.Group controlId='description'>
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='Enter description'
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+                <label
+                  htmlFor="inputVacationPercentage"
+                  className="switch switch-default"
+                >
+                  isCollection{" "}
+                </label>
                 <input
-                  className="ml10"
-                  type='number'
-                  name="price"
-                  placeholder="Price"
-                  value={x.price}
-                  onChange={(e) => handleInputChange(e, i)}
+                  id="inputVacationPercentage"
+                  type="checkbox"
+                  checked={checked}
+                  onChange={handleChange}
                 />
-                
-                 <Form.Group controlId='image'>
-                 <input
-              
-              name="image"
-              placeholder="Image"
-              value={x.image}
-              onChange={(e) => handleInputChange(e, i)}
-            />
-             <Form.File
-            id='image-file'
-            label='Choose File'
-            custom
-           
-          ></Form.File>
-                {uploading && <Loader />}
-            
-                 </Form.Group>
-                 <Form.Group controlId='livep'>
-                 <input
-              
-              name="livep"
-              placeholder="Live Product"
-              value={x.livep}
-              onChange={(e) => handleInputChange(e, i)}
-            />
-             
-            
-                 </Form.Group>
-                 <input
-              
-              name="brand"
-              placeholder="Brand Name"
-              value={x.brand}
-              onChange={(e) => handleInputChange(e, i)}
-            />
-                 <input
-                     type='number'
-                  name="qty"
-                  placeholder="Qty in stock"
-                  value={x.qty}
-                  onChange={(e) => handleInputChange(e, i)}
-                />
-               <input
-              
-              name="category"
-              placeholder="Category"
-              value={x.category}
-              onChange={(e) => handleInputChange(e, i)}
-            />
-                  <input
-            name="description"
-              placeholder="Description"
-              value={x.description}
-              onChange={(e) => handleInputChange(e, i)}
-            />
-            </div>  }
-            { !canda && 
-            <div>
-            <input
+                {checked && (
+                  <div className="box">
+
+
+                    <label
+                      htmlFor="inputVacationPercentage"
+                      className="switch switch-default"
+                    >
+                      Create and add{" "}
+                    </label>
+                    <input
+                      id="inputVacationPercentage"
+                      type="checkbox"
+                      checked={canda}
+                      onChange={() => setCanda(!canda)}
+                    />
+
+
+                    {inputList.map((x, i) => {
+                      return (
+                        <div key={i}>
+                          { canda &&
+                            <div>
+                              <input
+                                name="name"
+                                placeholder="Product Name"
+                                value={x.name}
+                                onChange={(e) => handleInputChange(e, i)}
+                              />
+                              <input
+                                className="ml10"
+                                type='number'
+                                name="price"
+                                placeholder="Price"
+                                value={x.price}
+                                onChange={(e) => handleInputChange(e, i)}
+                              />
+
+                              <Form.Group controlId='image'>
+                                <input
+
+                                  name="image"
+                                  placeholder="Image"
+                                  value={x.image}
+                                  onChange={(e) => handleInputChange(e, i)}
+                                />
+                                <Form.File
+                                  id='image-file'
+                                  label='Choose File'
+                                  custom
+
+                                ></Form.File>
+                                {uploading && <Loader />}
+
+                              </Form.Group>
+                              <Form.Group controlId='livep'>
+                                <input
+
+                                  name="livep"
+                                  placeholder="Live Product"
+                                  value={x.livep}
+                                  onChange={(e) => handleInputChange(e, i)}
+                                />
+
+
+                              </Form.Group>
+                              <input
+
+                                name="brand"
+                                placeholder="Brand Name"
+                                value={x.brand}
+                                onChange={(e) => handleInputChange(e, i)}
+                              />
+                              <input
+                                type='number'
+                                name="qty"
+                                placeholder="Qty in stock"
+                                value={x.qty}
+                                onChange={(e) => handleInputChange(e, i)}
+                              />
+                              <input
+
+                                name="category"
+                                placeholder="Category"
+                                value={x.category}
+                                onChange={(e) => handleInputChange(e, i)}
+                              />
+                              <input
+                                name="description"
+                                placeholder="Description"
+                                value={x.description}
+                                onChange={(e) => handleInputChange(e, i)}
+                              />
+                            </div>}
+                          { !canda &&
+                            <div>
+                              <Form.Label>Paste product Url and double-click  Add product to add it</Form.Label>
+                              <br/>
+                              {/* <Form.Group controlId='url'>
+                                <Form.Label>Product Url</Form.Label>
+                                <Form.Control
+                                  type='text'
+                                  placeholder='Paste product Url and double-click  Add product to add it'
+                                  value={x.url}
+                                  onChange={(e) => handleInputChange(e, i)}
+                                ></Form.Control>
+                              </Form.Group> */}
+                              <input
                 name="url"
-              placeholder="Add product Url"
+              placeholder="Paste product Url"
               value={x.url}
               onChange={(e) => handleInputChange(e, i)}
             />
-            <Button
-            onClick={()=> addUrla(inputList[i].url.split('/').slice(-1)[0])}>
-               Add product
-            </Button>
-            </div>
-}
-                <div className="btn-box">
-                  {inputList.length !== 1 && (
-                   <button className="mr10" onClick={() => handleRemoveClick(i)}>X</button> 
-                     )   }
-                  {inputList.length - 1 === i && (
-                    <button onClick={handleAddClick}>+</button>
-                  )}
-                </div>
-                
-              </div>
-            );
-          })}
-     <div className="images-map-content">
-      <div className="crop-box">
-        <div className="map-box">
-          <div className="map-box-img">
-            <ReactCrop src={img} crop={crop} ruleOfThirds onChange={onCropChange} />
-            {img &&
-              mapArea.map((map: any, index: number) => (
-                <span
-                  className="crop-item"
-                  key={index}
-                  style={{
-                    width: `${parseFloat(map.width)}%`,
-                    height: `${parseFloat(map.height)}%`,
-                    left: `${parseFloat(map.left)}%`,
-                    top: `${parseFloat(map.top)}%`
-                  }}
-                />
-              ))}
-          </div>
-          <div className="map-box-img">{ImageMapComponent}</div>
-        </div>
-      </div>
+            <br/>
+                              <Button
+                                onClick={() => addUrla(inputList[i].url.split('/').slice(-1)[0])}
 
-      {img &&
-        mapArea.map((map: any, index: number) => {
-          return (
-            <div className="map-area" key={index}>
-              <label className="title">map{index + 1}</label>
-              <div className="setting-box">
-                {/* <div className="setting-box-item">
+
+                              >
+                                Add product
+            </Button>
+
+                            </div>
+                          }
+                          <div className="btn-box">
+                            {inputList.length !== 1 && (
+                              <button className="mr10" onClick={() => handleRemoveClick(i)}>X</button>
+                            )}
+                            {inputList.length - 1 === i && (
+                              <button onClick={handleAddClick}>+</button>
+                            )}
+                          </div>
+
+                        </div>
+                      );
+                    })}
+                    <div className="images-map-content">
+                      <div className="crop-box">
+                        <div className="map-box">
+                          <div className="map-box-img">
+                            <ReactCrop src={image} crop={crop} ruleOfThirds onChange={onCropChange} />
+                            {image &&
+                              mapArea.map((map: any, index: number) => (
+                                <span
+                                  className="crop-item"
+                                  key={index}
+                                  style={{
+                                    width: `${parseFloat(map.width)}%`,
+                                    height: `${parseFloat(map.height)}%`,
+                                    left: `${parseFloat(map.left)}%`,
+                                    top: `${parseFloat(map.top)}%`
+                                  }}
+                                />
+                              ))}
+                          </div>
+                          <div className="map-box-img">{ImageMapComponent}</div>
+                        </div>
+                      </div>
+
+                      {image &&
+                        mapArea.map((map: any, index: number) => {
+                          return (
+                            <div className="map-area" key={index}>
+                              <label className="title">map{index + 1}</label>
+                              <div className="setting-box">
+                                {/* <div className="setting-box-item">
                   <label>width: </label>
                   <input
                     value={parseFloat(map.width)}
@@ -671,44 +710,44 @@ if(final && !canda){
                     onChange={setMap('height', index)}
                   />
                 </div> */}
-                <div className="setting-box-item">
-                  <label>left: </label>
-                  <input
-                    value={parseFloat(map.left)}
-                    type="number"
-                    onChange={setMap('left', index)}
-                  />
-                </div>
-                <div className="setting-box-item">
-                  <label>top: </label>
-                  <input
-                    value={parseFloat(map.top)}
-                    type="number"
-                    onChange={setMap('top', index)}
-                  />
-                </div>
-                {/* <div className="setting-box-item">
+                                <div className="setting-box-item">
+                                  <label>left: </label>
+                                  <input
+                                    value={parseFloat(map.left)}
+                                    type="number"
+                                    onChange={setMap('left', index)}
+                                  />
+                                </div>
+                                <div className="setting-box-item">
+                                  <label>top: </label>
+                                  <input
+                                    value={parseFloat(map.top)}
+                                    type="number"
+                                    onChange={setMap('top', index)}
+                                  />
+                                </div>
+                                {/* <div className="setting-box-item">
                   <label>href: </label>
                   <input value={map.href} type="text" onChange={setMap('href', index)} />
                 </div> */}
-              </div>
-              <Button className="cad-iconfont icon-sub" onClick={addSubArea('sub', index)} >X</Button>
-            </div>
-          );
-        })}
-      <div className="opt-box">
-        <Button
-          className="opt-box-btn"
-          icon={<i className="cad-iconfont icon-dotted-box" />}
-          onClick={addSubArea('add')}
-        >
-          Add map
+                              </div>
+                              <Button className="cad-iconfont icon-sub" onClick={addSubArea('sub', index)} >X</Button>
+                            </div>
+                          );
+                        })}
+                      <div className="opt-box">
+                        <Button
+                          className="opt-box-btn"
+                          icon={<i className="cad-iconfont icon-dotted-box" />}
+                          onClick={addSubArea('add')}
+                        >
+                          Add map
         </Button>
-        {/* <Button
+                        {/* <Button
         onClick={()=> console.log(dispatch(listProductDetails("http://localhost:3000/product/5fff196b7e40de3160439cce".split('/').slice(-1)[0])))}>
             get product
         </Button> */}
-        {/* <CopyToClipboard text={mapAreaString} onCopy={() => message.success('copy success')}>
+                        {/* <CopyToClipboard text={mapAreaString} onCopy={() => message.success('copy success')}>
           <Button className="opt-box-btn" icon={<i className="cad-iconfont icon-copy" />}>
             Copy
           </Button>
@@ -718,41 +757,41 @@ if(final && !canda){
             Format copy
           </Button>
         </CopyToClipboard> */}
-        <Button className="opt-box-btn" icon={<i className="cad-iconfont icon-image" />}>
-          <input type="file" accept="image/*" className="picker-image" onChange={onChange} />
+                        <Button className="opt-box-btn" icon={<i className="cad-iconfont icon-image" />}>
+                          <input type="file" accept="image/*" className="picker-image" onChange={onChange} />
           Select images
         </Button>
-      </div>
-      <textarea cols={3} value={mapAreaString} onChange={toSetMap} />
-      <label
-        htmlFor="inputVacationPercentage"
-        className="switch switch-default"
-      >
-     makeFinal{" "}
-      </label>
-      <input
-        id="inputVacationPercentage"
-        type="checkbox"
-        checked={final}
-        onChange={makeFinal}
-      />
-   </div>
+                      </div>
+                      <textarea cols={3} value={mapAreaString} onChange={toSetMap} />
+                      <label
+                        htmlFor="inputVacationPercentage"
+                        className="switch switch-default"
+                      >
+                        makeFinal{" "}
+                      </label>
+                      <input
+                        id="inputVacationPercentage"
+                        type="checkbox"
+                        checked={final}
+                        onChange={makeFinal}
+                      />
+                    </div>
 
-        </div>
-      )}
-      <div style={{ marginTop: 20 }}>{JSON.stringify(sProducts)}</div>
-      <div>{count}
-     {mapArea.length}
-      </div>
-      <div>isCollection : {checked ? "true":"false"}
-           
-        </div>
-        <Button type='submit' variant='primary'>
-              Update
+                  </div>
+                )}
+                <div style={{ marginTop: 20 }}>{JSON.stringify(sProducts)}</div>
+                <div>{count}
+                  {mapArea.length}
+                </div>
+                <div>isCollection : {checked ? "true" : "false"}
+
+                </div>
+                <Button type='submit' variant='primary'>
+                  Update
 
             </Button>
-          </Form>
-        )}
+              </Form>
+            )}
       </FormContainer>
     </>
   )

@@ -26,6 +26,9 @@ const sProductSchema=mongoose.Schema(
     image: {
       type: String,
     },
+    youtubeId:{
+      type:String
+    },
     livep:{
       type:String
     },
@@ -79,6 +82,9 @@ const productSchema = mongoose.Schema(
     image: {
       type: String,
       required: true,
+    },
+    youtubeId:{
+      type:String
     },
     livep:{
       type:String

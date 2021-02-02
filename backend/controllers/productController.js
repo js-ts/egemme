@@ -116,6 +116,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     description,
     iscollection,
     livep,
+    youtubeId,
     image,
     brand,
     category,
@@ -131,6 +132,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.description = description
     product.image = image
     product.livep=livep
+    product.youtubeId=youtubeId
     product.brand = brand
     product.category = category
     product.countInStock = countInStock

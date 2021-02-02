@@ -48,7 +48,7 @@ export const listProducts = (keyword = '', pageNumber = '') => async (
   }
 }
 
-export const listProductDetails = (id) => async (dispatch) => {
+export const listProductDetails = (id:string) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST })
     const { data } = await axios.get(`/api/products/${id}`)
@@ -69,7 +69,7 @@ export const listProductDetails = (id) => async (dispatch) => {
   }
 }
 
-export const deleteProduct = (id) => async (dispatch, getState) => {
+export const deleteProduct = (id:string) => async (dispatch, getState) => {
   try {
     dispatch({
       type: PRODUCT_DELETE_REQUEST,
@@ -173,7 +173,7 @@ export const updateProduct = (product) => async (dispatch, getState) => {
   }
 }
 
-export const createProductReview = (productId, review) => async (
+export const createProductReview = (productId:string, review) => async (
   dispatch,
   getState
 ) => {

@@ -1,5 +1,5 @@
 {
-  "name": "proshop",
+  "name": "egemme",
   "version": "1.0.0",
   "description": "MERN shopping cart app",
   "main": "server.js",
@@ -13,8 +13,8 @@
     "data:destroy": "node backend/seeder -d",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
-  "author": "Brad Traversy",
-  "license": "MIT",
+  "author": "Vedant Padwal",
+  "license": "Proprietary",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",

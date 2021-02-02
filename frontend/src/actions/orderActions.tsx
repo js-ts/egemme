@@ -54,7 +54,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
   }
 }
 
-export const getOrderDetails = (id) => async (dispatch, getState) => {
+export const getOrderDetails = (id:string) => async (dispatch, getState) => {
   try {
     dispatch({
       type: ORDER_DETAILS_REQUEST,
@@ -87,7 +87,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
   }
 }
 
-export const payOrder = (orderId, paymentResult) => async (
+export const payOrder = (orderId:string, paymentResult) => async (
   dispatch,
   getState
 ) => {

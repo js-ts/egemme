@@ -27,7 +27,7 @@ import {
 } from '../constants/userConstants'
 import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
 
-export const login = (email, password) => async (dispatch) => {
+export const login = (email:string, password:string) => async (dispatch) => {
   try {
     dispatch({
       type: USER_LOGIN_REQUEST,
@@ -70,7 +70,7 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_LIST_RESET })
 }
 
-export const register = (name, email, password) => async (dispatch) => {
+export const register = (name:string, email:string, password:string) => async (dispatch) => {
   try {
     dispatch({
       type: USER_REGISTER_REQUEST,
@@ -110,7 +110,7 @@ export const register = (name, email, password) => async (dispatch) => {
   }
 }
 
-export const getUserDetails = (id) => async (dispatch, getState) => {
+export const getUserDetails = (id:string) => async (dispatch, getState) => {
   try {
     dispatch({
       type: USER_DETAILS_REQUEST,
@@ -143,7 +143,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
   }
 }
 
-export const updateUserProfile = (user) => async (dispatch, getState) => {
+export const updateUserProfile = (user:string) => async (dispatch, getState) => {
   try {
     dispatch({
       type: USER_UPDATE_PROFILE_REQUEST,
@@ -210,7 +210,7 @@ export const listUsers = () => async (dispatch, getState) => {
   }
 }
 
-export const deleteUser = (id) => async (dispatch, getState) => {
+export const deleteUser = (id:string) => async (dispatch, getState) => {
   try {
     dispatch({
       type: USER_DELETE_REQUEST,

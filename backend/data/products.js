@@ -4,6 +4,7 @@ const products = [
     iscollection:false,
     image: '/images/airpods.jpg',
     livep:'',
+    youtubeId:'',
     description:
       'Bluetooth technology lets you connect it with compatible devices wirelessly High-quality AAC audio offers immersive listening experience Built-in microphone allows you to take calls while working',
     brand: 'Apple',
@@ -18,6 +19,8 @@ const products = [
     iscollection:false,
     image: '/images/phone.jpg',
     livep:'',
+    youtubeId:'',
+
     description: 
       'Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life',
     brand: 'Apple',
@@ -32,6 +35,8 @@ const products = [
     iscollection:false,
     image: '/images/camera.jpg',
     livep:'',
+    youtubeId:'',
+
     description:
       'Characterized by versatile imaging specs, the Canon EOS 80D further clarifies itself using a pair of robust focusing systems and an intuitive design',
     brand: 'Cannon',
@@ -46,6 +51,8 @@ const products = [
     iscollection:false,
     image: '/images/playstation.jpg',
     livep:'',
+    youtubeId:'',
+
     description:
       'The ultimate home entertainment center starts with PlayStation. Whether you are into gaming, HD movies, television, music',
     brand: 'Sony',
@@ -60,6 +67,8 @@ const products = [
     iscollection:false,
     image: '/images/mouse.jpg',
     livep:'',
+    youtubeId:'',
+
     description:
       'Get a better handle on your games with this Logitech LIGHTSYNC gaming mouse. The six programmable buttons allow customization for a smooth playing experience',
     brand: 'Logitech',
@@ -74,6 +83,8 @@ const products = [
     iscollection:false,
     image: '/images/alexa.jpg',
     livep:'',
+    youtubeId:'',
+
     description:
       'Meet Echo Dot - Our most popular smart speaker with a fabric design. It is our most compact smart speaker that fits perfectly into small space',
     brand: 'Amazon',
@@ -93,6 +104,7 @@ const products = [
     image: 
       "/images/macmini.jpg",
       livep:'',
+      youtubeId:'Y441774uB_o',
 
       description:"Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
     
@@ -114,6 +126,7 @@ const products = [
     image: 
       "/images/iphonepro1.jpg",
     livep:'',
+    youtubeId:"TCMnrssX1NE",
 
       description:"Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
       
@@ -135,6 +148,7 @@ const products = [
     image: 
       "/images/macbookair.jpg",
     livep:'',
+    youtubeId:'Y441774uB_o',
 
       _id:'5fff196b7e40de3160439cce',
       description: "Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
@@ -156,6 +170,7 @@ const products = [
     image: 
       "/images/Applewatch.jpeg",
     livep:'',
+    youtubeId:'TCMnrssX1NE',
 
       description:"Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
      
@@ -177,6 +192,7 @@ const products = [
     image: 
       "/images/Applehomepod.jpg",
     livep:'',
+    youtubeId:'jQF5Q3773uk',
 
       description:"Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
     brand: "Apple",
@@ -195,6 +211,7 @@ const products = [
     iscollection:true,
     image: '/images/AppleCollection.jpg',
     livep:'',
+    youtubeId:'RuurVkEXSP0',
 
     description:
       'Apple collection',
@@ -205,7 +222,9 @@ const products = [
       name: "Mac mini",
       image: 
         "/images/macmini.jpg",
-      
+        livep:'',
+    youtubeId:'bjcmnVkPptQ',
+
       brand: "Apple",
       category: "Electronics",
       description:
@@ -227,6 +246,8 @@ const products = [
       image: 
         "/images/iphonepro1.jpg",
     livep:'',
+    youtubeId:"TCMnrssX1NE",
+
 
        
       brand: "Apple",
@@ -249,6 +270,7 @@ const products = [
       image: 
         "/images/macbookair.jpg",
     livep:'',
+    youtubeId:'Y441774uB_o',
 
        
       brand: "Apple",
@@ -272,6 +294,7 @@ const products = [
       image: 
         "/images/Applewatch.jpeg",
     livep:'',
+    youtubeId:'TCMnrssX1NE',
        
       brand: "Apple",
       category: "Electronics",
@@ -293,6 +316,7 @@ const products = [
       image: 
         "/images/Applehomepod.jpg",
     livep:'',
+    youtubeId:'jQF5Q3773uk',
 
        
       model: "Apple Homepod",
@@ -315,6 +339,25 @@ const products = [
     rating: 0,
     numReviews: 0,
   },
+  {
+    _id: "601962c11026b713e00e5620",
+    
+    rating: 0,
+    numReviews: 0,
+    price: 150,
+    countInStock: 11,
+    name: "Pokedex",
+    user:  "60186cf9b1b77c6728f73886",
+    iscollection: false,
+    image: "/uploads\\image-1612276471168.png",
+    brand: "Pokemon",
+    category: "Electronics",
+  description: "The Pokédex (Japanese: ポケモン図鑑 illustrated Pokémon encyclopedia) is a digital encyclopedia created by Professor Oak as an invaluable tool to Trainers in the Pokémon world. ... They may give background information on the habitat or activities of a Pokémon in the wild or other information on the Pokémon's history or anatomy.",
+    reviews: [],
+   
+    youtubeId:'WMlH2EzCnFQ',
+    livep: "http://localhost:4000/gist/52ba3f209b842e56f719e1307d2c77df"
+}
 ]
 
 export default products

@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react'
 //import MovieList from './MovieList';
 import ReactImageZoom from 'react-image-zoom';
+import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import ReactStarRating from "react-star-ratings-component";
 import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
+import useImageSize from '../components/ImgSize'
 import { ModalLink } from "react-router-modal-gallery";
 import Rating from '../components/Rating'
 import Message from '../components/Message'
 import Meta from '../components/Meta'
 import './ModalProduct.css'
+import YouTubePlayer from '../components/ytframe/YouTubePlayer'
+import { Grid } from "@material-ui/core";
 import {
   listProductDetails,
   createProductReview,
@@ -25,11 +30,12 @@ const Root = styled.div`
   padding: 12px;
 `;
 const ModalProduct = ({
-   history, match 
+  history, match
 }) => {
   const [qty, setQty] = useState(1)
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
+
   // const clickRef = useRef(null);
   // useEffect(() => {
   //   clickRef.current.click();
@@ -48,7 +54,7 @@ const ModalProduct = ({
     success: successProductReview,
     error: errorProductReview,
   } = productReviewCreate
-  
+
 
   useEffect(() => {
     if (successProductReview) {
@@ -60,7 +66,18 @@ const ModalProduct = ({
     dispatch(listProductDetails(match.params.id))
   }, [dispatch, match, successProductReview])
 
-  
+  let parray = [];
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data) => {
+
+    for (var i in data) {
+      if (data[i] !== false) {
+        parray.push(`${[data[i]]}`);
+      }
+      history.push('/cart/' + parray[0].replace(/false,/g, "").replace(/false/g, "").replace(/,/g, "?qty=1&").slice(0, -1))
+
+    }
+  }
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -70,24 +87,24 @@ const ModalProduct = ({
         comment,
       })
     )
-  }    
+  }
   let { pid } = useParams();
-    // console.log(id)
-    console.log(pid)
-    const getsProductById = (productId) => {
-        const allsProducts = product.sProducts;
-        console.log(allsProducts)
- 
-         return allsProducts.find(product => product._id ===productId);
-};
-const [currId, setId] = useState(pid);
-const [clickId,setClickid]=useState()
+  // console.log(id)
+  console.log(pid)
+  const getsProductById = (productId) => {
+    const allsProducts = product.sProducts;
+    console.log(allsProducts)
+
+    return allsProducts.find(product => product._id === productId);
+  };
+  const [currId, setId] = useState(pid);
+  const [clickId, setClickid] = useState()
   const sproduct = getsProductById(currId)
- 
+
   console.log(sproduct)
-  function mChange(products){
+  function mChange(products) {
     changeImage(products.image);
-    changeProduct(products._id); 
+    changeProduct(products._id);
     setClickid(products._id)
   }
 
@@ -97,13 +114,13 @@ const [clickId,setClickid]=useState()
     product => product._id !== clickId
     //pid
   );
-        
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
   console.log(otherProducts)
   {
     /*display: "flex",
@@ -111,6 +128,7 @@ const [clickId,setClickid]=useState()
     alignItems: "center"*/
   }
   const [currImg, setImg] = useState(sproduct.image);
+  const [width, height] = useImageSize(sproduct.image);
 
 
   const props = {
@@ -132,22 +150,22 @@ const [clickId,setClickid]=useState()
   }
   return (
     <Root>
-      {/* <Row> */}
-     
+      <Row>
+
         {/* <div className="productreview">
           */}
 
-          {/* <div> */}
+        {/* <div> */}
+        <Col>
           <Row>
-
-          <Col md={3}>
-      <div id="box">
-              <ReactImageZoom {...props} />
-            </div>
+            <Col md={6}>
+              <div id="box">
+                <ReactImageZoom {...props} />
+              </div>
             </Col>
-          {/* <div className="center">
-          <Meta title={product.name} />
-          </div>
+            {/* <div className="center">
+             <Meta title={product.name} />
+            </div>
             <div className="center3">
               <p>Price: {product.price}</p>
             </div>
@@ -162,115 +180,207 @@ const [clickId,setClickid]=useState()
             <div className="center2">
               <p> Size:64GB </p>
             </div> */}
-            <Col  md={3}>
-        
+            <Col md={3}>
 
-            
-                <ListGroup.Item> <Col> {sproduct.name} </Col></ListGroup.Item>
-                <ListGroup.Item>
-                  <Col>Size:64GB</Col></ListGroup.Item>
-                  <ListGroup.Item>
-                  <Col> Color:
+
+
+              <ListGroup.Item> <Col> {sproduct.name} </Col></ListGroup.Item>
+              <ListGroup.Item>
+                <Col>Size:64GB</Col></ListGroup.Item>
+              <ListGroup.Item>
+                <Col> Color:
                 <br />
-                {sproduct.color}</Col></ListGroup.Item>
-                <ListGroup.Item><Col>Price: {sproduct.price}</Col> </ListGroup.Item>
-                
+                  {sproduct.color}</Col></ListGroup.Item>
+              <ListGroup.Item><Col>Price: {sproduct.price}</Col> </ListGroup.Item>
+              <ListGroup.Item>
+                <Rating
+                  value={sproduct.rating}
+                  text={`${sproduct.numReviews} reviews`}
+                />
+              </ListGroup.Item>
+
             </Col>
             <Col md={3}>
-                  <ListGroup.Item>
-                  <Col>Status :  
-                  <br/>
+              <ListGroup.Item>
+                <Col>Status :
+                  <br />
                   {sproduct.countInStock > 0 ? "In Stock" : "Out Of Stock"}</Col>
-                  </ListGroup.Item>
-                
-                 
- 
- {sproduct.countInStock > 0 && (
-   <ListGroup.Item>
-                      <Row>
-                        <Col>Qty</Col>
-                        <Col>
-                          <Form.Control
-                            as='select'
-                            value={qty}
-                            onChange={(e) => setQty(e.target.value)}
-                            >
-                            {[...Array(sproduct.countInStock).keys()].map(
-                              (x) => (
-                                <option key={x + 1} value={x + 1}>
-                                  {x + 1}
-                                </option>
-                              )
-                              )}
-                          </Form.Control>
-                        </Col>
-                      </Row>
-                      <ListGroup.Item>
-                <Button
+              </ListGroup.Item>
+
+
+
+              {sproduct.countInStock > 0 && (
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Qty</Col>
+                    <Col>
+                      <Form.Control
+                        as='select'
+                        value={qty}
+                        onChange={(e) => setQty(e.target.value)}
+                      >
+                        {[...Array(sproduct.countInStock).keys()].map(
+                          (x) => (
+                            <option key={x + 1} value={x + 1}>
+                              {x + 1}
+                            </option>
+                          )
+                        )}
+                      </Form.Control>
+                    </Col>
+                  </Row>
+                  <ListGroup.Item>
+                    <Button
                       onClick={addToCartHandler}
                       className='btn-block'
                       type='button'
                       disabled={product.countInStock === 0}
                     >
-                  Add to Cart
+                      Add to Cart
                 </Button>
-              </ListGroup.Item>
-                    </ListGroup.Item>
-                    
+                  </ListGroup.Item>
+                </ListGroup.Item>
+
+              )}
+
+
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <h2>Reviews</h2>
+              {product.reviews.length === 0 && <Message>No Reviews</Message>}
+              <ListGroup variant='flush'>
+                {product.reviews.map((review) => (
+                  <ListGroup.Item key={review._id}>
+                    <strong>{review.name}</strong>
+                    <Rating value={review.rating} />
+                    <p>{review.createdAt.substring(0, 10)}</p>
+                    <p>{review.comment}</p>
+                  </ListGroup.Item>
+                ))}
+                <ListGroup.Item>
+                  <h2>Write a Customer Review</h2>
+                  {errorProductReview && (
+                    <Message variant='danger'>{errorProductReview}</Message>
+                  )}
+                  {userInfo ? (
+                    <Form onSubmit={submitHandler}>
+                      <Form.Group controlId='rating'>
+                        <Form.Label>Rating</Form.Label>
+                        <ReactStarRating
+                          numberOfStar={5}
+                          numberOfSelectedStar={rating}
+                          colorFilledStar="gold"
+                          colorEmptyStar="black"
+                          starSize="3em"
+                          spaceBetweenStar="10px"
+                          disableOnSelect={false}
+                          onSelectStar={(val: number) => {
+                            setRating(val);
+                          }}
+                        />
+                      </Form.Group>
+                      <Form.Group controlId='comment'>
+                        <Form.Label>Comment</Form.Label>
+                        <Form.Control
+                          as='textarea'
+                          row='3'
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                        ></Form.Control>
+                      </Form.Group>
+                      <Button type='submit' variant='primary'>
+                        Submit
+                      </Button>
+                    </Form>
+                  ) : (
+                      <Message>
+                        Please <Link to='/login'>sign in</Link> to write a review{' '}
+                      </Message>
                     )}
-                    
-                    </Col>
-         
-            {/* <img style={{"height" : "300px", "width" : "250px"}} src={'https://m.media-amazon.com/images/I/81mxun+6pEL.jpg'}/> */}
+                </ListGroup.Item>
+              </ListGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Grid container spacing={1}>
+
+              <Grid item xs={12}>
+                <YouTubePlayer youtubeId={sproduct.youtubeId} />
+
+              </Grid>
+            </Grid>
+
+          </Row>
+        </Col>
+        <Col md={3}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {product.sProducts.map((data, i: number) => <li key={data._id}>
+              <Row>
+
+
+
+           
+
+
+
+
+
+
+                <ModalLink to={`${product._id}/${data._id}`} >
+                  <Col>
+                    <Row>
+                      <div
+                        className="cell"
+                        onClick={() => mChange(data)}
+                      >
+                        <Row>
+                          <div className="thumbimage">
+
+                            <img src={data.image} style={{
+                              height: "9vh",
+                              width: "6vw"
+                            }} />
+
+                          </div>
+                          <div className="pcblack">
+
+                            {' '}
+                            {data.name}
+                            <br />
+                            Price:{data.price}
+                            <Rating
+                              value={data.rating} />
+                          </div>
+
+
+                        </Row>
+                      </div>
+                    </Row>
+                  </Col>
+
+                </ModalLink>
+                <Col>
+                <input
+                  type="checkbox"
+                  value={data._id}
+                  name={"available." + i}
+                  ref={register}
+                />
+                </Col>
+               
+              </Row>
+            </li>)}
+            <input type="submit" value="add these" />
+
+          </form>
+        </Col>
+
+        {/* <img style={{"height" : "300px", "width" : "250px"}} src={'https://m.media-amazon.com/images/I/81mxun+6pEL.jpg'}/> */}
+
+
       </Row>
-
-          {/* </div> */}
-          <div id="main">
-            {/* {sproduct.ThumbArray.map(img => (
-              <div
-              key={sproduct.ThumbArray.indexOf(img)}
-              onClick={() => {
-                changeImage(img);
-              }}
-              >
-              <img src={img} style={{ height: '4vh', width: '4vw' }} />
-              <li key={product.ThumbArray.indexOf(img)}>
-              <img src={img} />
-              </li>
-              </div>
-            ))} */}
-          </div>
-        {/* </div> */}
-
-        {/* <div id="main1">
-          <MovieList movies={otherMovies} />
-        </div> */}
-      <Row>
-        <div id="main1">
-          {otherProducts.map(products => (
-            <div key={products.id}>
-              <ModalLink to={`${sproduct._id}/${products._id}`}>
-                <div
-                  className="cell"
-                  onClick={()=>mChange(products)}
-                  >
-                    {/* () => {
-                    changeImage(products.image);
-                    changeProduct(products._id); } */}
-                  <img src={products.image} />{' '}
-                  <p>
-                    {' '}
-                    {products.name}
-                    <br />
-                    Price:{products.price}
-                  </p>
-                </div>
-              </ModalLink>
-            </div>
-          ))}
-        </div>
-        </Row>
-          {/* </Row> */}
 
       {/* <Typography variant="h6">{product.title}</Typography>
       <img src={product.image}/>
@@ -285,133 +395,7 @@ const [clickId,setClickid]=useState()
   );
 };
 
-// ModalProduct.propTypes = {
-//   match: PropTypes.shape({
-//     params: PropTypes.shape({
-//       pid: PropTypes.string
-//     })
-//   }).isRequired
-// };
 
 export default ModalProduct;
 
-////Old Code
 
-// import React from 'react';
-// import MovieList from './MovieList';
-// import Dropdown from './Dropdown';
-// import ReactImageZoom from 'react-image-zoom';
-
-// import { getcollectionByMovieId, getMovieById } from '../data';
-// import { ModalLink } from '../../../src';
-// import styled from 'styled-components';
-// import { Typography } from '@material-ui/core';
-// import PropTypes from 'prop-types';
-// import './Movie.css';
-
-// const Root = styled.div`
-//   padding: 12px;
-// `;
-
-// const Movie = ({
-//   match: {
-//     params: { id }
-//   }
-// }) => {
-//   const product = getMovieById(id);
-
-//   const collection = getcollectionByMovieId(id);
-
-//   const otherMovies = collection.movies.filter(product => product.id !== id);
-//   {
-//     /*display: "flex",
-//     justifyContent: "center",
-//     alignItems: "center"*/
-//   }
-//   const props = {
-//     width: 200,
-//     height: 300,
-//     zoomWidth: 350,
-//     zoomPosition: 'right',
-//     img: product.image
-//   };
-
-//   return (
-//     <Root>
-//       <div>
-//         <div className="center">
-//           <span>{product.title}</span>
-//         </div>
-
-//         <div>
-//           <div className="center3">
-//             <p>Price: {product.price}</p>
-//           </div>
-//           <div className="center1">
-//             <span className="dot"></span>
-//             <p>
-//               Color:
-//               <br />
-//               {product.color}
-//             </p>
-//           </div>
-//           <div className="center2">
-//             <p> Size:64GB </p>
-//           </div>
-
-//           <select id="qty">
-//             <option value="Qty: 1">Qty: 1</option>
-//             <option value="Qty: 2">Qty: 2</option>
-//             <option value="Qty: 3">Qty: 3</option>
-//             <option value="Qty: 4">Qty: 4</option>
-//           </select>
-
-//           <div id="box">
-//             <ReactImageZoom {...props} />
-//           </div>
-//           {/* <img style={{"height" : "300px", "width" : "250px"}} src={'https://m.media-amazon.com/images/I/81mxun+6pEL.jpg'}/> */}
-//         </div>
-//         <div id="main">
-//           <div>
-//             <img src="https://m.media-amazon.com/images/I/41Q0PRqeavL._SS40_.jpg" />
-//           </div>
-//           <div>
-//             <img src="https://m.media-amazon.com/images/I/4131ycq4QDL._SS40_.jpg" />
-//           </div>
-//           <div>
-//             <img src="https://m.media-amazon.com/images/I/31BFm30Q93L._SS40_.jpg" />
-//           </div>
-//           <div>
-//             <img src="https://m.media-amazon.com/images/I/41AisChzPDL._SS40_.jpg" />
-//           </div>
-//           <div>
-//             <img src="https://m.media-amazon.com/images/I/31C+yq94rSL._SS40_.jpg" />
-//           </div>
-//         </div>
-//         <div id="main1">
-//           <MovieList movies={otherMovies} />
-//         </div>
-//       </div>
-
-//       {/* <Typography variant="h6">{product.title}</Typography>
-//       <img src={product.image}/>
-//       <ModalLink to={`/collections/${collection.id}`} style={{ fontSize: 14 }}>
-
-//         {collection.name}
-//       </ModalLink>
-//       <hr />
-//       <p>Other movies by {collection.name}:</p>
-//       <MovieList movies={otherMovies} /> */}
-//     </Root>
-//   );
-// };
-
-// Movie.propTypes = {
-//   match: PropTypes.shape({
-//     params: PropTypes.shape({
-//       id: PropTypes.string
-//     })
-//   }).isRequired
-// };
-
-// export default Movie;
