@@ -39,39 +39,6 @@ const getProductById = asyncHandler(async (req, res) => {
   }
 })
 
-// @desc    Delete a product
-// @route   DELETE /api/products/:id
-// @access  Private/Admin
-
-//  |   |   |
-// \|/ \|/ \|/
-//ProductCollection
-
-// @desc Fetch single product collections 
-// @route GET /api/products/:id/:pid
-// @access Public
-// const getProductCollectionById = asyncHandler(async (req, res) => {
-//   const product = await Product.findById(req.params.id)
-//   if (product) {
-//     res.json(product)
-//   } else {
-//     res.status(404)
-//     throw new Error('Product not found')
-//   }
-//   const sproducts = product.sProducts
-//   const productCollection = sproducts.findById(req.params.pid)
-//   if (productCollection ) {
-//     res.json(productCollection)
-//   } else {
-//     res.status(404)
-//     throw new Error('Product Collection not found')
-//   }
-// })
-//ProductCollection
-// /|\ /|\ /|\
-//  |   |   |
-
-
 const deleteProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id)
 

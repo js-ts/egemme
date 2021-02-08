@@ -31,7 +31,7 @@ const HomeScreen = ({ match }) => {
         <ProductCarousel />
       ) : (
         <Link to='/' className='btn btn-light'>
-        <i class="fas fa-long-arrow-alt-left fa-5x"></i>
+        <i className="fas fa-long-arrow-alt-left fa-5x"></i>
         </Link>
       )}
       <h1>Latest Products</h1>

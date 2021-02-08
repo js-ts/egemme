@@ -66,9 +66,9 @@ const ModalProduct = ({
     dispatch(listProductDetails(match.params.id))
   }, [dispatch, match, successProductReview])
 
-  let parray = [];
+  let parray:any = [];
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => {
+  const onSubmit = (data:any[]) => {
 
     for (var i in data) {
       if (data[i] !== false) {
@@ -88,10 +88,10 @@ const ModalProduct = ({
       })
     )
   }
-  let { pid } = useParams();
+  let { pid} = useParams();
   // console.log(id)
   console.log(pid)
-  const getsProductById = (productId) => {
+  const getsProductById = (productId:string) => {
     const allsProducts = product.sProducts;
     console.log(allsProducts)
 
@@ -304,13 +304,14 @@ const ModalProduct = ({
             </Col>
           </Row>
           <Row>
+          {product.youTubeId!=='' &&
             <Grid container spacing={1}>
 
               <Grid item xs={12}>
                 <YouTubePlayer youtubeId={sproduct.youtubeId} />
 
               </Grid>
-            </Grid>
+            </Grid>}
 
           </Row>
         </Col>

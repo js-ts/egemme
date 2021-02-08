@@ -7,6 +7,8 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { listProductDetails, updateProduct } from '../actions/productActions'
+import { ReactSearchAutocomplete } from "../components/search/index";
+
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
 // import { ImagesMap,MergeArray } from '../container';
 import './ImagesMap.css';
@@ -14,7 +16,7 @@ import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 // import CopyToClipboard from 'react-copy-to-clipboard';
 // import {  message } from 'antd';
-// import { ImageMap, Area } from '@qiuz/react-image-map';
+// import { ImageMap, Area } from '@qiuz/react-image-map'; 
 import { ImageMap } from '../component';
 import { Area } from '../component/image-map/index.d';
 
@@ -39,14 +41,26 @@ const ProductEditScreen = ({ match, history }) => {
   const [uploading, setUploading] = useState(false)
   const [inputList, setInputList] = useState([{ x: "", y: "", name: "", price: "", image: "", livep: "", brand: "", qty: "", category: "", description: "", url: "" }]);
   const [urla, setUrla] = useState([])
-
+  const [isUrla, ChangeUrla] = useState(false)
   const dispatch = useDispatch()
   // const dispatche=useDispatch()
   const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product } = productDetails;
-  console.log(product)
+  const productList = useSelector((state) => state.productList)
+  const { products } = productList
+  console.log(products)
+  const handleOnSearch = (string, results) => {
+    console.log(string);
 
-
+  };
+  const handleOnSelect = (item) => {
+    // history.push(`/search/${item.name}`)
+    console.log(item)
+    setUrla([...urla, item])
+  };
+  const handleOnFocus = () => {
+    console.log("Focused");
+  };
 
 
   // dispatch(listProductDetails("5fff196b7e40de3160439cce"))
@@ -148,8 +162,8 @@ const ProductEditScreen = ({ match, history }) => {
     const list = [...inputList];
     list.splice(index, 1);
     setInputList(list);
-    const Ap=[...urla]
-    Ap.splice(index,1);
+    const Ap = [...urla]
+    Ap.splice(index, 1);
     setUrla(Ap)
 
 
@@ -174,7 +188,7 @@ const ProductEditScreen = ({ match, history }) => {
   };
   const iscollection = checked;
   useEffect(() => {
-    
+
     const cropBoxEle: HTMLElement | null = document.querySelector('.ReactCrop');
     const handle = (e: any) => {
       const cropEle: HTMLElement | null = document.querySelector('.ReactCrop__crop-selection');
@@ -625,8 +639,18 @@ const ProductEditScreen = ({ match, history }) => {
                             </div>}
                           { !canda &&
                             <div>
-                              <Form.Label>Paste product Url and double-click  Add product to add it</Form.Label>
-                              <br/>
+                              <div style={{ width: "50vw", margin: 0 }}>
+                                <ReactSearchAutocomplete
+                                  items={products}
+                                  onSearch={handleOnSearch}
+                                  onSelect={handleOnSelect}
+                                  onFocus={handleOnFocus}
+                                  styling={{ zIndex: 1 }} // To display it on top of the search box below
+                                  autoFocus
+                                />
+                              </div>
+
+                              <br />
                               {/* <Form.Group controlId='url'>
                                 <Form.Label>Product Url</Form.Label>
                                 <Form.Control
@@ -636,21 +660,38 @@ const ProductEditScreen = ({ match, history }) => {
                                   onChange={(e) => handleInputChange(e, i)}
                                 ></Form.Control>
                               </Form.Group> */}
-                              <input
-                name="url"
-              placeholder="Paste product Url"
-              value={x.url}
-              onChange={(e) => handleInputChange(e, i)}
-            />
-            <br/>
-                              <Button
-                                onClick={() => addUrla(inputList[i].url.split('/').slice(-1)[0])}
-
-
+                              <label
+                                htmlFor="inputVacationPercentage"
+                                className="switch switch-default"
                               >
-                                Add product
-            </Button>
+                                Add url{" "}
 
+                              </label>
+                              <input
+                                id="inputVacationPercentage"
+                                type="checkbox"
+                                checked={isUrla}
+                                onChange={() => ChangeUrla(!isUrla)}
+                              />
+
+
+                              {isUrla && <div>
+                                <Form.Label>Paste product Url and double-click  Add product to add it</Form.Label>
+                                <input
+                                  name="url"
+                                  placeholder="Paste product Url"
+                                  value={x.url}
+                                  onChange={(e) => handleInputChange(e, i)}
+                                />
+                                <br />
+                                <Button
+                                  onClick={() => addUrla(inputList[i].url.split('/').slice(-1)[0])}
+
+
+                                >
+                                  Add product
+                              </Button>
+                              </div>}
                             </div>
                           }
                           <div className="btn-box">

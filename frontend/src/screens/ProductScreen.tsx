@@ -433,13 +433,13 @@ const ProductScreen = ({ history, match }) => {
                   </Col>
                 </Row>
                 <Row>
-                  <Grid container spacing={2}>
+                  {product.youTubeId!=='' && <Grid container spacing={2}>
 
                     <Grid item xs={6}>
                       <YouTubePlayer youtubeId={product.youtubeId} />
 
                     </Grid>
-                  </Grid>
+                  </Grid>}
                 </Row>
 
               </Col>

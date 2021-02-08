@@ -5,6 +5,8 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import HomeScreen from './screens/HomeScreen'
 import ProductScreen from './screens/ProductScreen'
+import PostScreen from './screens/PostScreen'
+
 import ModalProduct from './screens/ModalProduct'
 import CartScreen from './screens/CartScreen'
 import Routes from './ModalRoutes';
@@ -19,6 +21,8 @@ import UserListScreen from './screens/UserListScreen'
 import UserEditScreen from './screens/UserEditScreen'
 import ProductListScreen from './screens/ProductListScreen'
 import ProductEditScreen from './screens/ProductEditScreen'
+import PostListScreen from './screens/PostListScreen'
+import PostEditScreen from './screens/PostEditScreen'
 import OrderListScreen from './screens/OrderListScreen'
 import err from './screens/404'
 
@@ -36,6 +40,8 @@ const App = () => {
           <Route path='/register' component={RegisterScreen} />
           <Route path='/profile' component={ProfileScreen} />
           <Route path='/product/:id' component={ProductScreen} />
+          <Route path='/post/:id' component={PostScreen} />
+
           {/* <Route path='/product/:id/:pid' component={ModalProduct}  /> */}
           <Routes/>
           <Route path='/cart/:id?' component={CartScreen} />
@@ -52,6 +58,14 @@ const App = () => {
             exact
           />
           <Route path='/admin/product/:id/edit' component={ProductEditScreen} />
+
+          <Route
+            path='/admin/postlist'
+            component={PostListScreen}
+            exact
+          />
+       <Route path='/admin/post/:id/edit' component={PostEditScreen} />
+          
           <Route path='/admin/orderlist' component={OrderListScreen} />
           <Route path='/search/:keyword' component={HomeScreen} exact />
           <Route path='/page/:pageNumber' component={HomeScreen} exact />
