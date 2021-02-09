@@ -53,8 +53,8 @@ const SearchBox = ({ history }) => {
          
       </Form.Control> 
        </div> */}
-    {/* <div style={{  margin: 50 }}> */}
-      <Button type='submit' variant='outline-success' className='p-2'>
+    {/* <div > */}
+      <Button type='submit' variant='outline-success' className='p-2' style={{borderRadius:"50%"}}>
 
       <i className="fas fa-search fa-2x"></i>
       </Button>

@@ -20,40 +20,40 @@ const Header = () => {
   const logoutHandler = () => {
     dispatch(logout())
   }
-  const handleOnSearch = (string, results) => {
-    console.log(string, results);
-  };
+  // const handleOnSearch = (string, results) => {
+  //   console.log(string, results);
+  // };
 
-  const handleOnSelect = (item) => {
-    console.log(item);
-  };
+  // const handleOnSelect = (item) => {
+  //   console.log(item);
+  // };
 
-  const handleOnFocus = () => {
-    console.log("Focused");
-  };
+  // const handleOnFocus = () => {
+  //   console.log("Focused");
+  // };
 
-  const items = [
-    {
-      id: 0,
-      name: "Cobol",
-    },
-    {
-      id: 1,
-      name: "JavaScript",
-    },
-    {
-      id: 2,
-      name: "Basic",
-    },
-    {
-      id: 3,
-      name: "PHP",
-    },
-    {
-      id: 4,
-      name: "Java",
-    },
-  ];
+  // const items = [
+  //   {
+  //     id: 0,
+  //     name: "Cobol",
+  //   },
+  //   {
+  //     id: 1,
+  //     name: "JavaScript",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Basic",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "PHP",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Java",
+  //   },
+  // ];
 
   return (
     <header>

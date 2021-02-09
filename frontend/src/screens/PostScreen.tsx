@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import ReactStarRating from "react-star-ratings-component";
+import ReactMarkdown from "react-markdown";
 import Rating from '../components/Rating'
 import Message from '../components/Message'
 import LoadingProducts from '../components/LoadingProducts'
@@ -100,7 +101,15 @@ const PostScreen = ({ history, match }) => {
                                         </ListGroup.Item>
                                     </ListGroup>
                                 </Col>
+                                <ListGroup>
+                                <Col style={{borderStyle: "solid"}}>
+                                
+                                <ReactMarkdown source={post.markdown} />
 
+
+                        
+                                </Col>
+                                </ListGroup>
                             </Col>
                             <Row>
                                 <Col>

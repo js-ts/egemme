@@ -1,8 +1,11 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button ,Container} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import ReactMde from "react-mde";
+import ReactMarkdown from "react-markdown";
+import "react-mde/lib/styles/css/react-mde-all.css";
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
@@ -18,6 +21,7 @@ const PostEditScreen = ({ match, history }) => {
   const [markdown, setMarkdown] = useState('')
   const [description, setDescription] = useState('')
   const [uploading, setUploading] = useState(false)
+  console.log(markdown)
   const dispatch = useDispatch()
   const postDetails = useSelector((state) => state.postDetails)
   const { loading, error, post } = postDetails
@@ -27,6 +31,8 @@ const PostEditScreen = ({ match, history }) => {
     error: errorUpdate,
     success: successUpdate,
   } = postUpdate
+  let count = 0;
+  const isOne = (count === 1) ? true : false;
 
   useEffect(() => {
     if (successUpdate) {
@@ -34,7 +40,11 @@ const PostEditScreen = ({ match, history }) => {
       history.push('/admin/postlist')
     } else {
       if (!post.name || post._id !== postId) {
-        dispatch(listPostDetails(postId))
+        if (isOne) {
+          dispatch(listPostDetails(postId));
+          count++;
+        }
+
       } else {
         setTitle(post.title)
         // setPrice(post.price)
@@ -80,11 +90,11 @@ const PostEditScreen = ({ match, history }) => {
       updatePost({
         _id: postId,
         image,
-   
-    title,
-    description,
-    markdown,
-   
+
+        title,
+        description,
+        markdown,
+
       })
     )
   }
@@ -92,81 +102,101 @@ const PostEditScreen = ({ match, history }) => {
   return (
     <>
       <Link to='/admin/postlist' className='btn btn-light my-3'>
-      <i className="fas fa-long-arrow-alt-left fa-5x"></i>
+        <i className="fas fa-long-arrow-alt-left fa-5x"></i>
       </Link>
+
       <FormContainer>
-        <h1>Edit Post</h1>
-        {loadingUpdate && <Loader />}
-        {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
-        {loading ? (
-          <Loader />
-        ) : error ? (
-          <Message variant='danger'>{error}</Message>
-        ) : (
-          <Form onSubmit={submitHandler}>
-            <Form.Group controlId='title'>
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                type='title'
-                placeholder='Enter title'
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId='slug'>
-              <Form.Label>slug</Form.Label>
-              <Form.Control
-                type='slug'
-                placeholder='Enter slug'
-                value={slug}
-                onChange={(e) => setSlug(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+       
+          <h1>Edit Post</h1>
+          {loadingUpdate && <Loader />}
+          {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
+          {loading ? (
+            <Loader />
+          ) : error ? (
+            <Message variant='danger'>{error}</Message>
+          ) : (
+                <Form onSubmit={submitHandler}>
+                  <Form.Group controlId='title'>
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control
+                      type='title'
+                      placeholder='Enter title'
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                    ></Form.Control>
+                  </Form.Group>
+                  <Form.Group controlId='slug'>
+                    <Form.Label>slug</Form.Label>
+                    <Form.Control
+                      type='slug'
+                      placeholder='Enter slug'
+                      value={slug}
+                      onChange={(e) => setSlug(e.target.value)}
+                    ></Form.Control>
+                  </Form.Group>
 
-            <Form.Group controlId='image'>
-              <Form.Label>Image</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter image url'
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
-              <Form.File
-                id='image-file'
-                label='Choose File'
-                custom
-                onChange={uploadFileHandler}
-              ></Form.File>
-              {uploading && <Loader />}
-            </Form.Group>
+                  <Form.Group controlId='image'>
+                    <Form.Label>Image</Form.Label>
+                    <Form.Control
+                      type='text'
+                      placeholder='Enter image url'
+                      value={image}
+                      onChange={(e) => setImage(e.target.value)}
+                    ></Form.Control>
+                    <Form.File
+                      id='image-file'
+                      label='Choose File'
+                      custom
+                      onChange={uploadFileHandler}
+                    ></Form.File>
+                    {uploading && <Loader />}
+                  </Form.Group>
 
-            <Form.Group controlId=''>
-              <Form.Label>markdown</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter brand'
-                value={markdown}
-                onChange={(e) => setMarkdown(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+               
+                    <Form.Group controlId='markdown'>
+                    <Container fluid>
+                      <Form.Label>markdown</Form.Label>
 
 
-            <Form.Group controlId='description'>
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter description'
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
 
-            <Button type='submit' variant='primary'>
-              Update
+                      <div className="editor">
+                        <ReactMde
+                          value={markdown}
+                          onChange={setMarkdown}
+                          selectedTab={"write"}
+                          childProps={{
+                            writeButton: {
+                              tabIndex: -1
+                            }
+                          }}
+                        />
+                      </div>
+                      <div style={{ borderStyle: "solid" }}>
+                        <ReactMarkdown source={markdown} />
+                      </div>
+
+                      </Container>
+                    </Form.Group>
+              
+
+                  <Form.Group controlId='description'>
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control
+                      type='text'
+                      placeholder='Enter description'
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                    ></Form.Control>
+                  </Form.Group>
+
+                  <Button type='submit' variant='primary'>
+                    Update
             </Button>
-          </Form>
-        )}
+                </Form>
+              )}
+
       </FormContainer>
+
     </>
   )
 }

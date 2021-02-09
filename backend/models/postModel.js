@@ -43,17 +43,17 @@ const postSchema = new mongoose.Schema(
     slug: {
       type: String,
       required: true,
-      unique: true
+     
     },
     reviews: [reviewSchema],
     rating: {
       type: Number,
-      required: true,
+    
       default: 0,
     },
     numReviews: {
       type: Number,
-      required: true,
+     
       default: 0,
     },
   },
