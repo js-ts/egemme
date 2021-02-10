@@ -32,6 +32,9 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    youtubeId:{
+      type:String
+    },
     description: {type:String},
     markdown: {
       type: String,
@@ -45,12 +48,12 @@ const postSchema = new mongoose.Schema(
     reviews: [reviewSchema],
     rating: {
       type: Number,
-      required: true,
+   
       default: 0,
     },
     numReviews: {
       type: Number,
-      required: true,
+
       default: 0,
     },
   },

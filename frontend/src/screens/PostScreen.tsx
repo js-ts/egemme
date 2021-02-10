@@ -5,6 +5,8 @@ import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import ReactStarRating from "react-star-ratings-component";
 import ReactMarkdown from "react-markdown";
 import Rating from '../components/Rating'
+import YouTubePlayer from '../components/ytframe/YouTubePlayer'
+import { Grid } from "@material-ui/core";
 import Message from '../components/Message'
 import LoadingProducts from '../components/LoadingProducts'
 import Meta from '../components/Meta'
@@ -110,6 +112,15 @@ const PostScreen = ({ history, match }) => {
 
                                     </Col>
                                 {/* </ListGroup> */}
+                                <Col>
+                                {post.youTubeId!=='' && <Grid container spacing={2}>
+
+                    <Grid item xs={12}>
+                      <YouTubePlayer youtubeId={post.youtubeId} />
+
+                    </Grid>
+                  </Grid>}
+                                </Col>
                             </Col>
                             <Row>
                                 <Col>

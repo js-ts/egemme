@@ -10,17 +10,17 @@ const getPosts = asyncHandler(async (req, res) => {
 
   const keyword = req.query.keyword
     ? {
-        name: {
-          $regex: req.query.keyword,
-          $options: 'i',
-        },
-      }
+      name: {
+        $regex: req.query.keyword,
+        $options: 'i',
+      },
+    }
     : {}
 
   const count = await Post.countDocuments({ ...keyword })
   const posts = await Post.find({ ...keyword })
-    // .limit(pageSize)
-    // .skip(pageSize * (page - 1))
+  // .limit(pageSize)
+  // .skip(pageSize * (page - 1))
 
   res.json({ posts })
   // page, pages: Math.ceil(count / pageSize)
@@ -60,11 +60,12 @@ const createPost = asyncHandler(async (req, res) => {
     user: req.user._id,
     image: '/images/sample.jpg',
     title: 'Sample Title',
+    youtubeId: '4poqZjNTZjI',
     description: 'Sample description',
     markdown: 'Sample Markdown',
     reviews: [],
-    numReviews:0
-    
+    numReviews: 0
+
   })
 
   const createdPost = await post.save()
@@ -76,11 +77,11 @@ const createPost = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const updatePost = asyncHandler(async (req, res) => {
   const {
-   image,
+    image,
     title,
+    youtubeId,
     description,
     markdown,
- 
     reviews,
     numReviews
   } = req.body
@@ -88,13 +89,13 @@ const updatePost = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.id)
 
   if (post) {
-      post.title=title
-      post.image = image
-      post.description = description
-      post.markdown=markdown
-    
-      post.reviews=reviews
-      post.numReviews=numReviews
+    post.title = title
+    post.image = image
+    post.description = description
+    post.markdown = markdown
+    post.youtubeId = youtubeId
+    post.reviews = reviews
+    post.numReviews = numReviews
 
     const updatedPost = await post.save()
     res.json(updatedPost)
