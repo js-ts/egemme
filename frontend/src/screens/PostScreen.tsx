@@ -101,15 +101,15 @@ const PostScreen = ({ history, match }) => {
                                         </ListGroup.Item>
                                     </ListGroup>
                                 </Col>
-                                <ListGroup>
-                                <Col style={{borderStyle: "solid"}}>
-                                
-                                <ReactMarkdown source={post.markdown} />
+                                {/* <ListGroup> */}
+                                    <Col style={{ borderStyle: "solid" }}>
+
+                                        <ReactMarkdown source={post.markdown} />
 
 
-                        
-                                </Col>
-                                </ListGroup>
+
+                                    </Col>
+                                {/* </ListGroup> */}
                             </Col>
                             <Row>
                                 <Col>

@@ -62,7 +62,6 @@ const createPost = asyncHandler(async (req, res) => {
     title: 'Sample Title',
     description: 'Sample description',
     markdown: 'Sample Markdown',
-    slug: 'Sample-slug',
     reviews: [],
     numReviews:0
     
@@ -81,7 +80,7 @@ const updatePost = asyncHandler(async (req, res) => {
     title,
     description,
     markdown,
-    slug,
+ 
     reviews,
     numReviews
   } = req.body
@@ -93,7 +92,7 @@ const updatePost = asyncHandler(async (req, res) => {
       post.image = image
       post.description = description
       post.markdown=markdown
-      post.slug=slug
+    
       post.reviews=reviews
       post.numReviews=numReviews
 

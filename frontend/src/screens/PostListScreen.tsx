@@ -99,7 +99,7 @@ const PostListScreen = ({ history, match }) => {
               <tr>
                 <th>ID</th>
                 <th>TITLE</th>
-                <th>SLUG</th>
+             
                 <th>DESCRIPTION</th>
                 <th></th>
                 <th></th>
@@ -110,7 +110,7 @@ const PostListScreen = ({ history, match }) => {
                 <tr key={post._id}>
                   <td>{post._id}</td>
                   <td>{post.title}</td>
-                  <td>{post.slug}</td>
+        
                   <td>{post.description}</td>
                
                   <td>

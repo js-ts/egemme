@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Button ,Container} from 'react-bootstrap'
+import { Form, Button, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactMde from "react-mde";
 import ReactMarkdown from "react-markdown";
@@ -17,7 +17,6 @@ const PostEditScreen = ({ match, history }) => {
 
   const [title, setTitle] = useState('')
   const [image, setImage] = useState('')
-  const [slug, setSlug] = useState('')
   const [markdown, setMarkdown] = useState('')
   const [description, setDescription] = useState('')
   const [uploading, setUploading] = useState(false)
@@ -53,7 +52,7 @@ const PostEditScreen = ({ match, history }) => {
         // setCategory(post.category)
         // setCountInStock(post.countInSock)
         setDescription(post.description)
-        setSlug(post.slug)
+    
         setMarkdown(post.markdown)
 
       }
@@ -101,12 +100,12 @@ const PostEditScreen = ({ match, history }) => {
 
   return (
     <>
-      <Link to='/admin/postlist' className='btn btn-light my-3'>
-        <i className="fas fa-long-arrow-alt-left fa-5x"></i>
-      </Link>
+      <Col>
+        <Link to='/admin/postlist' className='btn btn-light my-3'>
+          <i className="fas fa-long-arrow-alt-left fa-5x"></i>
+        </Link>
 
-      <FormContainer>
-       
+        <FormContainer>
           <h1>Edit Post</h1>
           {loadingUpdate && <Loader />}
           {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
@@ -115,26 +114,22 @@ const PostEditScreen = ({ match, history }) => {
           ) : error ? (
             <Message variant='danger'>{error}</Message>
           ) : (
-                <Form onSubmit={submitHandler}>
-                  <Form.Group controlId='title'>
-                    <Form.Label>Title</Form.Label>
-                    <Form.Control
-                      type='title'
-                      placeholder='Enter title'
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                    ></Form.Control>
-                  </Form.Group>
-                  <Form.Group controlId='slug'>
-                    <Form.Label>slug</Form.Label>
-                    <Form.Control
-                      type='slug'
-                      placeholder='Enter slug'
-                      value={slug}
-                      onChange={(e) => setSlug(e.target.value)}
-                    ></Form.Control>
-                  </Form.Group>
 
+                  <Form onSubmit={submitHandler}>
+                <Col>
+
+                    <Form.Group controlId='title'>
+                      <Form.Label>Title</Form.Label>
+                      <Form.Control
+                        type='title'
+                        placeholder='Enter title'
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
+                  </Col>
+
+<Col>
                   <Form.Group controlId='image'>
                     <Form.Label>Image</Form.Label>
                     <Form.Control
@@ -151,10 +146,11 @@ const PostEditScreen = ({ match, history }) => {
                     ></Form.File>
                     {uploading && <Loader />}
                   </Form.Group>
+                  </Col>
+<Col>
 
-               
-                    <Form.Group controlId='markdown'>
-                    <Container fluid>
+                  <Form.Group controlId='markdown'>
+                   
                       <Form.Label>markdown</Form.Label>
 
 
@@ -175,10 +171,11 @@ const PostEditScreen = ({ match, history }) => {
                         <ReactMarkdown source={markdown} />
                       </div>
 
-                      </Container>
-                    </Form.Group>
-              
+                  
+                  </Form.Group>
+                  </Col>
 
+<Col>
                   <Form.Group controlId='description'>
                     <Form.Label>Description</Form.Label>
                     <Form.Control
@@ -188,6 +185,7 @@ const PostEditScreen = ({ match, history }) => {
                       onChange={(e) => setDescription(e.target.value)}
                     ></Form.Control>
                   </Form.Group>
+                  </Col>
 
                   <Button type='submit' variant='primary'>
                     Update
@@ -195,7 +193,8 @@ const PostEditScreen = ({ match, history }) => {
                 </Form>
               )}
 
-      </FormContainer>
+        </FormContainer>
+      </Col>
 
     </>
   )
