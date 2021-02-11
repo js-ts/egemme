@@ -12,50 +12,14 @@ const Header = () => {
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
-
   console.log(userInfo)
   const cart = useSelector((state) => state.cart)
   const { cartItems } = cart
-  const userDetails = useSelector((state) => state.userDetails)
-  const { user } = userDetails
 
   const logoutHandler = () => {
     dispatch(logout())
   }
-  // const handleOnSearch = (string, results) => {
-  //   console.log(string, results);
-  // };
 
-  // const handleOnSelect = (item) => {
-  //   console.log(item);
-  // };
-
-  // const handleOnFocus = () => {
-  //   console.log("Focused");
-  // };
-
-  // const items = [
-  //   {
-  //     id: 0,
-  //     name: "Cobol",
-  //   },
-  //   {
-  //     id: 1,
-  //     name: "JavaScript",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Basic",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "PHP",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Java",
-  //   },
-  // ];
 
   return (
     <header>
@@ -82,7 +46,19 @@ const Header = () => {
               <LinkContainer to='/cart'>
                 <Nav.Link>
                   <i className='fas fa-shopping-cart fa-2x'></i>
-                  {cartItems.length}
+
+                  <span style={{
+                    height: "1rem",
+                    width: "0.75rem",
+                    backgroundColor: "red",
+                    borderRadius: "50%",
+                    color: "white",
+                    display: "inline-block"
+                  }}>{" "}
+                    {cartItems.length}
+
+                  </span>
+
                   {/* 
                   <span className="fa-stack">
 <span className="fa fa-circle-o fa-stack-2x"></span>
@@ -100,7 +76,7 @@ const Header = () => {
                     width: '2vw',
                     borderRadius: '50%'
                   }}
-                    src={user.image}
+                    src={userInfo.image}
                     alt="user pic"
                   />}
                   id="profile-dropdown" >

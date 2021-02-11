@@ -22,7 +22,10 @@ import {
 //
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
-import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
+import {
+  PRODUCT_CREATE_REVIEW_RESET,
+  PRODUCT_UPDATE_STOCK_RESET,
+} from '../constants/productConstants'
 // import ModalProduct from './ModalProduct';
 
 // const productDetails = useSelector((state) => state.productDetails)
@@ -68,9 +71,14 @@ const ProductScreen = ({ history, match }) => {
   const checkoutHandler = () => {
     history.push('/login?redirect=shipping')
   }
-
+  const productUpdateStock = useSelector((state) => state.productUpdateStock);
+  const { success: successStockUpdate } = productUpdateStock;
   useEffect(() => {
     window.scrollTo(0, 0)
+    if (successStockUpdate) {
+      dispatch({ type: PRODUCT_UPDATE_STOCK_RESET });
+    }
+
     if (successProductReview) {
       alert('Review Submitted!')
       setRating(0)
@@ -80,7 +88,8 @@ const ProductScreen = ({ history, match }) => {
     dispatch(listProductDetails(match.params.id))
 
     console.log(dispatch(listProductDetails(match.params.id)))
-  }, [dispatch, match, successProductReview])
+  }, [dispatch, match, successProductReview ,product._id,
+    successStockUpdate,])
   let parray = [];
   const { register, handleSubmit } = useForm();
   
@@ -267,7 +276,7 @@ const ProductScreen = ({ history, match }) => {
               <Button
                 type='button'
                 className='btn-block'
-                disabled={product.iscollection}
+                disabled={product.iscollection || product.countInStock === 0}
                 onClick={checkoutHandler}
               >
                Buy Now

@@ -14,7 +14,11 @@ import {
 import {
   ORDER_PAY_RESET,
   ORDER_DELIVER_RESET,
+  ORDER_LIST_MY_RESET,
 } from '../constants/orderConstants'
+import { PRODUCT_UPDATE_STOCK_RESET } from '../constants/productConstants'
+import { removeFromCart } from '../actions/cartActions'
+import { updateProductStock } from '../actions/productActions'
 
 const OrderScreen = ({ match, history }) => {
   const orderId = match.params.id
@@ -22,6 +26,16 @@ const OrderScreen = ({ match, history }) => {
   const [sdkReady, setSdkReady] = useState(false)
 
   const dispatch = useDispatch()
+
+  const cart = useSelector((state) => state.cart)
+  const { cartItems } = cart
+
+  // console.log(cartItems);
+
+  const [countInStock, setCountInStock] = useState(0)
+
+  const productUpdateStock = useSelector((state) => state.productUpdateStock)
+  const { success: successStockUpdate } = productUpdateStock
 
   const orderDetails = useSelector((state) => state.orderDetails)
   const { order, loading, error } = orderDetails
@@ -63,7 +77,7 @@ const OrderScreen = ({ match, history }) => {
       document.body.appendChild(script)
     }
 
-    if (!order || successPay || successDeliver) {
+    if (!order || successPay || successDeliver || order._id !== orderId) {
       dispatch({ type: ORDER_PAY_RESET })
       dispatch({ type: ORDER_DELIVER_RESET })
       dispatch(getOrderDetails(orderId))
@@ -74,7 +88,45 @@ const OrderScreen = ({ match, history }) => {
         setSdkReady(true)
       }
     }
-  }, [dispatch, orderId, successPay, successDeliver, order])
+
+    if (successStockUpdate) {
+      console.log('PRODUCT_UPDATE_STOCK_RESET')
+      dispatch({ type: PRODUCT_UPDATE_STOCK_RESET })
+    }
+
+    if (order && successPay) {
+      console.log('sale del loop')
+      order.orderItems.forEach((item, i) => {
+        console.log(
+          `countinstock: ${cartItems[i].countInStock}
+              -
+            qty: ${item.qty}
+          Equals: ${cartItems[i].countInStock - item.qty}`
+        )
+        const updatedStock = cartItems[i].countInStock - item.qty
+        setCountInStock(cartItems[i].countInStock - item.qty)
+        dispatch(
+          updateProductStock({
+            _id: item.product,
+            countInStock: updatedStock,
+          })
+        )
+        dispatch(removeFromCart(item.product))
+      })
+      dispatch({ type: ORDER_LIST_MY_RESET })
+    }
+  }, [
+    history,
+    userInfo,
+    dispatch,
+    orderId,
+    successPay,
+    successDeliver,
+    order,
+    cartItems,
+    countInStock,
+    successStockUpdate,
+  ])
 
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult)
