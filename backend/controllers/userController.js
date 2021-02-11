@@ -9,12 +9,13 @@ const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body
 
   const user = await User.findOne({ email })
-
+  console.log(user)
   if (user && (await user.matchPassword(password))) {
     res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
+      image:user.image,
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
     })
@@ -28,7 +29,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body
+  const { name, email, password ,image} = req.body
 
   const userExists = await User.findOne({ email })
   const email_regexp = /[0-9a-zа-я_A-ZА-Я]+@[0-9a-zа-я_A-ZА-Я^.]+\.[a-zа-яА-ЯA-Z]{2,4}/i;
@@ -47,6 +48,7 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
+    image
   })
 
   if (user) {
@@ -54,6 +56,7 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      image:user.image,
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
     })
@@ -74,6 +77,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      image:user.image,
       isAdmin: user.isAdmin,
     })
   } else {
@@ -105,6 +109,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
+      image:updatedUser.image,
       isAdmin: updatedUser.isAdmin,
       token: generateToken(updatedUser._id),
     })
@@ -160,6 +165,7 @@ const updateUser = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
+    user.image = req.body.image || user.image,
     user.isAdmin = req.body.isAdmin
 
     const updatedUser = await user.save()
@@ -168,6 +174,7 @@ const updateUser = asyncHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
+      image:updatedUser.image,
       isAdmin: updatedUser.isAdmin,
     })
   } else {

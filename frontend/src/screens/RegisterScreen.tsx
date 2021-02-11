@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
+import axios from 'axios'
 import { register } from '../actions/userActions'
 // import TextField from '@material-ui/core/TextField';
 // import InputLabel from '@material-ui/core/InputLabel';
@@ -57,10 +58,10 @@ const ValidationIcon = ({ isDone }) => {
       />
     </svg>
   ) : (
-    <svg width="12" height="12" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 6A6 6 0 110 6a6 6 0 0112 0z" fill="#5B9A78" />
-    </svg>
-  );
+      <svg width="12" height="12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 6A6 6 0 110 6a6 6 0 0112 0z" fill="#5B9A78" />
+      </svg>
+    );
 };
 
 const ValidationItems = ({ state }) => (
@@ -103,7 +104,9 @@ const RegisterScreen = ({ location, history }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [image, setImage] = useState('')
   const [message, setMessage] = useState(null)
+  const [uploading, setUploading] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -113,10 +116,32 @@ const RegisterScreen = ({ location, history }) => {
   const redirect = location.search ? location.search.split('=')[1] : '/'
   const [state, dispatche] = useReducer(validationReducer, validationObj);
 
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+
+      const { data } = await axios.post('/api/upload', formData, config)
+
+      setImage(data)
+      setUploading(false)
+    } catch (error) {
+      console.error(error)
+      setUploading(false)
+    }
+  }
   const handleChange = (e) => {
     validate(e.target.value.trim());
     setPassword(e.target.value)
-};
+  };
 
   const validate = (value) => {
     const checkLength = value.length >= 8;
@@ -163,14 +188,14 @@ const RegisterScreen = ({ location, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    
+
     if (password !== confirmPassword) {
       setMessage('Passwords do not match')
     } else {
-      dispatch(register(name, email, password))
+      dispatch(register(name, email, password,image))
     }
   }
- 
+
   return (
     <FormContainer>
       <h1>Sign Up</h1>
@@ -198,21 +223,21 @@ const RegisterScreen = ({ location, history }) => {
           ></Form.Control>
         </Form.Group>
 
-      
+
         <Form.Group controlId='password'>
-        <div className="wrap">
+          <div className="wrap">
             <Form.Group controlId='password'>
-          <Form.Label>Password</Form.Label>
-            <ValidationItems state={state} />
-          <Form.Control
-            type='password'
-            placeholder='Enter password'
-            value={password}
-            onChange={handleChange}
-          ></Form.Control>
-        </Form.Group>
-   
-     </div>
+              <Form.Label>Password</Form.Label>
+              <ValidationItems state={state} />
+              <Form.Control
+                type='password'
+                placeholder='Enter password'
+                value={password}
+                onChange={handleChange}
+              ></Form.Control>
+            </Form.Group>
+
+          </div>
         </Form.Group>
         
         <Form.Group controlId='confirmPassword'>
@@ -224,7 +249,22 @@ const RegisterScreen = ({ location, history }) => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
-
+        <Form.Group controlId='image'>
+                  <Form.Label>Image</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='Enter image url'
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
+                  ></Form.Control>
+                  <Form.File
+                    id='image-file'
+                    label='Choose File'
+                    custom
+                    onChange={uploadFileHandler}
+                  ></Form.File>
+                  {uploading && <Loader />}
+                </Form.Group>
         <Button type='submit' variant='primary'>
           Register
         </Button>

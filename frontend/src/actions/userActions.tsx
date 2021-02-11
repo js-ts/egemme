@@ -27,7 +27,7 @@ import {
 } from '../constants/userConstants'
 import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
 
-export const login = (email:string, password:string) => async (dispatch) => {
+export const login = (email:string, password:string,image:string) => async (dispatch) => {
   try {
     dispatch({
       type: USER_LOGIN_REQUEST,
@@ -41,7 +41,7 @@ export const login = (email:string, password:string) => async (dispatch) => {
 
     const { data } = await axios.post(
       '/api/users/login',
-      { email, password },
+      { email, password,image },
       config
     )
 
@@ -70,7 +70,7 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_LIST_RESET })
 }
 
-export const register = (name:string, email:string, password:string) => async (dispatch) => {
+export const register = (name:string, email:string, password:string,image:string) => async (dispatch) => {
   try {
     dispatch({
       type: USER_REGISTER_REQUEST,
@@ -84,7 +84,7 @@ export const register = (name:string, email:string, password:string) => async (d
 
     const { data } = await axios.post(
       '/api/users',
-      { name, email, password },
+      { name, email, password ,image},
       config
     )
 
@@ -127,6 +127,7 @@ export const getUserDetails = (id:string) => async (dispatch, getState) => {
     }
 
     const { data } = await axios.get(`/api/users/${id}`, config)
+    
 
     dispatch({
       type: USER_DETAILS_SUCCESS,

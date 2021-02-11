@@ -65,6 +65,9 @@ const ProductScreen = ({ history, match }) => {
     error: errorProductReview,
   } = productReviewCreate
 
+  const checkoutHandler = () => {
+    history.push('/login?redirect=shipping')
+  }
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -80,6 +83,7 @@ const ProductScreen = ({ history, match }) => {
   }, [dispatch, match, successProductReview])
   let parray = [];
   const { register, handleSubmit } = useForm();
+  
   console.log(parray)
   const onSubmit = (data) => {
 
@@ -259,6 +263,16 @@ const ProductScreen = ({ history, match }) => {
                         Add to Cart
                 </Button>
                     </ListGroup.Item>
+                    <ListGroup.Item>
+              <Button
+                type='button'
+                className='btn-block'
+                disabled={product.iscollection}
+                onClick={checkoutHandler}
+              >
+               Buy Now
+              </Button>
+            </ListGroup.Item>
                   </ListGroup>
 
                   <ListGroup>
@@ -347,9 +361,7 @@ const ProductScreen = ({ history, match }) => {
 
 
                   ) : (
-                      <div>
-
-                      </div>
+                      null
                     )
                   }
 

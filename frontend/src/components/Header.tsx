@@ -10,12 +10,14 @@ import { logout } from '../actions/userActions'
 const Header = () => {
   const dispatch = useDispatch()
 
- 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
-  
+
+  console.log(userInfo)
   const cart = useSelector((state) => state.cart)
   const { cartItems } = cart
+  const userDetails = useSelector((state) => state.userDetails)
+  const { user } = userDetails
 
   const logoutHandler = () => {
     dispatch(logout())
@@ -62,7 +64,7 @@ const Header = () => {
           <LinkContainer className="brand-logo" to='/'>
             <Navbar.Brand>egemme</Navbar.Brand>
           </LinkContainer>
-         
+
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Route render={({ history }) => <SearchBox history={history} />} />
@@ -81,17 +83,27 @@ const Header = () => {
                 <Nav.Link>
                   <i className='fas fa-shopping-cart fa-2x'></i>
                   {cartItems.length}
-{/* 
+                  {/* 
                   <span className="fa-stack">
 <span className="fa fa-circle-o fa-stack-2x"></span>
 <strong className="fa-stack-1x">
 </strong>
 </span> */}
-                
+
                 </Nav.Link>
               </LinkContainer>
               {userInfo ? (
-                <NavDropdown title={userInfo.name} id='username'>
+                <NavDropdown title={
+                  <img style={{
+                    display: 'inline-block',
+                    height: '4vh',
+                    width: '2vw',
+                    borderRadius: '50%'
+                  }}
+                    src={user.image}
+                    alt="user pic"
+                  />}
+                  id="profile-dropdown" >
                   <LinkContainer to='/profile'>
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>
@@ -100,12 +112,12 @@ const Header = () => {
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
-                <LinkContainer to='/login'>
-                  <Nav.Link>
-                    <i className='fas fa-user'></i> Sign In
+                  <LinkContainer to='/login'>
+                    <Nav.Link>
+                      <i className='fas fa-user'></i> Sign In
                   </Nav.Link>
-                </LinkContainer>
-              )}
+                  </LinkContainer>
+                )}
               {userInfo && userInfo.isAdmin && (
                 <NavDropdown title='Admin' id='adminmenu'>
                   <LinkContainer to='/admin/userlist'>

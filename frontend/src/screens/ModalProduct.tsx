@@ -66,9 +66,9 @@ const ModalProduct = ({
     dispatch(listProductDetails(match.params.id))
   }, [dispatch, match, successProductReview])
 
-  let parray:any = [];
+  let parray: any = [];
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data:any[]) => {
+  const onSubmit = (data: any[]) => {
 
     for (var i in data) {
       if (data[i] !== false) {
@@ -88,10 +88,10 @@ const ModalProduct = ({
       })
     )
   }
-  let { pid} = useParams();
+  let { pid } = useParams();
   // console.log(id)
   console.log(pid)
-  const getsProductById = (productId:string) => {
+  const getsProductById = (productId: string) => {
     const allsProducts = product.sProducts;
     console.log(allsProducts)
 
@@ -185,12 +185,12 @@ const ModalProduct = ({
 
 
               <ListGroup.Item> <Col> {sproduct.name} </Col></ListGroup.Item>
-              <ListGroup.Item>
+              {/* <ListGroup.Item>
                 <Col>Size:64GB</Col></ListGroup.Item>
               <ListGroup.Item>
                 <Col> Color:
                 <br />
-                  {sproduct.color}</Col></ListGroup.Item>
+                  {sproduct.color}</Col></ListGroup.Item> */}
               <ListGroup.Item><Col>Price: {sproduct.price}</Col> </ListGroup.Item>
               <ListGroup.Item>
                 <Rating
@@ -198,9 +198,51 @@ const ModalProduct = ({
                   text={`${sproduct.numReviews} reviews`}
                 />
               </ListGroup.Item>
+              <ListGroup.Item>
+                <Col>Status :
+                  <br />
+                  {sproduct.countInStock > 0 ? "In Stock" : "Out Of Stock"}</Col>
+              </ListGroup.Item>
+
+
+
+              {sproduct.countInStock > 0 && (
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Qty</Col>
+                    <br/>
+                    <Col>
+                      <Form.Control
+                        as='select'
+                        value={qty}
+                        onChange={(e) => setQty(e.target.value)}
+                      >
+                        {[...Array(sproduct.countInStock).keys()].map(
+                          (x) => (
+                            <option key={x + 1} value={x + 1}>
+                              {x + 1}
+                            </option>
+                          )
+                        )}
+                      </Form.Control>
+                    </Col>
+                  </Row>
+                  <ListGroup.Item>
+                    <Button
+                      onClick={addToCartHandler}
+                      className='btn-block'
+                      type='button'
+                      disabled={product.countInStock === 0}
+                    >
+                      Add to Cart
+                </Button>
+                  </ListGroup.Item>
+                </ListGroup.Item>
+
+              )}
 
             </Col>
-            <Col md={3}>
+            {/* <Col md={3}>
               <ListGroup.Item>
                 <Col>Status :
                   <br />
@@ -244,7 +286,7 @@ const ModalProduct = ({
               )}
 
 
-            </Col>
+            </Col> */}
           </Row>
           <Row>
             <Col md={6}>
@@ -304,14 +346,14 @@ const ModalProduct = ({
             </Col>
           </Row>
           <Row>
-          {product.youTubeId!=='' &&
-            <Grid container spacing={1}>
+            {product.youTubeId !== '' &&
+              <Grid container spacing={1}>
 
-              <Grid item xs={12}>
-                <YouTubePlayer youtubeId={sproduct.youtubeId} />
+                <Grid item xs={12}>
+                  <YouTubePlayer youtubeId={sproduct.youtubeId} />
 
-              </Grid>
-            </Grid>}
+                </Grid>
+              </Grid>}
 
           </Row>
         </Col>
@@ -322,7 +364,7 @@ const ModalProduct = ({
 
 
 
-           
+
 
 
 
@@ -363,14 +405,14 @@ const ModalProduct = ({
 
                 </ModalLink>
                 <Col>
-                <input
-                  type="checkbox"
-                  value={data._id}
-                  name={"available." + i}
-                  ref={register}
-                />
+                  <input
+                    type="checkbox"
+                    value={data._id}
+                    name={"available." + i}
+                    ref={register}
+                  />
                 </Col>
-               
+
               </Row>
             </li>)}
             <input type="submit" value="add these" />

@@ -16,6 +16,11 @@ const reviewSchema = mongoose.Schema(
   }
 )
 
+// user: {
+//   type: mongoose.Schema.Types.ObjectId,
+//   required: true,
+//   ref: 'User',
+// }, will add sp.map add and it below \|/
 const sProductSchema=mongoose.Schema(
   {
     name: {

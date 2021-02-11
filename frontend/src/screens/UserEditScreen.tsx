@@ -6,6 +6,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { getUserDetails, updateUser } from '../actions/userActions'
+import axios from 'axios'
 import { USER_UPDATE_RESET } from '../constants/userConstants'
 
 const UserEditScreen = ({ match, history }) => {
@@ -13,13 +14,35 @@ const UserEditScreen = ({ match, history }) => {
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [image, setImage] = useState('')
   const [isAdmin, setIsAdmin] = useState(false)
-
+  const [uploading, setUploading] = useState(false)
   const dispatch = useDispatch()
 
   const userDetails = useSelector((state) => state.userDetails)
   const { loading, error, user } = userDetails
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
 
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+
+      const { data } = await axios.post('/api/upload', formData, config)
+
+      setImage(data)
+      setUploading(false)
+    } catch (error) {
+      console.error(error)
+      setUploading(false)
+    }
+  }
   const userUpdate = useSelector((state) => state.userUpdate)
   const {
     loading: loadingUpdate,
@@ -37,6 +60,7 @@ const UserEditScreen = ({ match, history }) => {
       } else {
         setName(user.name)
         setEmail(user.email)
+        setImage(user.image)
         setIsAdmin(user.isAdmin)
       }
     }
@@ -50,7 +74,7 @@ const UserEditScreen = ({ match, history }) => {
   return (
     <>
       <Link to='/admin/userlist' className='btn btn-light my-3'>
-      <i class="fas fa-long-arrow-alt-left fa-5x"></i>
+      <i className="fas fa-long-arrow-alt-left fa-5x"></i>
       </Link>
       <FormContainer>
         <h1>Edit User</h1>
@@ -81,7 +105,22 @@ const UserEditScreen = ({ match, history }) => {
                 onChange={(e) => setEmail(e.target.value)}
               ></Form.Control>
             </Form.Group>
-
+            <Form.Group controlId='image'>
+                  <Form.Label>Image</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='Enter image url'
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
+                  ></Form.Control>
+                  <Form.File
+                    id='image-file'
+                    label='Choose File'
+                    custom
+                    onChange={uploadFileHandler}
+                  ></Form.File>
+                  {uploading && <Loader />}
+                </Form.Group>
             <Form.Group controlId='isadmin'>
               <Form.Check
                 type='checkbox'
