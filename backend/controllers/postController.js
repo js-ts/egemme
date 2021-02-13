@@ -125,6 +125,7 @@ const createPostReview = asyncHandler(async (req, res) => {
 
     const review = {
       name: req.user.name,
+      image:req.user.image,
       rating: Number(rating),
       comment,
       user: req.user._id,

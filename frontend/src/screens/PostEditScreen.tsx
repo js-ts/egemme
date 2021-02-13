@@ -7,6 +7,7 @@ import ReactMde from "react-mde";
 import ReactMarkdown from "react-markdown";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import { Grid } from "@material-ui/core";
+import './vw.css'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
@@ -99,10 +100,18 @@ const PostEditScreen = ({ match, history }) => {
       })
     )
   }
-
+  const customCommand = {
+    name: "my-custom-command",
+    icon: () => (
+      <span role="img" aria-label="nice">
+  
+      </span>
+    ),
+   
+  };
   return (
     <>
-      <Col>
+ 
         <Link to='/admin/postlist' className='btn btn-light my-3'>
           <i className="fas fa-long-arrow-alt-left fa-5x"></i>
         </Link>
@@ -118,7 +127,7 @@ const PostEditScreen = ({ match, history }) => {
           ) : (
 
                 <Form onSubmit={submitHandler}>
-                  <Col>
+                  {/* <Col> */}
 
                     <Form.Group controlId='title'>
                       <Form.Label>Title</Form.Label>
@@ -129,8 +138,8 @@ const PostEditScreen = ({ match, history }) => {
                         onChange={(e) => setTitle(e.target.value)}
                       ></Form.Control>
                     </Form.Group>
-                  </Col>
-                  <Col>
+                  {/* </Col> */}
+                  {/* <Col> */}
                     <Form.Group controlId='youtubeId'>
                       <Form.Label>Video url</Form.Label>
                       <Form.Control
@@ -141,9 +150,9 @@ const PostEditScreen = ({ match, history }) => {
                       ></Form.Control>
 
                     </Form.Group>
-                  </Col>
+                  {/* </Col> */}
 
-                  <Col>
+                  {/* <Col> */}
                     <Form.Group controlId='image'>
                       <Form.Label>Image</Form.Label>
                       <Form.Control
@@ -160,40 +169,45 @@ const PostEditScreen = ({ match, history }) => {
                       ></Form.File>
                       {uploading && <Loader />}
                     </Form.Group>
-                  </Col>
-                  <Col>
+                  {/* </Col> */}
+                  {/* <Col> */}
 
                     <Form.Group controlId='markdown'>
 
                       <Form.Label>markdown</Form.Label>
 
+                      <div id='mkdn'>
 
-                      <Grid container spacing={2}>
+                        {/* <Grid container spacing={2}>
 
-<Grid item xs={12}>
-                      <div className="editor">
-                        <ReactMde
-                          value={markdown}
-                          onChange={setMarkdown}
-                          selectedTab={"write"}
-                          childProps={{
-                            writeButton: {
-                              tabIndex: -1
-                            }
-                          }}
-                        />
+                        <Grid item xs={12}> */}
+                        {/* <div className="editor"> */}
+                          <ReactMde
+                            value={markdown}
+                            onChange={setMarkdown}
+                            selectedTab={"write"}
+                            childProps={{
+                              writeButton: {
+                                tabIndex: -1
+                              }
+                            }}
+                          />
+                        {/* </div> */}
+                        {/* ,wordWrap: "break-word" */}
+                        <div style={{ borderStyle: "solid"}}>
+                          
+                          <ReactMarkdown source={markdown} />
+                          
+                        </div>
                       </div>
-                      <div style={{ borderStyle: "solid" }}>
-                        <ReactMarkdown source={markdown} />
-                      </div>
-                      </Grid >
+                      {/* </Grid >
 
-</Grid >
+</Grid > */}
 
                     </Form.Group>
-                  </Col>
+                  {/* </Col> */}
 
-                  <Col>
+                  {/* <Col> */}
                     <Form.Group controlId='description'>
                       <Form.Label>Description</Form.Label>
                       <Form.Control
@@ -203,7 +217,7 @@ const PostEditScreen = ({ match, history }) => {
                         onChange={(e) => setDescription(e.target.value)}
                       ></Form.Control>
                     </Form.Group>
-                  </Col>
+                  {/* </Col> */}
 
                   <Button type='submit' variant='primary'>
                     Update
@@ -212,7 +226,7 @@ const PostEditScreen = ({ match, history }) => {
               )}
 
         </FormContainer>
-      </Col>
+    
 
     </>
   )

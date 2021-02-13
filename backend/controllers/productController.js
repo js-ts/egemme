@@ -150,9 +150,10 @@ const createProductReview = asyncHandler(async (req, res) => {
       res.status(400)
       throw new Error('Product already reviewed')
     }
-
+     console.log(req)
     const review = {
       name: req.user.name,
+      image:req.user.image,
       rating: Number(rating),
       comment,
       user: req.user._id,

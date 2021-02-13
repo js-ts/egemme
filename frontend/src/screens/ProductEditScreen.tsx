@@ -9,7 +9,7 @@ import FormContainer from '../components/FormContainer'
 import { listProductDetails, updateProduct } from '../actions/productActions'
 import { ReactSearchAutocomplete } from "../components/search/index";
 
-import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
+import { PRODUCT_UPDATE_RESET,PRODUCT_DETAILS_RESET, } from '../constants/productConstants'
 // import { ImagesMap,MergeArray } from '../container';
 import './ImagesMap.css';
 import ReactCrop from 'react-image-crop';
@@ -203,6 +203,7 @@ const ProductEditScreen = ({ match, history }) => {
     }
     if (successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET })
+      dispatch({ type: PRODUCT_DETAILS_RESET })
       history.push('/admin/productlist')
     } else {
       if (!product.name || product._id !== productId) {
@@ -427,7 +428,7 @@ const ProductEditScreen = ({ match, history }) => {
         <i className="fas fa-long-arrow-alt-left fa-5x"></i>
       </Link>
       <FormContainer>
-        <h1>Edit Product</h1>
+       {(name === 'Sample name')? <h1>Create Product</h1>: <h1>Edit Product</h1>}
         {loadingUpdate && <Loader />}
         {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
         {loading ? (
@@ -828,7 +829,7 @@ const ProductEditScreen = ({ match, history }) => {
 
                 </div>
                 <Button type='submit' variant='primary'>
-                  Update
+                {(name === 'Sample name')? 'Create': 'Update'}
 
             </Button>
               </Form>

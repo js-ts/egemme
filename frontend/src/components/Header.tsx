@@ -48,23 +48,23 @@ const Header = () => {
                   <i className='fas fa-shopping-cart fa-2x'></i>
 
                   <span style={{
-                    height: "1rem",
-                    width: "0.75rem",
+
+                    display: "inline-block",
+                    width: "1em",
                     backgroundColor: "red",
                     borderRadius: "50%",
                     color: "white",
-                    display: "inline-block"
-                  }}>{" "}
-                    {cartItems.length}
+                  }}>
+                    {' '}{cartItems.length}
 
                   </span>
 
-                  {/* 
-                  <span className="fa-stack">
-<span className="fa fa-circle-o fa-stack-2x"></span>
-<strong className="fa-stack-1x">
-</strong>
-</span> */}
+                                    {/* 
+                                    <span className="fa-stack">
+                  <span className="fa fa-circle-o fa-stack-2x"></span>
+                  <strong className="fa-stack-1x">
+                  </strong>
+                  </span> */}
 
                 </Nav.Link>
               </LinkContainer>
@@ -72,8 +72,8 @@ const Header = () => {
                 <NavDropdown title={
                   <img style={{
                     display: 'inline-block',
-                    height: '4vh',
-                    width: '2vw',
+
+                    width: '3rem',
                     borderRadius: '50%'
                   }}
                     src={userInfo.image}

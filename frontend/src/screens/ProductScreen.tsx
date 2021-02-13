@@ -388,10 +388,27 @@ const ProductScreen = ({ history, match }) => {
                     <ListGroup variant='flush'>
                       {product.reviews.map((review) => (
                         <ListGroup.Item key={review._id}>
+                          <Row>
+                            <Col md={1}>
+                          <img style={{
+                            display: 'inline-block',
+                            width: '3vw',
+                            borderRadius: '50%',
+                            borderStyle: 'solid 1px black',
+                            borderColor: 'black',
+                            // padding: '5px'
+                          }}
+                          src={review.image}
+                          alt="user pic"
+                          />
+                          </Col>
+                  <Col>
                           <strong>{review.name}</strong>
                           <Rating value={review.rating} />
                           <p>{review.createdAt.substring(0, 10)}</p>
                           <p>{review.comment}</p>
+                  </Col>
+                          </Row>
                         </ListGroup.Item>
                       ))}
                       <ListGroup.Item>
