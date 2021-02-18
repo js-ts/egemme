@@ -19,7 +19,8 @@ function checkFileType(file, cb) {
   const filetypes = /jpg|jpeg|png/
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
   const mimetype = filetypes.test(file.mimetype)
-
+ console.log(extname)
+ console.log(mimetype)
   if (extname && mimetype) {
     return cb(null, true)
   } else {
@@ -35,6 +36,7 @@ const upload = multer({
 })
 
 router.post('/', upload.single('image'), (req, res) => {
+  console.log(`/${req.file.path}`)
   res.send(`/${req.file.path}`)
 })
 

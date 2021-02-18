@@ -1,0 +1,55 @@
+.demo-color {
+    flex: 0 0 auto;
+    font-size: 16px;
+    margin-bottom: 24px;
+    width: 100%;
+  }
+  
+  .demo-color label {
+    display: block;
+    font-size: inherit;
+    margin-bottom: 12px;
+  }
+  
+  .demo-color input {
+    font-size: inherit;
+  }
+  
+  .demo-color button {
+    font-size: inherit;
+    margin-left: 6px;
+  }
+  
+  .demo-color .box {
+    background: var(--boxColor);
+    border: 1px solid black;
+    height: 120px;
+    margin-top: 24px;
+    position: relative;
+    width: 120px;
+  }
+  
+  .demo-color .count {
+    margin-top: 12px;
+    text-align: right;
+  }
+  
+  .demo-color #outerdiv 
+  { 
+  width:120vw; 
+  height:80vh; 
+  overflow:hidden; 
+  position:relative; 
+  
+  }
+  
+  .demo-color .innerIframe 
+  { 
+  position:absolute; 
+  top:-400px; 
+  left:-800px; 
+  width:1520px; 
+  height:1425px; 
+  overflow:hidden; 
+  zoom: var(--Zoom);
+  }

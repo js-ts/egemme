@@ -2,7 +2,7 @@ const products = [
   {
     name: 'Airpods Wireless Bluetooth Headphones',
     iscollection:false,
-    image: '/images/airpods.jpg',
+    image: [{images:"/images/airpods.jpg"}],
     livep:'',
     youtubeId:'',
     description:
@@ -17,7 +17,7 @@ const products = [
   {
     name: 'iPhone 11 Pro 256GB Memory',
     iscollection:false,
-    image: '/images/phone.jpg',
+    image: [{images:'/images/phone.jpg'}],
     livep:'',
     youtubeId:'',
 
@@ -33,7 +33,7 @@ const products = [
   {
     name: 'Cannon EOS 80D DSLR Camera',
     iscollection:false,
-    image: '/images/camera.jpg',
+    image: [{images:'/images/camera.jpg'}],
     livep:'',
     youtubeId:'',
 
@@ -49,7 +49,7 @@ const products = [
   {
     name: 'Sony Playstation 4 Pro White Version',
     iscollection:false,
-    image: '/images/playstation.jpg',
+    image: [{images:'/images/playstation.jpg'}],
     livep:'',
     youtubeId:'',
 
@@ -65,7 +65,7 @@ const products = [
   {
     name: 'Logitech G-Series Gaming Mouse',
     iscollection:false,
-    image: '/images/mouse.jpg',
+    image: [{images:'/images/mouse.jpg'}],
     livep:'',
     youtubeId:'',
 
@@ -81,7 +81,7 @@ const products = [
   {
     name: 'Amazon Echo Dot 3rd Generation',
     iscollection:false,
-    image: '/images/alexa.jpg',
+    image: [{images:'/images/alexa.jpg'}],
     livep:'',
     youtubeId:'',
 
@@ -102,7 +102,7 @@ const products = [
     iscollection:false,
 
     image: 
-      "/images/macmini.jpg",
+      [{images:"/images/macmini.jpg"}],
       livep:'',
       youtubeId:'Y441774uB_o',
 
@@ -124,7 +124,7 @@ const products = [
     name: "Apple iphone 11 pro",
     iscollection:false,
     image: 
-      "/images/iphonepro1.jpg",
+      [{images:"/images/iphonepro1.jpg"}],
     livep:'',
     youtubeId:"TCMnrssX1NE",
 
@@ -146,7 +146,7 @@ const products = [
     name: "Macbook air",
     iscollection:false,
     image: 
-      "/images/macbookair.jpg",
+      [{images:"/images/macbookair.jpg"}],
     livep:'',
     youtubeId:'Y441774uB_o',
 
@@ -168,7 +168,7 @@ const products = [
     name: "Apple Watch series 5",
     iscollection:false,
     image: 
-      "/images/Applewatch.jpeg",
+      [{images:"/images/Applewatch.jpeg"}],
     livep:'',
     youtubeId:'TCMnrssX1NE',
 
@@ -190,7 +190,7 @@ const products = [
     name: "Apple Homepod",
     iscollection:false,
     image: 
-      "/images/Applehomepod.jpg",
+      [{images:"/images/Applehomepod.jpg"}],
     livep:'',
     youtubeId:'jQF5Q3773uk',
 
@@ -209,7 +209,7 @@ const products = [
   {
     name: 'Apple collection',
     iscollection:true,
-    image: '/images/AppleCollection.jpg',
+    image: [{images:'/images/AppleCollection.jpg'}],
     livep:'',
     youtubeId:'RuurVkEXSP0',
 
@@ -221,7 +221,7 @@ const products = [
       y: 21,
       name: "Mac mini",
       image: 
-        "/images/macmini.jpg",
+        [{images:"/images/macmini.jpg"}],
         livep:'',
     youtubeId:'bjcmnVkPptQ',
 
@@ -244,7 +244,7 @@ const products = [
      
       name: "Apple iphone 11 pro",
       image: 
-        "/images/iphonepro1.jpg",
+        [{images:"/images/iphonepro1.jpg"}],
     livep:'',
     youtubeId:"TCMnrssX1NE",
 
@@ -268,7 +268,7 @@ const products = [
       y: 10,
       name: "Macbook air",
       image: 
-        "/images/macbookair.jpg",
+        [{images:"/images/macbookair.jpg"}],
     livep:'',
     youtubeId:'Y441774uB_o',
 
@@ -292,7 +292,7 @@ const products = [
      
       name: "Apple Watch series 5",
       image: 
-        "/images/Applewatch.jpeg",
+        [{images:"/images/Applewatch.jpeg"}],
     livep:'',
     youtubeId:'TCMnrssX1NE',
        
@@ -314,7 +314,7 @@ const products = [
       y: 20,
       name: "Apple Homepod",
       image: 
-        "/images/Applehomepod.jpg",
+        [{images:"/images/Applehomepod.jpg"}],
     livep:'',
     youtubeId:'jQF5Q3773uk',
 
@@ -349,7 +349,7 @@ const products = [
     name: "Pokedex",
     user:  "60186cf9b1b77c6728f73886",
     iscollection: false,
-    image: "/uploads\\image-1612276471168.png",
+    image: [{images:"/uploads\\image-1612276471168.png"}],
     brand: "Pokemon",
     category: "Electronics",
   description: "The Pokédex (Japanese: ポケモン図鑑 illustrated Pokémon encyclopedia) is a digital encyclopedia created by Professor Oak as an invaluable tool to Trainers in the Pokémon world. ... They may give background information on the habitat or activities of a Pokémon in the wild or other information on the Pokémon's history or anatomy.",

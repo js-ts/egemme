@@ -15,6 +15,7 @@ const UserEditScreen = ({ match, history }) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [image, setImage] = useState('')
+  const [description, setDescription] = useState('')
   const [isAdmin, setIsAdmin] = useState(false)
   const [uploading, setUploading] = useState(false)
   const dispatch = useDispatch()
@@ -62,13 +63,14 @@ const UserEditScreen = ({ match, history }) => {
         setEmail(user.email)
         setImage(user.image)
         setIsAdmin(user.isAdmin)
+        setDescription(user.description)
       }
     }
   }, [dispatch, history, userId, user, successUpdate])
 
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(updateUser({ _id: userId, name, email, isAdmin }))
+    dispatch(updateUser({ _id: userId, name, email, image, description}))
   }
 
   return (

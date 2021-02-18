@@ -10,6 +10,8 @@ import useImageSize from '../components/ImgSize'
 import { ModalLink } from "react-router-modal-gallery";
 import Rating from '../components/Rating'
 import Message from '../components/Message'
+import ImageHotspots from 'react-image-hotspots'
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Meta from '../components/Meta'
 import './ModalProduct.css'
 import YouTubePlayer from '../components/ytframe/YouTubePlayer'
@@ -127,8 +129,8 @@ const ModalProduct = ({
     justifyContent: "center",
     alignItems: "center"*/
   }
-  const [currImg, setImg] = useState(sproduct.image);
-  const [width, height] = useImageSize(sproduct.image);
+  const [currImg, setImg] = useState(sproduct.image[0]['images']);
+  const [width, height] = useImageSize(sproduct.image[0]['images']);
 
 
   const props = {
@@ -159,9 +161,27 @@ const ModalProduct = ({
         <Col>
           <Row>
             <Col md={6}>
-              <div id="box">
+              <TransformWrapper
+                defaultScale={1}
+              >
+                <TransformComponent>
+                  <div id="Pinch">
+
+                    <ImageHotspots
+                      src={currImg}
+                      alt='Sample image'
+
+                      hideFullscreenControl={true}
+                      hideZoomControls={true}
+                      hideMinimap={true}
+                    />
+
+                  </div>
+                </TransformComponent>
+              </TransformWrapper>
+              {/* <div id="box">
                 <ReactImageZoom {...props} />
-              </div>
+              </div> */}
             </Col>
             {/* <div className="center">
              <Meta title={product.name} />
@@ -210,7 +230,7 @@ const ModalProduct = ({
                 <ListGroup.Item>
                   <Row>
                     <Col>Qty</Col>
-                    <br/>
+                    <br />
                     <Col>
                       <Form.Control
                         as='select'
@@ -287,6 +307,71 @@ const ModalProduct = ({
 
 
             </Col> */}
+            <Col md={3}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {product.sProducts.map((data, i: number) => <li key={data._id}>
+              <Row>
+
+
+
+
+
+
+
+
+
+
+                <ModalLink to={`${product._id}/${data._id}`} >
+                  <Col>
+                    <Row>
+                      <div
+                        id="cell"
+                        onClick={() => mChange(data)}
+                      >
+                        <Row>
+                          <div className="thumbimage">
+
+                            <img src={data.image[0]['images']}/>
+
+                          </div>
+                          <div>
+
+                            {' '}
+                            {data.name}
+                            <br />
+                            Price:{data.price}
+                            <Rating
+                              value={data.rating} />
+                          </div>
+
+
+                        </Row>
+                      </div>
+                    </Row>
+                  </Col>
+
+                </ModalLink>
+                <Col>
+                  <input
+                    type="checkbox"
+                    value={data._id}
+                    name={"available." + i}
+                    ref={register}
+                  />
+                </Col>
+
+              </Row>
+            </li>)}
+            <input type="submit" value="add these" />
+
+          </form>
+        </Col>
+
+
+
+
+
+
           </Row>
           <Row>
             <Col md={6}>
@@ -357,68 +442,7 @@ const ModalProduct = ({
 
           </Row>
         </Col>
-        <Col md={3}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            {product.sProducts.map((data, i: number) => <li key={data._id}>
-              <Row>
 
-
-
-
-
-
-
-
-
-
-                <ModalLink to={`${product._id}/${data._id}`} >
-                  <Col>
-                    <Row>
-                      <div
-                        className="cell"
-                        onClick={() => mChange(data)}
-                      >
-                        <Row>
-                          <div className="thumbimage">
-
-                            <img src={data.image} style={{
-                              height: "9vh",
-                              width: "6vw"
-                            }} />
-
-                          </div>
-                          <div className="pcblack">
-
-                            {' '}
-                            {data.name}
-                            <br />
-                            Price:{data.price}
-                            <Rating
-                              value={data.rating} />
-                          </div>
-
-
-                        </Row>
-                      </div>
-                    </Row>
-                  </Col>
-
-                </ModalLink>
-                <Col>
-                  <input
-                    type="checkbox"
-                    value={data._id}
-                    name={"available." + i}
-                    ref={register}
-                  />
-                </Col>
-
-              </Row>
-            </li>)}
-            <input type="submit" value="add these" />
-
-          </form>
-        </Col>
 
         {/* <img style={{"height" : "300px", "width" : "250px"}} src={'https://m.media-amazon.com/images/I/81mxun+6pEL.jpg'}/> */}
 

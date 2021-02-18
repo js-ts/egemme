@@ -105,6 +105,7 @@ const RegisterScreen = ({ location, history }) => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [image, setImage] = useState('')
+  const [description, setDescription] = useState('')
   const [message, setMessage] = useState(null)
   const [uploading, setUploading] = useState(false)
 
@@ -115,6 +116,8 @@ const RegisterScreen = ({ location, history }) => {
 
   const redirect = location.search ? location.search.split('=')[1] : '/'
   const [state, dispatche] = useReducer(validationReducer, validationObj);
+
+  console.log(description)
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0]
@@ -130,7 +133,6 @@ const RegisterScreen = ({ location, history }) => {
       }
 
       const { data } = await axios.post('/api/upload', formData, config)
-
       setImage(data)
       setUploading(false)
     } catch (error) {
@@ -143,7 +145,7 @@ const RegisterScreen = ({ location, history }) => {
     setPassword(e.target.value)
   };
 
-  const validate = (value) => {
+  const validate = (value: string) => {
     const checkLength = value.length >= 8;
     const checkLowerCase = /[a-z|ç|ş|ö|ü|ı|ğ]/u.test(value);
     const checkUpperCase = /[A-Z|Ç|Ş|Ö|Ü|İ|Ğ]/u.test(value);
@@ -185,14 +187,14 @@ const RegisterScreen = ({ location, history }) => {
       history.push(redirect)
     }
   }, [history, userInfo, redirect])
-
   const submitHandler = (e) => {
     e.preventDefault()
+    console.log(description)
 
     if (password !== confirmPassword) {
       setMessage('Passwords do not match')
     } else {
-      dispatch(register(name, email, password,image))
+      dispatch(register(name, email, password, image, description))
     }
   }
 
@@ -239,7 +241,7 @@ const RegisterScreen = ({ location, history }) => {
 
           </div>
         </Form.Group>
-        
+
         <Form.Group controlId='confirmPassword'>
           <Form.Label>Confirm Password</Form.Label>
           <Form.Control
@@ -250,21 +252,30 @@ const RegisterScreen = ({ location, history }) => {
           ></Form.Control>
         </Form.Group>
         <Form.Group controlId='image'>
-                  <Form.Label>Image</Form.Label>
-                  <Form.Control
-                    type='text'
-                    placeholder='Enter image url'
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
-                  ></Form.Control>
-                  <Form.File
-                    id='image-file'
-                    label='Choose File'
-                    custom
-                    onChange={uploadFileHandler}
-                  ></Form.File>
-                  {uploading && <Loader />}
-                </Form.Group>
+          <Form.Label>Image</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='Enter image url'
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+          ></Form.Control>
+          <Form.File
+            id='image-file'
+            label='Choose File'
+            custom
+            onChange={uploadFileHandler}
+          ></Form.File>
+          {uploading && <Loader />}
+        </Form.Group>
+        <Form.Group controlId='description'>
+                      <Form.Label>Description</Form.Label>
+                      <Form.Control
+                       type='text'
+                        placeholder='Enter description'
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
         <Button type='submit' variant='primary'>
           Register
         </Button>

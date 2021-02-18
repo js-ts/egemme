@@ -18,6 +18,14 @@ const reviewSchema = mongoose.Schema(
   }
 )
 
+
+const imageSchema = mongoose.Schema(
+  {
+   
+    images: { type: String},
+
+  }
+)
 // user: {
 //   type: mongoose.Schema.Types.ObjectId,
 //   required: true,
@@ -30,9 +38,7 @@ const sProductSchema=mongoose.Schema(
     },
     x: { type: Number },
     y: { type: Number },
-    image: {
-      type: String,
-    },
+    image: [imageSchema],
     youtubeId:{
       type:String
     },
@@ -86,10 +92,7 @@ const productSchema = mongoose.Schema(
       type: Boolean,
       // required: true,
     },
-    image: {
-      type: String,
-      required: true,
-    },
+    image:  [imageSchema],
     youtubeId:{
       type:String
     },

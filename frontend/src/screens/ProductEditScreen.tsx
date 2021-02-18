@@ -9,7 +9,7 @@ import FormContainer from '../components/FormContainer'
 import { listProductDetails, updateProduct } from '../actions/productActions'
 import { ReactSearchAutocomplete } from "../components/search/index";
 
-import { PRODUCT_UPDATE_RESET,PRODUCT_DETAILS_RESET, } from '../constants/productConstants'
+import { PRODUCT_UPDATE_RESET, PRODUCT_DETAILS_RESET, } from '../constants/productConstants'
 // import { ImagesMap,MergeArray } from '../container';
 import './ImagesMap.css';
 import ReactCrop from 'react-image-crop';
@@ -22,16 +22,16 @@ import { Area } from '../component/image-map/index.d';
 
 import EXAMPLE from './images/example.png';
 import { getUrlParams } from '../common';
-import { arrayOf } from 'prop-types'
-import { Label } from '@material-ui/icons'
+// import { arrayOf } from 'prop-types'
+// import { Label } from '@material-ui/icons'
 
 const ProductEditScreen = ({ match, history }) => {
   const productId = match.params.id
 
   const [name, setName] = useState('')
   const [price, setPrice] = useState(0)
-  const [image, setImage] = useState('')
-  console.log(image)
+
+
   const [livep, setLivep] = useState('')
   const [youtubeId, setYoutubeId] = useState('')
   const [brand, setBrand] = useState('')
@@ -42,13 +42,20 @@ const ProductEditScreen = ({ match, history }) => {
   const [inputList, setInputList] = useState([{ x: "", y: "", name: "", price: "", image: "", livep: "", brand: "", qty: "", category: "", description: "", url: "" }]);
   const [urla, setUrla] = useState([])
   const [isUrla, ChangeUrla] = useState(false)
+  const [currImg,setcurrImg]= useState('')
   const dispatch = useDispatch()
   // const dispatche=useDispatch()
   const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product } = productDetails;
   const productList = useSelector((state) => state.productList)
   const { products } = productList
+
   console.log(products)
+  console.log(product.image)
+  const [inputimgList, setInputimgList] = useState([{ images: "" }]);
+  console.log(inputimgList)
+  const [image, setImage] = useState(inputimgList)
+  console.log(image)
   const handleOnSearch = (string, results) => {
     console.log(string);
 
@@ -173,6 +180,33 @@ const ProductEditScreen = ({ match, history }) => {
     setInputList([...inputList, { x: "", y: "", name: "", price: "", image: "", livep: "", brand: "", qty: "", category: "", description: "", url: "" }]);
 
   };
+
+
+
+  const handleimgInputChange = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...inputimgList];
+    list[index][name] = value;
+    setInputimgList(list);
+  };
+
+  // handle click event of the Remove button
+  const handleimgRemoveClick = (index) => {
+    const list = [...inputimgList];
+    list.splice(index, 1);
+    setInputimgList(list);
+
+
+
+  };
+  // handle click event of the Add button
+  const handleimgAddClick = () => {
+    setInputimgList([...inputimgList, { images: "" }]);
+
+  };
+
+
+
   const [checked, setChecked] = useState(false);
   const [canda, setCanda] = useState(false)
   console.log(canda)
@@ -184,6 +218,11 @@ const ProductEditScreen = ({ match, history }) => {
   const count = checked ? inputList.length : 0
   const handleChange = () => {
     setChecked(!checked);
+
+  };
+  const [ming, setMing] = useState(false);
+  const handleMing = () => {
+    setMing(!ming);
 
   };
   const iscollection = checked;
@@ -212,7 +251,7 @@ const ProductEditScreen = ({ match, history }) => {
       } else {
         setName(product.name)
         setPrice(product.price)
-        setImage(product.image)
+        setcurrImg(product.image[0].images)
         setBrand(product.brand)
         setCategory(product.category)
         setCountInStock(product.countInSock)
@@ -313,24 +352,26 @@ const ProductEditScreen = ({ match, history }) => {
       // message.error(error);
     }
   };
-
-  const ImageMapComponent = React.useMemo(
+ const ImageMapComponent = React.useMemo(
     () => (
       <ImageMap
         className="usage-map"
-        src={image}
+        src={currImg}
         map={formatMapArea(mapArea)}
         onMapClick={onMapClick}
-      />
-    ),
-    [mapArea, image]
+      /> ),
+    [mapArea, currImg]
   );
-  const uploadFileHandler = async (e) => {
-    const file = e.target.files[0]
+  const uploadFileHandler = async (e,i) => {
+    const file = e.target.files[i]
+    console.log(e)
+    console.log(i)
+    console.log(file)
     const formData = new FormData()
-    formData.append('image', file)
+    let nm ='image'
+    formData.append(nm, file)
     setUploading(true)
-
+    console.log(formData)
     try {
       const config = {
         headers: {
@@ -338,12 +379,18 @@ const ProductEditScreen = ({ match, history }) => {
         },
       }
 
-      const { data } = await axios.post('/api/upload', formData, config)
+    const { data } = await axios.post('/api/upload', formData, config)
 
-      setImage(data)
-      setUploading(false)
+      // setInputimgList(data)
+    console.log(data)
+    const list = [...inputimgList];
+    list[i]['images'] = data;
+    setInputimgList(list);
+    setUploading(false)
     } catch (error) {
       console.error(error)
+     
+      console.log('error here')
       setUploading(false)
     }
   }
@@ -428,7 +475,7 @@ const ProductEditScreen = ({ match, history }) => {
         <i className="fas fa-long-arrow-alt-left fa-5x"></i>
       </Link>
       <FormContainer>
-       {(name === 'Sample name')? <h1>Create Product</h1>: <h1>Edit Product</h1>}
+        {(name === 'Sample name') ? <h1>Create Product</h1> : <h1>Edit Product</h1>}
         {loadingUpdate && <Loader />}
         {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
         {loading ? (
@@ -456,23 +503,51 @@ const ProductEditScreen = ({ match, history }) => {
                     onChange={(e) => setPrice(e.target.value)}
                   ></Form.Control>
                 </Form.Group>
+                <label
+                  htmlFor="ming"
+                  className="switch switch-default"
+                >
+                  Ming
+                </label>
+                <input
+                  id="ming"
+                  type="checkbox"
+                  checked={ming}
+                  onChange={handleMing}
+                />
+                {ming &&  (inputimgList.map((x, i) => {
+              
+return  <div key={i}>
+                    <Form.Group controlId='images'>
+                      <input
 
-                <Form.Group controlId='image'>
-                  <Form.Label>Image</Form.Label>
-                  <Form.Control
-                    type='text'
-                    placeholder='Enter image url'
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
-                  ></Form.Control>
-                  <Form.File
-                    id='image-file'
-                    label='Choose File'
-                    custom
-                    onChange={uploadFileHandler}
-                  ></Form.File>
-                  {uploading && <Loader />}
-                </Form.Group>
+                        name="images"
+                        placeholder="Image"
+                        value={x['images']}
+                        onChange={(e) => handleimgInputChange(e, i)}
+                      />
+                      <Form.File
+                        id='mimage-file'
+                        label='Choose File'
+                        custom
+                        onChange={(e)=>uploadFileHandler(e,i)}
+                      ></Form.File>
+                      {uploading && <Loader />}
+                      <div className="btn-box">
+                        {inputimgList.length !== 1 && (
+                          <button className="mr10" onClick={() => handleimgRemoveClick(i)}>X</button>
+                        )}
+                        {inputimgList.length - 1 === i && (
+                          <button onClick={handleimgAddClick}>+</button>
+                        )}
+                      </div>
+                    </Form.Group>
+
+                   </div>
+                  
+
+                }))}
+              {console.log(inputimgList)}
                 <Form.Group controlId='livep'>
                   <Form.Label>live Product</Form.Label>
                   <Form.Control
@@ -526,6 +601,7 @@ const ProductEditScreen = ({ match, history }) => {
                 <Form.Group controlId='description'>
                   <Form.Label>Description</Form.Label>
                   <Form.Control
+                    as="textarea"
                     type='text'
                     placeholder='Enter description'
                     value={description}
@@ -711,8 +787,8 @@ const ProductEditScreen = ({ match, history }) => {
                       <div className="crop-box">
                         <div className="map-box">
                           <div className="map-box-img">
-                            <ReactCrop src={image} crop={crop} ruleOfThirds onChange={onCropChange} />
-                            {image &&
+                            <ReactCrop src={currImg} crop={crop} ruleOfThirds onChange={onCropChange} />
+                            {currImg &&
                               mapArea.map((map: any, index: number) => (
                                 <span
                                   className="crop-item"
@@ -730,7 +806,7 @@ const ProductEditScreen = ({ match, history }) => {
                         </div>
                       </div>
 
-                      {image &&
+                      {image[0]['images'] &&
                         mapArea.map((map: any, index: number) => {
                           return (
                             <div className="map-area" key={index}>
@@ -829,9 +905,9 @@ const ProductEditScreen = ({ match, history }) => {
 
                 </div>
                 <Button type='submit' variant='primary'>
-                {(name === 'Sample name')? 'Create': 'Update'}
+                  {(name === 'Sample name') ? 'Create' : 'Update'}
 
-            </Button>
+                </Button>
               </Form>
             )}
       </FormContainer>

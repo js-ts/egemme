@@ -9,12 +9,14 @@ import { useForm } from 'react-hook-form'
 import Rating from '../components/Rating'
 import Message from '../components/Message'
 import ImageHotspots from 'react-image-hotspots'
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import YouTubePlayer from '../components/ytframe/YouTubePlayer'
 import { Grid } from "@material-ui/core";
 import Iframe from 'react-iframe'
 // import Loader from '../components/Loader'
 import LoadingProducts from '../components/LoadingProducts'
 import Meta from '../components/Meta'
+import { addToCart, removeFromCart } from '../actions/cartActions'
 import {
   listProductDetails,
   createProductReview,
@@ -26,33 +28,12 @@ import {
   PRODUCT_CREATE_REVIEW_RESET,
   PRODUCT_UPDATE_STOCK_RESET,
 } from '../constants/productConstants'
-// import ModalProduct from './ModalProduct';
 
-// const productDetails = useSelector((state) => state.productDetails)
-// const { loading, error, product } = productDetails
-// const getAllsProducts = () => {
-//   let ModalProducts =[];
-
-//   if(product.iscollection){
-//   product.sProducts.forEach(products=> {
-//     //products = [...products,...collection.products];
-//     ModalProducts = [...products.sProducts];
-//   });
-//   }
-//   return ModalProducts;
-// };
-// const getsProductById = (productId) => {
-//   const allsProducts = getAllsProducts();
-//   return allsProducts.find(product => product.id === productId);
-// };
 const ProductScreen = ({ history, match }) => {
   const [qty, setQty] = useState(1)
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
-  // const clickRef = useRef(null);
-  // useEffect(() => {
-  //   clickRef.current.click();
-  // }, []);
+
 
   const dispatch = useDispatch()
 
@@ -69,6 +50,7 @@ const ProductScreen = ({ history, match }) => {
   } = productReviewCreate
 
   const checkoutHandler = () => {
+    dispatch(addToCart(product._id, qty,true))
     history.push('/login?redirect=shipping')
   }
   const productUpdateStock = useSelector((state) => state.productUpdateStock);
@@ -88,11 +70,11 @@ const ProductScreen = ({ history, match }) => {
     dispatch(listProductDetails(match.params.id))
 
     console.log(dispatch(listProductDetails(match.params.id)))
-  }, [dispatch, match, successProductReview ,product._id,
+  }, [dispatch, match, successProductReview, product._id,
     successStockUpdate,])
   let parray = [];
   const { register, handleSubmit } = useForm();
-  
+
   console.log(parray)
   const onSubmit = (data) => {
 
@@ -137,29 +119,17 @@ const ProductScreen = ({ history, match }) => {
         y: data.y,
         content: (
           <li key={data._id}>
-            {/* <div id="main1" > */}
-            {/* <div className="tooltip tooltip">  */}
-            {/* <div className="pin"></div> */}
 
-            {/* <div className="tooltip-content"> */}
-            {/* <div className="arrow"></div> */}
-            {/* <div className="content"> */}
-            {/* <div ref={clickRef} > */}
             <ModalLink to={`${product._id}/${data._id}`} >
-              {/* <div className="cell" > */}
-              {/* <img src={movie.image} />{' '} */}
+
               <p>
                 {' '}
                 {data.name}
                 <br />
                       Price:{data.price}
               </p>
-              {/* </div> */}
             </ModalLink>
-            {/* </div> */}
-            {/* </div> */}
-            {/* </div> */}
-            {/* </div> */}
+
           </li>
         )
       }))
@@ -187,7 +157,7 @@ const ProductScreen = ({ history, match }) => {
               <Row>
                 <Col md={6}>
                   {product.iscollection ? (<ImageHotspots
-                    src={product.image}
+                    src={product.image[0]['images']}
                     alt='Sample image'
                     hotspots={arr}
                     hideFullscreenControl={true}
@@ -200,15 +170,27 @@ const ProductScreen = ({ history, match }) => {
                         display="initial"
                         position="absolute"
                         scrolling="no" />
-                    </div> : <ImageHotspots
-                      src={product.image}
-                      alt='Sample image'
+                    </div> :
+                    
+               <TransformWrapper
+               defaultScale={1}
+               >
+               <TransformComponent> 
+               <div style={{ width: '40vw', height: '50vh' }}>
 
-                      hideFullscreenControl={true}
-                      hideZoomControls={true}
-                      hideMinimap={true}
-                    />
-                    )
+<ImageHotspots
+                  src={product.image[0]['images']}
+                  alt='Sample image'
+
+                  hideFullscreenControl={true}
+                  hideZoomControls={true}
+                  hideMinimap={true}
+                />
+                </div>
+                
+   </TransformComponent>
+   </TransformWrapper>
+                   )
 
                   }
                 </Col>
@@ -273,15 +255,15 @@ const ProductScreen = ({ history, match }) => {
                 </Button>
                     </ListGroup.Item>
                     <ListGroup.Item>
-              <Button
-                type='button'
-                className='btn-block'
-                disabled={product.iscollection || product.countInStock === 0}
-                onClick={checkoutHandler}
-              >
-               Buy Now
+                      <Button
+                        type='button'
+                        className='btn-block'
+                        disabled={product.iscollection || product.countInStock === 0}
+                        onClick={checkoutHandler}
+                      >
+                        Buy Now
               </Button>
-            </ListGroup.Item>
+                    </ListGroup.Item>
                   </ListGroup>
 
                   <ListGroup>
@@ -323,7 +305,7 @@ const ProductScreen = ({ history, match }) => {
                               <Row>
                                 <div className="thumbimg">
 
-                                  <img src={data.image} />
+                                  <img src={data.image[0]['images']} />
 
                                 </div>
                                 <div className="pblack">
@@ -390,24 +372,24 @@ const ProductScreen = ({ history, match }) => {
                         <ListGroup.Item key={review._id}>
                           <Row>
                             <Col md={1}>
-                          <img style={{
-                            display: 'inline-block',
-                            width: '3vw',
-                            borderRadius: '50%',
-                            borderStyle: 'solid 1px black',
-                            borderColor: 'black',
-                            // padding: '5px'
-                          }}
-                          src={review.image}
-                          alt="user pic"
-                          />
-                          </Col>
-                  <Col>
-                          <strong>{review.name}</strong>
-                          <Rating value={review.rating} />
-                          <p>{review.createdAt.substring(0, 10)}</p>
-                          <p>{review.comment}</p>
-                  </Col>
+                              <img style={{
+                                display: 'inline-block',
+                                width: '3vw',
+                                borderRadius: '50%',
+                                borderStyle: 'solid 1px black',
+                                borderColor: 'black',
+                                // padding: '5px'
+                              }}
+                                src={review.image}
+                                alt="user pic"
+                              />
+                            </Col>
+                            <Col>
+                              <strong>{review.name}</strong>
+                              <Rating value={review.rating} />
+                              <p>{review.createdAt.substring(0, 10)}</p>
+                              <p>{review.comment}</p>
+                            </Col>
                           </Row>
                         </ListGroup.Item>
                       ))}
@@ -433,7 +415,7 @@ const ProductScreen = ({ history, match }) => {
                                 }}
                               />
                               {/*  ['Poor','Fair','Good','Very Good','Excellent']
-                              
+                              use to display rating range
                               <Form.Control
                               as='select'
                               value={rating}
@@ -471,7 +453,7 @@ const ProductScreen = ({ history, match }) => {
                   </Col>
                 </Row>
                 <Row>
-                  {product.youTubeId!=='' && <Grid container spacing={2}>
+                  {product.youTubeId !== '' && <Grid container spacing={2}>
 
                     <Grid item xs={6}>
                       <YouTubePlayer youtubeId={product.youtubeId} />
@@ -487,20 +469,6 @@ const ProductScreen = ({ history, match }) => {
     </>
   )
 }
-// export const getAllsProducts = () => {
-//   let ModalProducts =[];
 
-//   if(product.iscollection){
-//   product.sProducts.forEach(products=> {
-//     //products = [...products,...collection.products];
-//     ModalProducts = [ModalProducts,...products.sProducts];
-//   });
-//   }
-//   return ModalProducts;
-// };
-// export const getsProductById = (productId) => {
-//   const allsProducts = getAllsProducts();
-//   return allsProducts.find(product => product.id === productId);
-// };
 
 export default ProductScreen 

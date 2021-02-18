@@ -15,6 +15,23 @@ import {
     createPostReview,
 } from '../actions/postActions'
 import { POST_CREATE_REVIEW_RESET } from '../constants/postConstants'
+import {useTheme} from 'css-vars-hook';
+import {makeStyles} from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Slider from "@material-ui/core/Slider";
+import Input from "@material-ui/core/Input";
+import Iframe from 'react-iframe'
+import './postyle.css'
+const useStyles = makeStyles({
+    root: {
+      width: 250
+    },
+    input: {
+      width: 42
+    }
+  });
+  
+  const theme = {Zoom: 0.5};
 
 const PostScreen = ({ history, match }) => {
 
@@ -34,9 +51,22 @@ const PostScreen = ({ history, match }) => {
         success: successPostReview,
         error: errorPostReview,
     } = postReviewCreate
+  const {setRef, setVariable} = useTheme(theme);
+  const [inputValue, setInputValue] = useState(theme.Zoom);
+  const livep = "http://localhost:4000/gist/ce75d1dbca7435979529b011fd826df0"
+  const classes = useStyles();
+  const [value, setValue] = React.useState(theme.Zoom);
 
+  const handleSliderChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleInputChange = (event) => {
+    setValue(event.target.value === "" ? "" : Number(event.target.value));
+  };
 
     useEffect(() => {
+        setInputValue(inputValue);
         if (successPostReview) {
             alert('Review Submitted!')
             setRating(0)
@@ -44,7 +74,7 @@ const PostScreen = ({ history, match }) => {
             dispatch({ type: POST_CREATE_REVIEW_RESET })
         }
         dispatch(listPostDetails(match.params.id))
-    }, [dispatch, match, successPostReview])
+    }, [dispatch, match, successPostReview,inputValue])
 
     const addToCartHandler = () => {
         history.push(`/cart/${match.params.id}?qty=${qty}`)
@@ -74,6 +104,66 @@ const PostScreen = ({ history, match }) => {
                         <>
                             <Meta title={post.title} />
                             <Col>
+<div  className="demo-color" ref={setRef}>
+
+                            <fieldset>
+
+{livep !== "" ?
+  <div>
+    <div id="outerdiv">
+      <Iframe url={livep}
+
+        className="innerIframe"
+
+        display="initial"
+        position="absolute"
+        scrolling="yes" />
+
+    </div>
+    <div className={classes.root}>
+      <Typography id="input-slider" gutterBottom>
+        Zoom
+</Typography>
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs>
+          <Slider
+            value={typeof value === "number" ? value : 0}
+            onChange={handleSliderChange}
+            aria-labelledby="input-slider"
+          />
+        </Grid>
+        <Grid item>
+          <Input
+            className={classes.input}
+            value={value*0.01}
+            margin="dense"
+            onChange={handleInputChange}
+
+            inputProps={{
+              step: 10,
+              min: 0,
+              max: 1,
+              type: "number",
+              "aria-labelledby": "input-slider"
+            }}
+          />
+          <button
+  onClick={() => {
+    setVariable('Zoom', value*0.01);
+  }}
+  type="button">
+  Set
+</button>
+<p>{value}</p>
+        </Grid>
+      </Grid>
+    </div>
+  </div>
+
+  : null
+}
+</fieldset>
+</div>
                                 <Col >
 
                                     <Image src={post.image} alt={post.title} fluid style={{

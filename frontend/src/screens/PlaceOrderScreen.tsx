@@ -10,12 +10,15 @@ const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch()
 
   const cart = useSelector((state) => state.cart)
+  const mcart =cart.cartItems.find(x=>x.bnow===true) && cart.cartItems.filter(x=>x.bnow===true).length  ? cart.cartItems.find(x=>x.bnow===true): false
+  
+  console.log(mcart.image[0].images)
+  console.log(cart.image)
 
-  //   Calculate prices
+ //   Calculate prices
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2)
   }
-
   cart.itemsPrice = addDecimals(
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   )
@@ -26,7 +29,17 @@ const PlaceOrderScreen = ({ history }) => {
     Number(cart.shippingPrice) +
     Number(cart.taxPrice)
   ).toFixed(2)
-
+  if(mcart){
+    cart.cartItems=[mcart]
+    cart.itemsPrice=addDecimals(mcart.price * mcart.qty)
+    cart.shippingPrice=addDecimals(cart.itemsPrice > 100 ? 0 : 100)
+    cart.taxPrice=addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)))
+    cart.totalPrice=(
+      Number(cart.itemsPrice) +
+      Number(cart.shippingPrice) +
+      Number(cart.taxPrice)
+    ).toFixed(2)
+  }
   const orderCreate = useSelector((state) => state.orderCreate)
   const { order, success, error } = orderCreate
 
@@ -79,12 +92,31 @@ const PlaceOrderScreen = ({ history }) => {
                 <Message>Your cart is empty</Message>
               ) : (
                 <ListGroup variant='flush'>
-                  {cart.cartItems.map((item, index) => (
+                {(mcart)?
+                <Row>
+                <Col md={1}>
+                  <Image
+                    src={mcart.image[0].images}
+                    alt={mcart.name}
+                    fluid
+                    rounded
+                  />
+                </Col>
+                <Col>
+                  <Link to={`/product/${mcart.product}`}>
+                    {mcart.name}
+                  </Link>
+                </Col>
+                <Col md={4}>
+                  {mcart.qty} x ${mcart.price} = ${mcart.qty * mcart.price}
+                </Col>
+              </Row>
+                :cart.cartItems.map((item, index) => (
                     <ListGroup.Item key={index}>
                       <Row>
                         <Col md={1}>
                           <Image
-                            src={item.image}
+                            src={item.image[0]}
                             alt={item.name}
                             fluid
                             rounded

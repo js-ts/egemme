@@ -20,10 +20,9 @@ h2 {
   margin: 0.1rem;
 }
 
-/* carousel */
-.carousele{
+/* .carousele{
   margin-top: 20vh;
-}
+} */
 .carousel-item-next,
 .carousel-item-prev,
 .carousel-item.active {

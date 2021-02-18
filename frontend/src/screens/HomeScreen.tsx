@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
@@ -9,8 +9,28 @@ import Paginate from '../components/Paginate'
 import ProductCarousel from '../components/ProductCarousel'
 import Meta from '../components/Meta'
 import { listProducts } from '../actions/productActions'
+import axios from 'axios'
 
 const HomeScreen = ({ match }) => {
+  // const [search, setSearch] = useState("");
+  // const [previewSearches, setPreviewSearches] = useState([]);
+  // const [requestCount, setRequestCount] = useState(0);
+  // const onLoadSearches = async value => {
+  //   try {
+  //     setRequestCount(requestCount + 1);
+  //     const res = await axios.get(
+  //       `/api/products?keyword=${value}`
+  //     )
+  
+  //     console.log(value)
+  //     console.log(res)
+  //     const cities = res.data.products;
+  //     console.log(cities)
+  //     setPreviewSearches(cities);
+  //   } catch {
+  //     setPreviewSearches([]);
+  //   }
+  // };
   const keyword = match.params.keyword
 
   const pageNumber = match.params.pageNumber || 1
@@ -34,6 +54,22 @@ const HomeScreen = ({ match }) => {
         <i className="fas fa-long-arrow-alt-left fa-5x"></i>
         </Link>
       )}
+      {/* <input
+        type="text"
+        placeholder="Search any Country ..."
+        value={search}
+        onChange={e => {
+          setSearch(e.target.value);
+          onLoadSearches(e.target.value);
+        }}
+      />
+      {previewSearches.length > 0 && (
+        <ul>
+          {previewSearches.map((city, i) => {
+            return <li key={i}>{city.name}</li>;
+          })}
+        </ul>
+      )} */}
       <h1>Latest Products</h1>
       {loading ? (
         <Loader />

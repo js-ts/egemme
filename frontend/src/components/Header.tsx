@@ -22,7 +22,10 @@ const Header = () => {
 
 
   return (
-    <header>
+    <header style={{
+      paddingTop: 0,
+      paddingBottom: 0
+    }}>
       <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
         <Container>
           <LinkContainer className="brand-logo" to='/'>
@@ -48,7 +51,8 @@ const Header = () => {
                   <i className='fas fa-shopping-cart fa-2x'></i>
 
                   <span style={{
-
+                    paddingTop: 0,
+                    paddingBottom: 0,
                     display: "inline-block",
                     width: "1em",
                     backgroundColor: "red",
@@ -82,6 +86,12 @@ const Header = () => {
                   id="profile-dropdown" >
                   <LinkContainer to='/profile'>
                     <NavDropdown.Item>Profile</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to='/profileEdit'>
+                    <NavDropdown.Item>Profile Edit</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to='/orders'>
+                    <NavDropdown.Item>My Orders</NavDropdown.Item>
                   </LinkContainer>
                   <NavDropdown.Item onClick={logoutHandler}>
                     Logout

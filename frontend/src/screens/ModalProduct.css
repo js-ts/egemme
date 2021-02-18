@@ -123,16 +123,6 @@
 
 
 
-
-  
-.thumbimage img{
-  height:9vh;
-  width: 6vw;
- 
-}
-
-
-
 .pcblack p:hover {
   color: white;
   display: block;
@@ -173,4 +163,41 @@ li {
   list-style-type:none;
 }
 
+#cell img{
+  height:9vh;
+  width: 6vw;
+ 
+}
 
+@media screen and (max-width: 768px) {
+#cell img{
+  width:20vw;
+  height:20vh
+}
+}
+
+@media screen and (max-width: 512px) {
+  #cell img{
+    width:20vw;
+    height:15vh
+}
+}
+
+#Pinch {
+  width:20vw;
+  height:40vh
+}
+
+@media screen and (max-width: 768px) {
+#Pinch {
+  width:80vw;
+  height:40vh
+}
+}
+
+@media screen and (max-width: 512px) {
+  #Pinch {
+  width:80vw;
+  height:40vh
+}
+}

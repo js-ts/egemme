@@ -16,6 +16,7 @@ const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       image:user.image,
+      description: user.description,
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
     })
@@ -29,7 +30,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password ,image} = req.body
+  const { name, email, password ,image,description} = req.body
 
   const userExists = await User.findOne({ email })
   const email_regexp = /[0-9a-zа-я_A-ZА-Я]+@[0-9a-zа-я_A-ZА-Я^.]+\.[a-zа-яА-ЯA-Z]{2,4}/i;
@@ -48,7 +49,8 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
-    image
+    image,
+    description
   })
 
   if (user) {
@@ -57,9 +59,10 @@ const registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       image:user.image,
-      isAdmin: user.isAdmin,
+      description: user.description,
       token: generateToken(user._id),
     })
+    // isAdmin: user.isAdmin,
   } else {
     res.status(400)
     throw new Error('Invalid user data')
@@ -71,13 +74,14 @@ const registerUser = asyncHandler(async (req, res) => {
 // @access  Private
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
-
+ console.log(user)
   if (user) {
     res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
       image:user.image,
+      description: user.description,
       isAdmin: user.isAdmin,
     })
   } else {
@@ -96,7 +100,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
-
+    user.image = req.body.image || user.image,
+    user.description = req.body.description || user.description
 
     console.log(user)
     if (req.body.password) {
@@ -110,9 +115,10 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       image:updatedUser.image,
-      isAdmin: updatedUser.isAdmin,
+      description: user.description,
       token: generateToken(updatedUser._id),
     })
+    // isAdmin: updatedUser.isAdmin,
   } else {
     res.status(404)
     throw new Error('User not found')
@@ -166,7 +172,8 @@ const updateUser = asyncHandler(async (req, res) => {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
     user.image = req.body.image || user.image,
-    user.isAdmin = req.body.isAdmin
+    user.description = req.body.description || user.description
+    // ,user.isAdmin = req.body.isAdmin
 
     const updatedUser = await user.save()
 
@@ -175,8 +182,9 @@ const updateUser = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       image:updatedUser.image,
-      isAdmin: updatedUser.isAdmin,
+      description:updatedUser.description,
     })
+    // isAdmin: updatedUser.isAdmin,
   } else {
     res.status(404)
     throw new Error('User not found')
