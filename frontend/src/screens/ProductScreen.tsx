@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import ReactStarRating from "react-star-ratings-component";
+import ReactStars from "react-rating-stars-component";
 import './Hotspot.css';
 import { ModalLink } from "react-router-modal-gallery";
 import { useForm } from 'react-hook-form'
@@ -33,25 +34,61 @@ const ProductScreen = ({ history, match }) => {
   const [qty, setQty] = useState(1)
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
-
-
+  const [ errors, setErrors ] = useState({})
+  
   const dispatch = useDispatch()
-
+  
   const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product } = productDetails
   console.log(useSelector((state) => state.productDetails))
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
-
+  
   const productReviewCreate = useSelector((state) => state.productReviewCreate)
   const {
     success: successProductReview,
     error: errorProductReview,
   } = productReviewCreate
+  
+  // const [currImg, setImg] = useState(product.image[0]['images']);
 
-  const checkoutHandler = () => {
-    dispatch(addToCart(product._id, qty,true))
+  // function changeImage(i) {
+  //   setImg(i);
+  // }
+  const addToWishlistHandler = () => {
+    history.push(`/wishlist/${match.params.id}?qty=${qty}`)
+  }
+
+  
+  const setRatingField = (value) => {
+    setRating(value)
+    // Check and see if errors exist, and remove them from the error object:
+    if ( !!errors['rating'] ) setErrors({
+      ...errors,
+      ['rating']: null
+    })
+  }
+  
+  const setCommentField = (value) => {
+    setComment(value)
+    // Check and see if errors exist, and remove them from the error object:
+    if ( !!errors['comment'] ) setErrors({
+      ...errors,
+      ['comment']: null
+    })
+  }
+const checkoutHandler = () => {
+    dispatch(addToCart(product._id, qty, true))
     history.push('/login?redirect=shipping')
+  }
+  const buyAllHandler = () => {
+    let allps = []
+    console.log(product.sProducts)
+    for (let i=0;i<product.sProducts.length;i++) {
+      allps.push(product.sProducts[i]._id)
+    }
+    console.log(('/cart/' + allps.join('?qty=1&').slice(0, -1)))
+    history.push('/cart/' + allps.join('?qty=1&')+'?qty=1')
   }
   const productUpdateStock = useSelector((state) => state.productUpdateStock);
   const { success: successStockUpdate } = productUpdateStock;
@@ -78,12 +115,20 @@ const ProductScreen = ({ history, match }) => {
   console.log(parray)
   const onSubmit = (data) => {
 
+    console.log(data)
     for (var i in data) {
       if (data[i] !== false) {
         parray.push(`${[data[i]]}`);
       }
-      history.push('/cart/' + parray[0].replace(/false,/g, "").replace(/false/g, "").replace(/,/g, "?qty=1&").slice(0, -1))
-
+       console.log("logged here",parray[0].replace(/false,/g, "").replace(/false/g, "").slice(0, -1).split(',').length<product.sProducts.length)
+    //   console.log(parray[0].replace(/false,/g, "").replace(/false/g, "").slice(0, -1).split(','))
+      console.log(parray[0].replace(/false,/g, "").replace(/false/g, "").replace(/,/g, "?qty=1&").slice(0, -1))
+      if(parray[0].replace(/false,/g, "").replace(/false/g, "").slice(0, -1).split(',').length<product.sProducts.length){
+      history.push('/cart/' + parray[0].replace(/false,/g, "").replace(/false/g, "").replace(/,/g, "?qty=1&").slice(0, -1))}
+      else{
+        buyAllHandler()
+      }
+      // history.push('/cart/' + parray[0].replace(/false,/g, "").replace(/false/g, "").replace(/,/g, "?qty=1&").slice(0, -1))
     }
 
     //   if(parray["available"]!==undefined){alert('/cart/'+parray["available"].filter(x=>x!==false).join("?qty=1&"))}
@@ -99,12 +144,21 @@ const ProductScreen = ({ history, match }) => {
 
   const submitHandler = (e) => {
     e.preventDefault()
+
+    
+    const newErrors = findFormErrors()
+    // Conditional logic:
+    if ( Object.keys(newErrors).length > 0 ) {
+      // We got errors!
+      setErrors(newErrors)
+    }
+    else{
     dispatch(
       createProductReview(match.params.id, {
         rating,
         comment,
       })
-    )
+    )}
   }
   //md
   const arr = [];
@@ -141,6 +195,24 @@ const ProductScreen = ({ history, match }) => {
   }
   console.log(arr)
 
+  
+  const findFormErrors = () => {
+    
+    const newErrors = {}
+    // name errors
+    if ( !rating || rating === 0 ) newErrors.rating = 'Set a Rating'
+    // else if ( email.length > 30 ) newErrors.email = 'name is too long!'
+    // food errors
+    // if ( !food || food === '' ) newErrors.food = 'select a food!'
+    // rating errors
+    // if ( !rating || rating > 5 || rating < 1 ) newErrors.rating = 'must assign a rating between 1 and 5!'
+    // comment errors
+    if ( !comment || comment === '' ) newErrors.comment = 'comment cannot be blank!'
+    else if ( comment.length <= 2 ) newErrors.comment = 'comment is too short!'
+
+    return newErrors
+  }
+
   return (
     <>
       {/* <Link className='btn btn-light my-3' to='/'>
@@ -171,26 +243,35 @@ const ProductScreen = ({ history, match }) => {
                         position="absolute"
                         scrolling="no" />
                     </div> :
-                    
-               <TransformWrapper
-               defaultScale={1}
-               >
-               <TransformComponent> 
-               <div style={{ width: '40vw', height: '50vh' }}>
 
-<ImageHotspots
-                  src={product.image[0]['images']}
-                  alt='Sample image'
+                    <TransformWrapper
+                      defaultScale={1}
+                    >
+                      <TransformComponent>
+                          {/* <div id="Pinch"> 
+                          <ImageHotspots
+                          src={product.image[0]['images']}
+                          alt='Sample image'
+                          
+                          hideFullscreenControl={true}
+                          hideZoomControls={true}
+                          hideMinimap={true}
+                          />
+                        */}
 
-                  hideFullscreenControl={true}
-                  hideZoomControls={true}
-                  hideMinimap={true}
-                />
-                </div>
-                
-   </TransformComponent>
-   </TransformWrapper>
-                   )
+<div id="Pinch">
+                          <ImageHotspots
+                            src={product.image[0]['images']}
+                            alt='Sample image'
+                            hideFullscreenControl={true}
+                            hideZoomControls={true}
+                            hideMinimap={true}
+                          />
+
+                        </div>
+                      </TransformComponent>
+                    </TransformWrapper>
+                    )
 
                   }
                 </Col>
@@ -210,10 +291,19 @@ const ProductScreen = ({ history, match }) => {
                       <Row>
                         <Col>Price :</Col>
                         <Col>
-                          <strong> {product.iscollection ? `$${Math.min(...pricesArr)}-$${pricesArr.reduce((a, b) => a + b, 0)}` : `${product.price}`}</strong>
+                          <strong> {product.iscollection ? <>${product.price} <span id="strike">${pricesArr.reduce((a, b) => a + b, 0)}</span></> : `${product.price}`}</strong>
                         </Col>
                       </Row>
                     </ListGroup.Item>
+                    {product.iscollection &&
+                    <ListGroup.Item>
+                      <Row>
+                        <Col>Price Range:</Col>
+                        <Col>
+                          <strong> {product.iscollection ? `$${Math.min(...pricesArr)}-$${pricesArr.reduce((a, b) => a + b, 0)}` : `${product.price}`}</strong>
+                        </Col>
+                      </Row>
+                    </ListGroup.Item>}
                     <ListGroup.Item>
                       <Row>
                         <Col>Status :</Col>
@@ -244,17 +334,30 @@ const ProductScreen = ({ history, match }) => {
                         </Row>
                       </ListGroup.Item>
                     )}
-                    <ListGroup.Item>
-                      <Button
-                        onClick={addToCartHandler}
-                        className='btn-block'
-                        type='button'
-                        disabled={product.countInStock === 0}
-                      >
-                        Add to Cart
+
+                   {(!product.iscollection)? (
+                                       
+                                       <ListGroup.Item>
+                                                     
+                <Button
+                      onClick={addToWishlistHandler}
+                      className='btn-block'
+                      type='button'
+                      disabled={product.countInStock === 0}
+                    >
+                  ❤
                 </Button>
-                    </ListGroup.Item>
-                    <ListGroup.Item>
+                                       <Button
+                                         onClick={addToCartHandler}
+                                         className='btn-block'
+                                         type='button'
+                                         disabled={product.countInStock === 0}
+                                       >
+                                         Add to Cart
+                                       </Button>
+                                     {/* </ListGroup.Item>
+                   
+                   <ListGroup.Item> */}
                       <Button
                         type='button'
                         className='btn-block'
@@ -263,7 +366,18 @@ const ProductScreen = ({ history, match }) => {
                       >
                         Buy Now
               </Button>
+                    </ListGroup.Item>):
+                  (  <ListGroup.Item>
+                      <Button
+                        type='button'
+                        className='btn-block'
+                        disabled={!product.iscollection || product.countInStock === 0}
+                        onClick={buyAllHandler}
+                      >
+                        Buy All
+                        </Button>
                     </ListGroup.Item>
+                    )}
                   </ListGroup>
 
                   <ListGroup>
@@ -303,28 +417,32 @@ const ProductScreen = ({ history, match }) => {
                           <ModalLink to={`${product._id}/${data._id}`} >
                             <Col>
                               <Row>
-                                <div className="thumbimg">
+                                <div id="cell">
+                                  {/* <div className="thumbimg"> */}
 
                                   <img src={data.image[0]['images']} />
 
                                 </div>
-                                <div className="pblack">
-                                  <p>
-                                    {' '}
-                                    {data.name}
-                                    <br />
+                                {/* <div className="pblack"> */}
+                                <div>
+                                  {/* <p> */}
+                                  {' '}
+                                  {data.name}
+                                  <br />
                                     Price:{data.price}
-                                    <Rating
-                                      value={data.rating}
+                                  <Rating
+                                    value={data.rating}
 
-                                    />
+                                  />
 
-                                  </p>
-
-
+                                  {/* </p> */}
 
 
+
+
+                                  {/* </div> */}
                                 </div>
+
                               </Row>
                             </Col>
 
@@ -355,12 +473,12 @@ const ProductScreen = ({ history, match }) => {
                       null
                     )
                   }
-
-
-
-
-
                 </Col>
+
+
+
+
+
               </Row>
               <Col>
                 <Row>
@@ -407,13 +525,25 @@ const ProductScreen = ({ history, match }) => {
                                 numberOfSelectedStar={rating}
                                 colorFilledStar="gold"
                                 colorEmptyStar="black"
-                                starSize="5em"
-                                spaceBetweenStar="10px"
+                                starSize="5vw"
+                                spaceBetweenStar="1vw"
                                 disableOnSelect={false}
                                 onSelectStar={(val: number) => {
-                                  setRating(val);
+                                  setRatingField(val);
                                 }}
                               />
+                               <ReactStars
+                              size={50}
+                              isHalf={true}
+                              halfIcon={<i className="fa fa-star-half-alt" />}
+                              a11y={false}
+                              value={3.5}
+                              onChange={(val: number) => {
+                                setRatingField(val);
+                              }}
+                              />
+
+                                 <Form.Control.Feedback type='invalid'>{ errors.rating }</Form.Control.Feedback>
                               {/*  ['Poor','Fair','Good','Very Good','Excellent']
                               use to display rating range
                               <Form.Control
@@ -436,8 +566,10 @@ const ProductScreen = ({ history, match }) => {
                                 as='textarea'
                                 row='3'
                                 value={comment}
-                                onChange={(e) => setComment(e.target.value)}
+                                onChange={(e) => setCommentField(e.target.value)}
+                                isInvalid={ !!errors.comment }
                               ></Form.Control>
+                                <Form.Control.Feedback type='invalid'>{ errors.comment }</Form.Control.Feedback>
                             </Form.Group>
                             <Button type='submit' variant='primary'>
                               Submit
@@ -455,7 +587,7 @@ const ProductScreen = ({ history, match }) => {
                 <Row>
                   {product.youTubeId !== '' && <Grid container spacing={2}>
 
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                       <YouTubePlayer youtubeId={product.youtubeId} />
 
                     </Grid>

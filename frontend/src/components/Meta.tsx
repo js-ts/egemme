@@ -1,7 +1,12 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 
-const Meta = ({ title, description, keywords }) => {
+interface TMeta{
+  title: string,
+  description: string,
+  keywords: string
+}
+const Meta = ({ title, description, keywords }:TMeta) => {
   return (
     <Helmet>
       <title>{title}</title>

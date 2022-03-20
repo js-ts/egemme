@@ -69,10 +69,6 @@ const ProductEditScreen = ({ match, history }) => {
     console.log("Focused");
   };
 
-
-  // dispatch(listProductDetails("5fff196b7e40de3160439cce"))
-  // const { data } = axios.get(`/api/products/5fff196b7e40de3160439cce`)
-  // console.log(dispatch(listProductDetails("5fff196b7e40de3160439cce")))
   const productUpdate = useSelector((state) => state.productUpdate)
   const {
     loading: loadingUpdate,
@@ -83,13 +79,6 @@ const ProductEditScreen = ({ match, history }) => {
   interface AreaType extends Area {
     href?: string;
   }
-
-  // {
-  //   left: '6',
-  //   top: '6',
-  //   height: '6',
-  //   width: '6'
-  // }
 
   const EXAMPLE_AREA: AreaType[] = [
 
@@ -188,6 +177,7 @@ const ProductEditScreen = ({ match, history }) => {
     const list = [...inputimgList];
     list[index][name] = value;
     setInputimgList(list);
+    setImage(inputimgList)
   };
 
   // handle click event of the Remove button
@@ -195,14 +185,12 @@ const ProductEditScreen = ({ match, history }) => {
     const list = [...inputimgList];
     list.splice(index, 1);
     setInputimgList(list);
-
-
-
+    setImage(inputimgList)
   };
   // handle click event of the Add button
-  const handleimgAddClick = () => {
-    setInputimgList([...inputimgList, { images: "" }]);
-
+  const handleimgAddClick = (data) => {
+    setInputimgList([...inputimgList, { images: data }]);
+    setImage(inputimgList)
   };
 
 
@@ -257,7 +245,8 @@ const ProductEditScreen = ({ match, history }) => {
         setCountInStock(product.countInSock)
         setDescription(product.description)
         setInputList(inputList)
-
+        setLivep(product.livep)
+        // setYoutubeId(product.youtubeId)
       }
     }
 
@@ -362,16 +351,12 @@ const ProductEditScreen = ({ match, history }) => {
       /> ),
     [mapArea, currImg]
   );
-  const uploadFileHandler = async (e,i) => {
-    const file = e.target.files[i]
-    console.log(e)
-    console.log(i)
-    console.log(file)
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0]
     const formData = new FormData()
-    let nm ='image'
-    formData.append(nm, file)
+    formData.append('image', file)
     setUploading(true)
-    console.log(formData)
+
     try {
       const config = {
         headers: {
@@ -379,18 +364,13 @@ const ProductEditScreen = ({ match, history }) => {
         },
       }
 
-    const { data } = await axios.post('/api/upload', formData, config)
+      const { data } = await axios.post('/api/upload', formData, config)
 
-      // setInputimgList(data)
-    console.log(data)
-    const list = [...inputimgList];
-    list[i]['images'] = data;
-    setInputimgList(list);
-    setUploading(false)
+      // setImage(data)
+      handleimgAddClick(data)
+      setUploading(false)
     } catch (error) {
       console.error(error)
-     
-      console.log('error here')
       setUploading(false)
     }
   }
@@ -475,7 +455,7 @@ const ProductEditScreen = ({ match, history }) => {
         <i className="fas fa-long-arrow-alt-left fa-5x"></i>
       </Link>
       <FormContainer>
-        {(name === 'Sample name') ? <h1>Create Product</h1> : <h1>Edit Product</h1>}
+        {( product.isCreated) ? <h1>Create Product</h1> : <h1>Edit Product</h1>}
         {loadingUpdate && <Loader />}
         {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
         {loading ? (
@@ -515,6 +495,16 @@ const ProductEditScreen = ({ match, history }) => {
                   checked={ming}
                   onChange={handleMing}
                 />
+                {ming && 
+                 <Form.Group controlId='mimages'>
+                <Form.File
+                        id='mimage-file'
+                        label='Choose File'
+                        custom
+                        onChange={uploadFileHandler}
+                      ></Form.File>
+                      </Form.Group>
+                      }
                 {ming &&  (inputimgList.map((x, i) => {
               
 return  <div key={i}>
@@ -526,20 +516,15 @@ return  <div key={i}>
                         value={x['images']}
                         onChange={(e) => handleimgInputChange(e, i)}
                       />
-                      <Form.File
-                        id='mimage-file'
-                        label='Choose File'
-                        custom
-                        onChange={(e)=>uploadFileHandler(e,i)}
-                      ></Form.File>
+                      
                       {uploading && <Loader />}
                       <div className="btn-box">
                         {inputimgList.length !== 1 && (
                           <button className="mr10" onClick={() => handleimgRemoveClick(i)}>X</button>
                         )}
-                        {inputimgList.length - 1 === i && (
+                        {/* {inputimgList.length - 1 === i && (
                           <button onClick={handleimgAddClick}>+</button>
-                        )}
+                        )} */}
                       </div>
                     </Form.Group>
 

@@ -48,8 +48,8 @@
   position:absolute; 
   top:-400px; 
   left:-800px; 
-  width:1520px; 
-  height:1425px; 
+  width:calc(var(--Width)+1500px); 
+  height:calc(var(--Height)+1425px); 
   overflow:hidden; 
   zoom: var(--Zoom);
   }

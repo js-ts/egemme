@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useReducer } from 'react'
-import './passwordValidation.css'
+import '../components/passwordValidation.css'
 import { Link } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
+import {validationReducer,validationObj,ValidationItems} from '../components/Validate'
 import axios from 'axios'
 import { register } from '../actions/userActions'
 // import TextField from '@material-ui/core/TextField';
@@ -15,109 +16,25 @@ import { register } from '../actions/userActions'
 // import '../components/password-strength/index.scss';
 // import NiceInputPassword from '../components/password-strength/NiceInputPassword';
 
-const validationNames = [
-  { id: 'lowercase', name: 'Lower-case' },
-  { id: 'uppercase', name: 'Upper-case' },
-  { id: 'number', name: 'Number' },
-  { id: 'minChar', name: 'More than 8 characters' },
-];
-
-const validationObj = {
-  lowercase: false,
-  uppercase: false,
-  number: false,
-  minChar: false,
-};
-
-const validationReducer = (state, action) => {
-  switch (action.type) {
-    case 'lowercase':
-      return { ...state, lowercase: action.payload };
-    case 'uppercase':
-      return { ...state, uppercase: action.payload };
-    case 'number':
-      return { ...state, number: action.payload };
-    case 'minChar':
-      return { ...state, minChar: action.payload };
-    default:
-      return state;
-  }
-};
-
-
-const ValidationIcon = ({ isDone }) => {
-  return isDone ? (
-    <svg width="14" height="12" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <polyline
-        className="check"
-        points="1,7 5,11 13,1"
-        fill="none"
-        stroke="#FFFFFF"
-        strokeWidth="2px"
-        strokeLinecap="round"
-      />
-    </svg>
-  ) : (
-      <svg width="12" height="12" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 6A6 6 0 110 6a6 6 0 0112 0z" fill="#5B9A78" />
-      </svg>
-    );
-};
-
-const ValidationItems = ({ state }) => (
-  <ul className="validation-box">
-    {validationNames.map((item) => (
-      <li
-        className={
-          state[item.id] === true ? `done validation-item` : 'validation-item'
-        }
-        key={item.id}>
-        <span className="validation-icon">
-          <ValidationIcon isDone={state[item.id]} />
-        </span>
-        {item.name}
-      </li>
-    ))}
-  </ul>
-);
-
-const FormField = ({ handleChange }) => {
-  return (
-    <div className="form-field">
-      <input
-        className="form-input"
-        id="password"
-        type="password"
-        onChange={handleChange}
-      />
-    </div>
-  );
-};
-
-
-
-
-
-
 const RegisterScreen = ({ location, history }) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [username,setUsername]=useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [image, setImage] = useState('')
   const [description, setDescription] = useState('')
   const [message, setMessage] = useState(null)
   const [uploading, setUploading] = useState(false)
-
+  const [ errors, setErrors ] = useState({})
   const dispatch = useDispatch()
 
   const userRegister = useSelector((state) => state.userRegister)
   const { loading, error, userInfo } = userRegister
-
   const redirect = location.search ? location.search.split('=')[1] : '/'
   const [state, dispatche] = useReducer(validationReducer, validationObj);
-
-  console.log(description)
+console.log(description)
+  console.log(username)
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0]
@@ -150,6 +67,7 @@ const RegisterScreen = ({ location, history }) => {
     const checkLowerCase = /[a-z|ç|ş|ö|ü|ı|ğ]/u.test(value);
     const checkUpperCase = /[A-Z|Ç|Ş|Ö|Ü|İ|Ğ]/u.test(value);
     const checkNumber = /[0-9]/.test(value);
+    const checkSpecialChar = /[^A-Za-z0-9]/.test(value)
 
     if (checkLength) {
       dispatche({ type: 'minChar', payload: true });
@@ -175,27 +93,95 @@ const RegisterScreen = ({ location, history }) => {
       dispatche({ type: 'number', payload: false });
     }
 
-    const isAllGood =
-      checkLength && checkUpperCase && checkLowerCase && checkNumber;
+    if (checkSpecialChar) {
+      dispatche({ type: 'specialChar', payload: true });
+    } else {
+      dispatche({ type: 'specialChar', payload: false });
+    }
 
+    const isAllGood =
+      checkLength && checkUpperCase && checkLowerCase && checkNumber && checkSpecialChar;
     return isAllGood;
   };
-
-
   useEffect(() => {
     if (userInfo) {
       history.push(redirect)
     }
   }, [history, userInfo, redirect])
+
+  const setEmailField = (value) => {
+    setEmail(value)
+    // Check and see if errors exist, and remove them from the error object:
+    if ( !!errors['email'] ) setErrors({
+      ...errors,
+      ['email']: null
+    })
+  }
+
+  const setUsernameField = (value) => {
+    setUsername(value)
+    // Check and see if errors exist, and remove them from the error object:
+    if ( !!errors['username'] ) setErrors({
+      ...errors,
+      ['username']: null
+    })
+  }
+
+  const setNameField = (value) => {
+    setName(value)
+    // Check and see if errors exist, and remove them from the error object:
+    if ( !!errors['name'] ) setErrors({
+      ...errors,
+      ['name']: null
+    })
+  }
+
+  const setPasswordField = (value) => {
+    setPassword(value)
+    // Check and see if errors exist, and remove them from the error object:
+    if ( !!errors['password'] ) setErrors({
+      ...errors,
+      ['password']: null
+    })
+  }
   const submitHandler = (e) => {
     e.preventDefault()
-    console.log(description)
+    console.log(username)
+    console.log({name, username,email, password, image, description})
 
+    
+    const newErrors = findFormErrors()
+    // Conditional logic:
+    if ( Object.keys(newErrors).length > 0 ) {
+      // We got errors!
+      setErrors(newErrors)
+    }
+    else{
     if (password !== confirmPassword) {
       setMessage('Passwords do not match')
     } else {
-      dispatch(register(name, email, password, image, description))
-    }
+      console.log({name, username,email, password, image, description})
+      dispatch(register(name, username,email, password, image, description))
+    }}
+  }
+
+  const findFormErrors = () => {
+    
+    const newErrors = {}
+    // name errors
+    if ( !email || email === '' ) newErrors.email = 'cannot be blank!'
+    // else if ( email.length > 30 ) newErrors.email = 'name is too long!'
+    // food errors
+    if ( !username|| username=== '' ) newErrors.username =  'cannot be blank!'
+    if ( !name|| name=== '' ) newErrors.name =  'cannot be blank!'
+
+    // rating errors
+    // if ( !rating || rating > 5 || rating < 1 ) newErrors.rating = 'must assign a rating between 1 and 5!'
+    // comment errors
+    if ( !password || password === '' ) newErrors.password = 'cannot be blank!'
+    // else if ( comment.length > 100 ) newErrors.comment = 'comment is too long!'
+
+    return newErrors
   }
 
   return (
@@ -206,30 +192,46 @@ const RegisterScreen = ({ location, history }) => {
       {loading && <Loader />}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId='name'>
-          <Form.Label>Name</Form.Label>
+          <Form.Label>Name *</Form.Label>
           <Form.Control
             type='name'
             placeholder='Enter name'
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setNameField(e.target.value)}
+            isInvalid={ !!errors.name }
           ></Form.Control>
+          <Form.Control.Feedback type='invalid'>{ errors.name }</Form.Control.Feedback>
+        </Form.Group>
+
+        <Form.Group controlId='username'>
+          <Form.Label>Username *</Form.Label>
+          <Form.Control
+            type='username'
+            placeholder='Enter Username'
+            value={username}
+            onChange={(e) =>setUsernameField(e.target.value)}
+            isInvalid={ !!errors.username }
+          ></Form.Control>
+          <Form.Control.Feedback type='invalid'>{ errors.username }</Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group controlId='email'>
-          <Form.Label>Email Address</Form.Label>
+          <Form.Label>Email Address *</Form.Label>
           <Form.Control
             type='email'
-            placeholder='Enter email'
+            placeholder='Enter Email'
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmailField(e.target.value)}
+            isInvalid={ !!errors.email }
           ></Form.Control>
+           <Form.Control.Feedback type='invalid'>{ errors.email }</Form.Control.Feedback>
         </Form.Group>
 
 
         <Form.Group controlId='password'>
           <div className="wrap">
             <Form.Group controlId='password'>
-              <Form.Label>Password</Form.Label>
+              <Form.Label>Password *</Form.Label>
               <ValidationItems state={state} />
               <Form.Control
                 type='password'
@@ -243,7 +245,7 @@ const RegisterScreen = ({ location, history }) => {
         </Form.Group>
 
         <Form.Group controlId='confirmPassword'>
-          <Form.Label>Confirm Password</Form.Label>
+          <Form.Label>Confirm Password *</Form.Label>
           <Form.Control
             type='password'
             placeholder='Confirm password'

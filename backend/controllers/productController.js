@@ -30,7 +30,7 @@ const getProducts = asyncHandler(async (req, res) => {
 // @access  Public
 const getProductById = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id)
-
+console.log(product)
   if (product) {
     res.json(product)
   } else {
@@ -66,6 +66,7 @@ const createProduct = asyncHandler(async (req, res) => {
     countInStock: 0,
     numReviews: 0,
     description: 'Sample description',
+    // isCreated:true,
     sProducts:[]
   })
 
@@ -101,6 +102,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.livep=livep
     product.youtubeId=youtubeId
     product.brand = brand
+    product.isCreated = true
     product.category = category
     product.countInStock = countInStock
     product.iscollection=iscollection

@@ -42,7 +42,7 @@ const PostListScreen = ({ history, match }) => {
   useEffect(() => {
     dispatch({ type: POST_CREATE_RESET })
 
-    if (!userInfo || !userInfo.isAdmin) {
+    if (!userInfo || !userInfo.isAdmin ) {
       history.push('/login')
     }
 
@@ -101,7 +101,7 @@ const PostListScreen = ({ history, match }) => {
                 <th>TITLE</th>
              
                 <th>DESCRIPTION</th>
-                <th></th>
+                <th>PUBLISHED</th>
                 <th></th>
               </tr>
             </thead>
@@ -109,11 +109,9 @@ const PostListScreen = ({ history, match }) => {
               {posts.map((post) => (
                 <tr key={post._id}>
                   <td>{post._id}</td>
-                  <td>{post.title}</td>
-        
-                  <td>{post.description}</td>
-               
-                  <td>
+                  <td>{post.data.blocks[0].data.text}</td>
+
+            <td>
                     <LinkContainer to={`/admin/post/${post._id}/edit`}>
                       <Button variant='light' className='btn-sm'>
                         <i className='fas fa-edit'></i>
@@ -127,6 +125,12 @@ const PostListScreen = ({ history, match }) => {
                       <i className='fas fa-trash'></i>
                     </Button>
                   </td>
+                  <td>{post.isPublished?  (
+                <>
+                  <i className="fas fa-check"></i></>
+              ) : (
+                <> <i className='fas fa-times' style={{ color: 'red' }}></i></>
+              )}</td>
                 </tr>
               ))}
             </tbody>

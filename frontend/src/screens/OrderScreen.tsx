@@ -3,6 +3,9 @@ import axios from 'axios'
 import { PayPalButton } from 'react-paypal-button-v2'
 import { Link } from 'react-router-dom'
 import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap'
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from '@stripe/react-stripe-js';
+import StripePay from '../components/StripePay'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -29,8 +32,9 @@ const OrderScreen = ({ match, history }) => {
 
   const cart = useSelector((state) => state.cart)
   const { cartItems } = cart
-
-  // console.log(cartItems);
+  
+  const PUBLIC_KEY = "pk_test_51ITQyDDQyacp4JdUu6As9r4MRNeJoQnpCCfvhzm04z8MWnB6OStybQEbar6kgUVBQps2WHE2h0DQ3l6qhdubtUgX00LkoyQ1My";
+  const stripeTestPromise = loadStripe(PUBLIC_KEY);
 
   const [countInStock, setCountInStock] = useState(0)
 
@@ -247,7 +251,7 @@ const OrderScreen = ({ match, history }) => {
                   <Col>${order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              {!order.isPaid && (
+              {userInfo && userInfo._id === order.user._id && !order.isPaid &&  order.paymentMethod === 'PayPal' && (
                 <ListGroup.Item>
                   {loadingPay && <Loader />}
                   {!sdkReady ? (
@@ -259,6 +263,13 @@ const OrderScreen = ({ match, history }) => {
                     />
                   )}
                 </ListGroup.Item>
+              )}
+              {userInfo && userInfo._id === order.user._id && !order.isPaid && order.paymentMethod === 'Stripe' && (
+                <ListGroup.Item>
+                <Elements stripe={stripeTestPromise}>
+                <StripePay email={order.user.email} orderId={orderId}/>
+              </Elements>
+              </ListGroup.Item>
               )}
               {loadingDeliver && <Loader />}
               {userInfo &&

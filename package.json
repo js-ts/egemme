@@ -18,13 +18,20 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "domino": "^2.1.6",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
+    "handlebars": "^4.7.7",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.6",
     "morgan": "^1.10.0",
-    "multer": "^1.4.2"
+    "multer": "^1.4.2",
+    "node-fetch": "^2.6.1",
+    "nodemailer": "^6.5.0",
+    "nodemailer-sendgrid": "^1.0.3",
+    "page-metadata-parser": "^1.1.4"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",

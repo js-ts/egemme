@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactStarRating from "react-star-ratings-component";
+import ReactStars from "react-rating-stars-component";
 import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import useImageSize from '../components/ImgSize'
 import { ModalLink } from "react-router-modal-gallery";
@@ -75,8 +76,14 @@ const ModalProduct = ({
     for (var i in data) {
       if (data[i] !== false) {
         parray.push(`${[data[i]]}`);
+      }      
+      
+      console.log(parray[0].replace(/false,/g, "").replace(/false/g, "").replace(/,/g, "?qty=1&").slice(0, -1))
+      if(parray[0].replace(/false,/g, "").replace(/false/g, "").slice(0, -1).split(',').length<product.sProducts.length){
+      history.push('/cart/' + parray[0].replace(/false,/g, "").replace(/false/g, "").replace(/,/g, "?qty=1&").slice(0, -1))}
+      else{
+        buyAllHandler()
       }
-      history.push('/cart/' + parray[0].replace(/false,/g, "").replace(/false/g, "").replace(/,/g, "?qty=1&").slice(0, -1))
 
     }
   }
@@ -105,7 +112,7 @@ const ModalProduct = ({
 
   console.log(sproduct)
   function mChange(products) {
-    changeImage(products.image);
+    changeImage(products.image[0]['images']);
     changeProduct(products._id);
     setClickid(products._id)
   }
@@ -149,6 +156,15 @@ const ModalProduct = ({
   }
   const addToCartHandler = () => {
     history.push(`/cart/${sproduct._id}?qty=${qty}`)
+  }
+  const buyAllHandler = () => {
+    let allps = []
+    console.log(product.sProducts)
+    for (let i=0;i<product.sProducts.length;i++) {
+      allps.push(product.sProducts[i]._id)
+    }
+    console.log(('/cart/' + allps.join('?qty=1&').slice(0, -1)))
+    history.push('/cart/' + allps.join('?qty=1&')+'?qty=1')
   }
   return (
     <Root>
@@ -257,6 +273,16 @@ const ModalProduct = ({
                       Add to Cart
                 </Button>
                   </ListGroup.Item>
+                  <ListGroup.Item>
+                      <Button
+                        type='button'
+                        className='btn-block'
+                        disabled={!product.iscollection || product.countInStock === 0}
+                        onClick={buyAllHandler}
+                      >
+                        Buy All
+                        </Button>
+                    </ListGroup.Item>
                 </ListGroup.Item>
 
               )}
@@ -308,9 +334,9 @@ const ModalProduct = ({
 
             </Col> */}
             <Col md={3}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            {product.sProducts.map((data, i: number) => <li key={data._id}>
-              <Row>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                {product.sProducts.map((data, i: number) => <li key={data._id}>
+                  <Row>
 
 
 
@@ -321,51 +347,51 @@ const ModalProduct = ({
 
 
 
-                <ModalLink to={`${product._id}/${data._id}`} >
-                  <Col>
-                    <Row>
-                      <div
-                        id="cell"
-                        onClick={() => mChange(data)}
-                      >
+                    <ModalLink to={`${product._id}/${data._id}`} >
+                      <Col>
                         <Row>
-                          <div className="thumbimage">
+                          <div
+                            id="cell"
+                            onClick={() => mChange(data)}
+                          >
+                            <Row>
+                              <div className="thumbimage">
 
-                            <img src={data.image[0]['images']}/>
+                                <img src={data.image[0]['images']} />
 
-                          </div>
-                          <div>
+                              </div>
+                              <div>
 
-                            {' '}
-                            {data.name}
-                            <br />
+                                {' '}
+                                {data.name}
+                                <br />
                             Price:{data.price}
-                            <Rating
-                              value={data.rating} />
+                                <Rating
+                                  value={data.rating} />
+                              </div>
+
+
+                            </Row>
                           </div>
-
-
                         </Row>
-                      </div>
-                    </Row>
-                  </Col>
+                      </Col>
 
-                </ModalLink>
-                <Col>
-                  <input
-                    type="checkbox"
-                    value={data._id}
-                    name={"available." + i}
-                    ref={register}
-                  />
-                </Col>
+                    </ModalLink>
+                    <Col>
+                      <input
+                        type="checkbox"
+                        value={data._id}
+                        name={"available." + i}
+                        ref={register}
+                      />
+                    </Col>
 
-              </Row>
-            </li>)}
-            <input type="submit" value="add these" />
+                  </Row>
+                </li>)}
+                <input type="submit" value="add these" />
 
-          </form>
-        </Col>
+              </form>
+            </Col>
 
 
 
@@ -400,13 +426,23 @@ const ModalProduct = ({
                           numberOfSelectedStar={rating}
                           colorFilledStar="gold"
                           colorEmptyStar="black"
-                          starSize="3em"
-                          spaceBetweenStar="10px"
+                          starSize="5vw"
+                          spaceBetweenStar="1vw"
                           disableOnSelect={false}
                           onSelectStar={(val: number) => {
                             setRating(val);
                           }}
                         />
+                        <ReactStars
+                              size={50}
+                              isHalf={true}
+                              halfIcon={<i className="fa fa-star-half-alt" />}
+                              a11y={false}
+                              value={3.5}
+                              onChange={(val: number) => {
+                                setRating(val);
+                              }}
+                              />
                       </Form.Group>
                       <Form.Group controlId='comment'>
                         <Form.Label>Comment</Form.Label>

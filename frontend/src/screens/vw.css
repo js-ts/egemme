@@ -1,19 +1,5 @@
-#mkdn {
-    width:60vw;
- }
 
-@media screen and (max-width: 768px) {
- #mkdn {
-    width:80vw;
- }
-}
-
-@media screen and (max-width: 512px) {
-    #mkdn {
-    width:80vw;
- }
-}
-/* #dis {
+ /* #dis {
     width:60vw;
     border-style: "solid";
     word-wrap: "break-word"
@@ -34,3 +20,18 @@
     word-wrap: "break-word"
  }
 } */
+#mkdn {
+   width:60vw;
+}
+
+@media screen and (max-width: 768px) {
+#mkdn {
+   width:80vw;
+}
+}
+
+@media screen and (max-width: 512px) {
+   #mkdn {
+   width:80vw;
+}
+}

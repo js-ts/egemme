@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { ReactSearchAutocomplete } from "./search/index";
+import { RouteComponentProps, Link } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 import axios from 'axios'
 
-const SearchBox = ({ history }) => {
+const SearchBox = ({ history }:RouteComponentProps) => {
   const [keyword, setKeyword] = useState('')
   const [search, setSearch] = useState("");
+  const [inputValue,setInputValue]=useState("")
   const [previewSearches, setPreviewSearches] = useState([]);
   const [requestCount, setRequestCount] = useState(0);
   const onLoadSearches = async value => {
@@ -16,7 +18,7 @@ const SearchBox = ({ history }) => {
       const res = await axios.get(
         `/api/products?keyword=${value}`
       )
-  
+      setInputValue(value)
       console.log(value)
       console.log(res)
       const cities = res.data.products;
@@ -27,14 +29,16 @@ const SearchBox = ({ history }) => {
     }
   };
   const submitHandler = (e) => {
+
+    console.log(keyword)
     e.preventDefault()
-    if (keyword.trim()) {
-      history.push(`/search/${keyword}`)
+    if (inputValue.trim()) {
+      history.push(`/search/${inputValue}`)
     } else {
       history.push('/')
     }
   }
-  const handleOnSearch = (string, results) => {
+  const handleOnSearch = (string:string, results) => {
       console.log(string);
       setKeyword(string)
   };

@@ -12,9 +12,8 @@ const PlaceOrderScreen = ({ history }) => {
   const cart = useSelector((state) => state.cart)
   const mcart =cart.cartItems.find(x=>x.bnow===true) && cart.cartItems.filter(x=>x.bnow===true).length  ? cart.cartItems.find(x=>x.bnow===true): false
   
-  console.log(mcart.image[0].images)
-  console.log(cart.image)
-
+  // console.log(mcart.image[0].images)
+  // console.log(cart.cartItems[0].image[0].images)
  //   Calculate prices
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2)
@@ -39,17 +38,19 @@ const PlaceOrderScreen = ({ history }) => {
       Number(cart.shippingPrice) +
       Number(cart.taxPrice)
     ).toFixed(2)
+    cart.cartItems[0].image = [{images:cart.cartItems[0].image[0]['images']}]
+    // cart.cartItems[0].image = cart.cartItems[0].image[0]['images']
+
   }
   const orderCreate = useSelector((state) => state.orderCreate)
   const { order, success, error } = orderCreate
-
-  useEffect(() => {
+useEffect(() => {
     if (success) {
       history.push(`/order/${order._id}`)
     }
     // eslint-disable-next-line
   }, [history, success])
-
+console.log(cart.cartItems)
   const placeOrderHandler = () => {
     dispatch(
       createOrder({
@@ -112,11 +113,12 @@ const PlaceOrderScreen = ({ history }) => {
                 </Col>
               </Row>
                 :cart.cartItems.map((item, index) => (
-                    <ListGroup.Item key={index}>
+                  <ListGroup.Item key={index}>
+                      {console.log(item)}
                       <Row>
                         <Col md={1}>
                           <Image
-                            src={item.image[0]}
+                            src={item.image[0].images}
                             alt={item.name}
                             fluid
                             rounded

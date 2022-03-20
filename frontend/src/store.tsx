@@ -11,20 +11,37 @@ import {
   productReviewCreateReducer,
   productTopRatedReducer,
 } from './reducers/productReducers'
+import { wishlistReducer } from './reducers/wishlistReducers'
 import {
   postListReducer,
   postDetailsReducer,
+  userPostDetailsReducer, 
+  userAllPostDetailsReducer,
   postDeleteReducer,
   postCreateReducer,
   postUpdateReducer,
   postReviewCreateReducer,
   postTopRatedReducer,
+  postUpdateLikesReducer
 } from './reducers/postReducers'
+import {
+  linkListReducer,
+  linkDetailsReducer,
+  userLinkDetailsReducer, 
+  userAllLinkDetailsReducer,
+  linkDeleteReducer,
+  linkCreateReducer,
+  linkUpdateReducer,
+  linkReviewCreateReducer,
+  linkTopRatedReducer,
+  linkUpdateLikesReducer
+} from './reducers/linkReducers'
 import { cartReducer } from './reducers/cartReducers'
 import {
   userLoginReducer,
   userRegisterReducer,
   userDetailsReducer,
+  userPageDetailsReducer,
   userUpdateProfileReducer,
   userListReducer,
   userDeleteReducer,
@@ -51,14 +68,29 @@ const reducer = combineReducers({
 
   postList: postListReducer,
   postDelete:postDeleteReducer,
+  listUserPostDetails:userPostDetailsReducer,
+  listAllUserPostDetails:userAllPostDetailsReducer,
   postCreate:postCreateReducer,
   postUpdate:postUpdateReducer,
   postReviewCreate:postReviewCreateReducer,
   postDetails: postDetailsReducer,
   postTopRated:postTopRatedReducer,
+  postUpdateLikes:postUpdateLikesReducer,
+
+  linkList:linkListReducer,
+  linkDetails:linkDetailsReducer,
+  userLinkDetails:userLinkDetailsReducer, 
+  userAllLinkDetails:userAllLinkDetailsReducer,
+  linkDelete:linkDeleteReducer,
+  linkCreate:linkCreateReducer,
+  linkUpdate:linkUpdateReducer,
+  linkReviewCreate:linkReviewCreateReducer,
+  linkTopRated:linkTopRatedReducer,
+  linkUpdateLikes:linkUpdateLikesReducer,
 
   cart: cartReducer,
   userLogin: userLoginReducer,
+  userPageDetails:userPageDetailsReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
@@ -71,6 +103,8 @@ const reducer = combineReducers({
   orderDeliver: orderDeliverReducer,
   orderListMy: orderListMyReducer,
   orderList: orderListReducer,
+
+  wishlist:wishlistReducer,
 })
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
@@ -100,5 +134,7 @@ const store = createStore(
   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 )
+
+export type RootStore = ReturnType<typeof reducer>;
 
 export default store

@@ -11,10 +11,6 @@ const CartScreen = ({ match, location, history }) => {
     url=url.split("&")
     console.log(url[0].split("?"))
   }
-  console.log(match)
-  console.log(location)
-  console.log(history)
-  
   const productId = match.params.id
   const qty = location.search ? Number(location.search.split('=')[1]) : 1
 
@@ -28,9 +24,10 @@ const CartScreen = ({ match, location, history }) => {
     if(typeof(url)==='object'){
     for(let i=0;i<url.length;i++){
       const tid=url[i].split("?")[0]
-      const n=+url[i].split("?")[1].split("qty=")[1] || 1
-      console.log(n)
-      dispatch(addToCart(tid, n))
+      console.log(tid)
+      // const n=+url[i].split("?")[1].split("qty=")[1] || 1
+      // console.log(n)
+      dispatch(addToCart(tid, 1))
     }
     }
     if(typeof(url)==='string'){

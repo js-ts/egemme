@@ -1,7 +1,8 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import ModalProduct from './screens/ModalProduct';
-
+import Modalb from './screens/link/Modalb';
+import Movies from './screens/link/Movies'
 import MuiModal from './components/MuiModal';
 
 import { ModalSwitch, ModalRoute } from "react-router-modal-gallery";
@@ -14,6 +15,19 @@ const routes = [
     path: '/product/:id/:pid',
     component: ModalProduct
   },
+  {
+    exact:true,
+    defaultParentPath: '/',
+    modal: true,
+    path: '/link/:username/:id/:pid',
+    component: Movies
+  },
+  // {
+  //   defaultParentPath: '/',
+  //   modal: true,
+  //   path: '/product/:id/:pid',
+  //   component: Modalb
+  // },
   
   // {
   //   path: '*',

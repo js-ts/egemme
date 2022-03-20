@@ -19,10 +19,10 @@ export default function Results(props) {
     <StyledResults>
       <div className="line" />
       <ul>
-        {results.slice(0, maxResults).map((result) => {
+        {results.slice(0, maxResults).map((result,i) => {
           return (
             <li
-              key={`rsa-result-${result.id}`}
+              key={`rsa-result-${i}`}
               onMouseDown={() => handleClick(result)}
               onClick={() => handleClick(result)}
             >

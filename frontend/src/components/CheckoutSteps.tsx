@@ -2,7 +2,14 @@ import React from 'react'
 import { Nav } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
-const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
+interface ICheckoutSteps {
+  step1?: Boolean;
+  step2?: Boolean;
+  step3?: Boolean;
+  step4?: Boolean;
+}
+
+const CheckoutSteps = ({ step1, step2, step3, step4 }: ICheckoutSteps) => {
   return (
     <Nav className='justify-content-center mb-4'>
       <Nav.Item>

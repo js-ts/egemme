@@ -11,7 +11,24 @@ export const addToCart = (id:string, qty:number,bnow=false) => async (dispatch, 
   console.log(id)
   console.log(qty)
   console.log(data)
+  //add to db
+  const {
+    userLogin: { userInfo },
+  } = getState()
+  
+  
+  console.log(userInfo)
 
+// const cartVar=`/api/users/cart/?id=${id}&qty=${qty}`
+if(userInfo){
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  }
+  const { data:db } = await axios.put(`/api/users/cart/${userInfo._id}`,{cart:`id=${id}&qty=${qty}&`}, config)
+  console.log(db)
   console.log(bnow)
   dispatch({
     type: CART_ADD_ITEM,
@@ -25,7 +42,23 @@ export const addToCart = (id:string, qty:number,bnow=false) => async (dispatch, 
       bnow
     },
   })
-
+//
+}
+else{
+  console.log(bnow)
+  dispatch({
+    type: CART_ADD_ITEM,
+    payload: {
+      product: data._id,
+      name: data.name,
+      image: data.image,
+      price: data.price,
+      countInStock: data.countInStock,
+      qty,
+      bnow
+    },
+  })
+}
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
 }
 

@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useState,useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import Paginate from '../components/Paginate'
+import { ReactSearchAutocomplete } from "../components/search/index";
 import {
   listProducts,
   deleteProduct,
@@ -37,6 +38,20 @@ const ProductListScreen = ({ history, match }) => {
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
+  const [productslist, setProductslist] = useState(products)
+
+  const handleOnSearch = (string, results) => {
+    console.log(string);
+    
+  };
+  const handleOnSelect = (item) => {
+    // history.push(`/search/${item.name}`)
+    console.log(item)
+    
+  };
+  const handleOnFocus = () => {
+    console.log("Focused");
+  };
 
   useEffect(() => {
     dispatch({ type: PRODUCT_CREATE_RESET })
@@ -92,9 +107,21 @@ const ProductListScreen = ({ history, match }) => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
+         <div style={{ width: "50vw", margin: 0 }}>
+                                <ReactSearchAutocomplete
+                                  items={products}
+                                  onSearch={handleOnSearch}
+                                  onSelect={handleOnSelect}
+                                  onFocus={handleOnFocus}
+                                  styling={{ zIndex: 1 }} // To display it on top of the search box below
+                                  autoFocus
+                                />
+                              </div>
+
           <Table striped bordered hover responsive className='table-sm'>
             <thead>
               <tr>
+                <th>SR</th>
                 <th>ID</th>
                 <th>NAME</th>
                 <th>PRICE</th>
@@ -104,8 +131,9 @@ const ProductListScreen = ({ history, match }) => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
+              {products.map((product,i) => (
                 <tr key={product._id}>
+<td>{i+1}</td>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
                   <td>${product.price}</td>

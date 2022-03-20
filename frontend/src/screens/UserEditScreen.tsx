@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useReducer } from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,7 +16,7 @@ const UserEditScreen = ({ match, history }) => {
   const [email, setEmail] = useState('')
   const [image, setImage] = useState('')
   const [description, setDescription] = useState('')
-  const [isAdmin, setIsAdmin] = useState(false)
+  const [isSeller, setIsSeller] = useState(false)
   const [uploading, setUploading] = useState(false)
   const dispatch = useDispatch()
 
@@ -62,7 +62,7 @@ const UserEditScreen = ({ match, history }) => {
         setName(user.name)
         setEmail(user.email)
         setImage(user.image)
-        setIsAdmin(user.isAdmin)
+        setIsSeller(user.isSeller)
         setDescription(user.description)
       }
     }
@@ -70,7 +70,7 @@ const UserEditScreen = ({ match, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(updateUser({ _id: userId, name, email, image, description}))
+    dispatch(updateUser({ _id: userId, name, email, image, description,isSeller}))
   }
 
   return (
@@ -126,9 +126,9 @@ const UserEditScreen = ({ match, history }) => {
             <Form.Group controlId='isadmin'>
               <Form.Check
                 type='checkbox'
-                label='Is Admin'
-                checked={isAdmin}
-                onChange={(e) => setIsAdmin(e.target.checked)}
+                label='Make Seller'
+                checked={isSeller}
+                onChange={(e) => setIsSeller(e.target.checked)}
               ></Form.Check>
             </Form.Group>
 

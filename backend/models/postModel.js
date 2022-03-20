@@ -3,64 +3,72 @@ import mongoose from 'mongoose'
 
 //Post Schema
 const reviewSchema = mongoose.Schema(
-  {
-    name: { type: String, required: true },
-    image: { type: String, required: true },
-    rating: { type: Number, required: true },
-    comment: { type: String, required: true },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'User',
+    {
+        name: { type: String, required: true },
+        image: { type: String, required: true },
+        rating: { type: Number, required: true },
+        comment: { type: String, required: true },
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: 'User',
+        },
     },
-  },
-  {
-    timestamps: true,
-  }
+    {
+        timestamps: true,
+    }
+)
+const EditorSchema = mongoose.Schema(
+    {
+        time: {
+            type: Number,
+            default: new Date().getTime(),
+        },
+        blocks:{
+            type: Array
+        },
+        version:{
+          type:String
+        }
+    }
 )
 
 const postSchema = new mongoose.Schema(
-  {
-    image:
-    {type: String
-    ,      required: true},
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'User',
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-    youtubeId:{
-      type:String
-    },
-    description: {type:String},
-    markdown: {
-      type: String,
-      required: true,
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-   
-    reviews: [reviewSchema],
-    rating: {
-      type: Number,
-   
-      default: 0,
-    },
-    numReviews: {
-      type: Number,
+    {
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: 'User',
+        },
+        data:EditorSchema,
+        isPublished:{type:Boolean,default:false},
+        createdAt: {
+            type: Number,
+            default: new Date().getTime(),
+        },
+        likes: [
+            {
+              user: {
+                type: mongoose.Schema.Types.ObjectId,
+              },
+            },
+          ],
 
-      default: 0,
+        reviews: [reviewSchema],
+        rating: {
+            type: Number,
+
+            default: 0,
+        },
+        numReviews: {
+            type: Number,
+
+            default: 0,
+        },
     },
-  },
-  {
-    timestamps: true,
-  }
+    {
+        timestamps: true,
+    }
 );
 
 

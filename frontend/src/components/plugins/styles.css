@@ -1,0 +1,21 @@
+
+.codex-editor .feather {
+    fill: transparent !important;
+  }
+  
+  .textColor-plugin {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .textColor-plugin .content {
+    width: 100%;
+    height: 12px;
+    display: flex;
+    border: 2px solid #707684;
+    background-color: #000000;
+  }
+  

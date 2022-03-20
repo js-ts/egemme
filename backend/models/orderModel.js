@@ -1,5 +1,12 @@
 import mongoose from 'mongoose'
 
+const imageSchema = mongoose.Schema(
+  {
+   
+    images: { type: String}
+
+  }
+)
 const orderSchema = mongoose.Schema(
   {
     user: {
@@ -11,7 +18,7 @@ const orderSchema = mongoose.Schema(
       {
         name: { type: String, required: true },
         qty: { type: Number, required: true },
-        image: { type: String, required: true },
+        image:[imageSchema],
         price: { type: Number, required: true },
         countInStock: { type: Number, required: true },
         product: {

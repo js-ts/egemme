@@ -70,7 +70,9 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_LIST_RESET })
 }
 
-export const register = (name:string, email:string, password:string,image:string,description:string) => async (dispatch) => {
+export const register = (name:string,username:string, email:string, password:string,image:string,description:string) => async (dispatch) => {
+  
+  console.log(      { name, username, email, password, image, description })
   try {
     dispatch({
       type: USER_REGISTER_REQUEST,
@@ -81,13 +83,13 @@ export const register = (name:string, email:string, password:string,image:string
         'Content-Type': 'application/json',
       },
     }
-
+   
     const { data } = await axios.post(
       '/api/users',
-      { name, email, password ,image ,description },
+      { name, username, email, password, image, description },
       config
     )
-
+    console.log(data)
     dispatch({
       type: USER_REGISTER_SUCCESS,
       payload: data,
@@ -144,6 +146,49 @@ export const getUserDetails = (id:string) => async (dispatch, getState) => {
     })
   }
 }
+
+
+
+
+
+export const getUserPageDetails = (id:string) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_DETAILS_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.get(`/api/users/u/${id}`, config)
+    // console.log(await axios.get(`/api/users/602b895330af7556ac4a1a1f`, config))
+
+    dispatch({
+      type: USER_DETAILS_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: USER_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+
+
+
+
 
 export const updateUserProfile = (user:string) => async (dispatch, getState) => {
   try {

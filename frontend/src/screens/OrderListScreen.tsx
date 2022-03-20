@@ -4,7 +4,7 @@ import { Table, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { listOrders } from '../actions/orderActions'
+import { listOrders,deliverOrder } from '../actions/orderActions'
 
 const OrderListScreen = ({ history }) => {
   const dispatch = useDispatch()
@@ -14,6 +14,11 @@ const OrderListScreen = ({ history }) => {
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
+
+  
+  const deliverHandler = (order) => {
+    dispatch(deliverOrder(order))
+  }
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
@@ -61,7 +66,17 @@ const OrderListScreen = ({ history }) => {
                   {order.isDelivered ? (
                     order.deliveredAt.substring(0, 10)
                   ) : (
+                    <>
                     <i className='fas fa-times' style={{ color: 'red' }}></i>
+                    
+                    <Button
+                      type='button'
+                      className='btn btn-block'
+                      onClick={()=>deliverHandler(order)}
+                    >
+                      Mark As Delivered
+                    </Button>
+                  </>
                   )}
                 </td>
                 <td>

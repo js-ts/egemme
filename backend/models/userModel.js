@@ -1,6 +1,17 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 
+const sociallinkSchema =  mongoose.Schema({
+  url: {
+    type: String
+  },
+  linkTitle: {
+    type: String
+  },
+  icon: {
+    type: String
+  },
+});
 const userSchema = mongoose.Schema(
   {
     name: {
@@ -16,19 +27,53 @@ const userSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     description: {
-      type:String
+      type: String
+    },
+    cart: {
+      type: String
+    },
+    wishlist: {
+      type: String
     },
     password: {
       type: String,
       required: true,
     },
-    
+  followers: [
+    {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    },
+  ],
+  following: [
+    {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    },
+  ],
     isAdmin: {
       type: Boolean,
       required: true,
       default: false,
     },
+    isSeller: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
+    socialLinks: {type:
+     [sociallinkSchema]
+    }
   },
   {
     timestamps: true,

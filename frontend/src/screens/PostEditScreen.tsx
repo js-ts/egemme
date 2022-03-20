@@ -6,24 +6,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import ReactMde from "react-mde";
 import ReactMarkdown from "react-markdown";
 import "react-mde/lib/styles/css/react-mde-all.css";
+import EditorJs from "react-editor-js";
+import { EDITOR_JS_TOOLS } from "./editor/constants";
 import { Grid } from "@material-ui/core";
 import './vw.css'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import { listPostDetails, updatePost } from '../actions/postActions'
-import { POST_UPDATE_RESET } from '../constants/postConstants'
+
+import { listPostDetails, updatePost,listUserPostDetails } from '../actions/postActions'
+import { POST_UPDATE_RESET,POST_DETAILS_RESET } from '../constants/postConstants'
 
 const PostEditScreen = ({ match, history }) => {
   const postId = match.params.id
-
-  const [title, setTitle] = useState('')
-  const [image, setImage] = useState('')
-  const [markdown, setMarkdown] = useState('')
-  const [description, setDescription] = useState('')
+  const [readOnly, setreadOnly] = useState(true)
   const [uploading, setUploading] = useState(false)
-  const [youtubeId, setYoutubeId] = useState('')
-  console.log(markdown)
+  const instanceRef = React.useRef(null);
   const dispatch = useDispatch()
   const postDetails = useSelector((state) => state.postDetails)
   const { loading, error, post } = postDetails
@@ -33,201 +31,145 @@ const PostEditScreen = ({ match, history }) => {
     error: errorUpdate,
     success: successUpdate,
   } = postUpdate
+
   let count = 0;
-  const isOne = (count === 1) ? true : false;
+function nd(pd){
+  if(post.id){
+  const {_id,...newData}=pd
+  return newData
+  }
+  return post.data
+}
+  const [postdata, setData] = useState(post.data)
+console.log(postdata)
+  // const [pubSave, setPubSave] = useState(post.data.time)
 
-  useEffect(() => {
-    if (successUpdate) {
-      dispatch({ type: POST_UPDATE_RESET })
-      history.push('/admin/postlist')
+  const isOne = (count === 5) ? true : false;
+  const isdef = (post) ? true : false
+// if(isdef){  console.log(post.data.time>post.saved.time)
+//   console.log(data)}
+// console.log(pubSave)
+useEffect(() => {
+  if (successUpdate) {
+    dispatch({ type: POST_UPDATE_RESET })
+    dispatch({ type: POST_DETAILS_RESET })
+    
+    history.push('/admin/postlist')
+  } else {
+    if (!post.data || post._id !== postId) {
+      
+      dispatch(listPostDetails(postId))
+      // dispatch(listUserPostDetails(postId))
+      
+      
     } else {
-      if (!post.name || post._id !== postId) {
-        if (isOne) {
-          dispatch(listPostDetails(postId));
-          count++;
-        }
-
-      } else {
-        setTitle(post.title)
-        // setPrice(post.price)
-        setImage(post.image)
-        // setBrand(post.brand)
-        // setCategory(post.category)
-        // setCountInStock(post.countInSock)
-        setDescription(post.description)
-
-        setMarkdown(post.markdown)
-
-      }
-    }
-  }, [dispatch, history, postId, post, successUpdate])
-
-  const uploadFileHandler = async (e) => {
-    const file = e.target.files[0]
-    const formData = new FormData()
-    formData.append('image', file)
-    setUploading(true)
-
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
-
-      const { data } = await axios.post('/api/upload', formData, config)
-
-      setImage(data)
-      setUploading(false)
-
-    } catch (error) {
-      console.error(error)
-      setUploading(false)
+      console.log('id del')
+      const {_id,...newData}=post.data
+      console.log(postdata)
+      setData(newData)
     }
   }
+  if(post.data){
+    const {_id,...newData}=post.data
+    
+    setData(newData)
+  }
+}, [dispatch,match, history, postId, successUpdate])
+// console.log(data)
 
-  const submitHandler = (e) => {
+
+  async function submitHandler(e) {
+    const data = await instanceRef.current.save();
+    console.log(data)
     e.preventDefault()
     dispatch(
       updatePost({
         _id: postId,
-        image,
-        youtubeId,
-        title,
-        description,
-        markdown,
+        data
 
-      })
+      },false)
+    )
+  }
+
+  async function saveSubmitHandler(e) {
+    const data = await instanceRef.current.save();
+    console.log(data)
+    e.preventDefault()
+    dispatch(
+      updatePost({
+        _id: postId,
+        data
+
+      },true)
     )
   }
   const customCommand = {
     name: "my-custom-command",
     icon: () => (
-      <span role="img" aria-label="nice">
+      <span role="img" aria-label="nice"></span>),};
+  async function handleSave() {
+    const savedData = await instanceRef.current.save();
+    console.log("savedData", savedData);
+}
+
   
-      </span>
-    ),
-   
-  };
+
+
+
+  // {post && delete post.data._id}
+  {console.log(post)}
+
+
+  const filteredKeys = ['blocks', 'time','version'];
+
+  // const filtered = filteredKeys.reduce((obj, key) => ({ ...obj, [key]: post['data'][key] }), {});
+  // const {_id,...newData}=post.data
+  // setData(newData)
+  
+  {console.log(postdata)}
   return (
     <>
- 
-        <Link to='/admin/postlist' className='btn btn-light my-3'>
-          <i className="fas fa-long-arrow-alt-left fa-5x"></i>
-        </Link>
 
-        <FormContainer>
-          <h1>Edit Post</h1>
-          {loadingUpdate && <Loader />}
-          {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
-          {loading ? (
-            <Loader />
-          ) : error ? (
-            <Message variant='danger'>{error}</Message>
-          ) : (
+      <Link to='/admin/postlist' className='btn btn-light my-3'>
+        <i className="fas fa-long-arrow-alt-left fa-5x"></i>
+      </Link>
 
-                <Form onSubmit={submitHandler}>
-                  {/* <Col> */}
+      <>
+        {post.isPublished? <h1>Edit Post</h1>:<h1>Create Post</h1>}
+        {loadingUpdate && <Loader />}
+        {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <Message variant='danger'>{error}</Message>
+        ) : (
 
-                    <Form.Group controlId='title'>
-                      <Form.Label>Title</Form.Label>
-                      <Form.Control
-                        type='title'
-                        placeholder='Enter title'
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                      ></Form.Control>
-                    </Form.Group>
-                  {/* </Col> */}
-                  {/* <Col> */}
-                    <Form.Group controlId='youtubeId'>
-                      <Form.Label>Video url</Form.Label>
-                      <Form.Control
-                        type='text'
-                        placeholder='Enter Youtube url'
-                        value={youtubeId.replace('https://www.youtube.com/watch?v=', '')}
-                        onChange={(e) => setYoutubeId(e.target.value)}
-                      ></Form.Control>
+ <Form onSubmit={submitHandler}>
 
-                    </Form.Group>
-                  {/* </Col> */}
+                {isdef ? (
+                  <>
+                  {/* {post.data ? setData(filteredKeys.reduce((obj, key) => ({ ...obj, [key]: post['data'][key] }), {})):post.data} */}
+                    <Button onClick={saveSubmitHandler}>Save Post</Button>
+                    <EditorJs
+                      tools={EDITOR_JS_TOOLS}
+                      data={post.data}
+                      instanceRef={instance => (instanceRef.current = instance)}
+                      i18n={{
+                        messages: {}
+                      }}
+                    />
+                  </>) : (
+                    <Loader />
+                  )}
 
-                  {/* <Col> */}
-                    <Form.Group controlId='image'>
-                      <Form.Label>Image</Form.Label>
-                      <Form.Control
-                        type='text'
-                        placeholder='Enter image url'
-                        value={image}
-                        onChange={(e) => setImage(e.target.value)}
-                      ></Form.Control>
-                      <Form.File
-                        id='image-file'
-                        label='Choose File'
-                        custom
-                        onChange={uploadFileHandler}
-                      ></Form.File>
-                      {uploading && <Loader />}
-                    </Form.Group>
-                  {/* </Col> */}
-                  {/* <Col> */}
-
-                    <Form.Group controlId='markdown'>
-
-                      <Form.Label>markdown</Form.Label>
-
-                      <div id='mkdn'>
-
-                        {/* <Grid container spacing={2}>
-
-                        <Grid item xs={12}> */}
-                        {/* <div className="editor"> */}
-                          <ReactMde
-                            value={markdown}
-                            onChange={setMarkdown}
-                            selectedTab={"write"}
-                            childProps={{
-                              writeButton: {
-                                tabIndex: -1
-                              }
-                            }}
-                          />
-                        {/* </div> */}
-                        {/* ,wordWrap: "break-word" */}
-                        <div style={{ borderStyle: "solid"}}>
-                          
-                          <ReactMarkdown source={markdown} />
-                          
-                        </div>
-                      </div>
-                      {/* </Grid >
-
-</Grid > */}
-
-                    </Form.Group>
-                  {/* </Col> */}
-
-                  {/* <Col> */}
-                    <Form.Group controlId='description'>
-                      <Form.Label>Description</Form.Label>
-                      <Form.Control
-                      as="textarea"
-                        type='text'
-                        placeholder='Enter description'
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                      ></Form.Control>
-                    </Form.Group>
-                  {/* </Col> */}
-
-                  <Button type='submit' variant='primary'>
-                    Update
+                <Button type='submit' variant='primary'>
+                  Publish
             </Button>
-                </Form>
-              )}
+              </Form>
+            )}
 
-        </FormContainer>
-    
+      </>
+
 
     </>
   )

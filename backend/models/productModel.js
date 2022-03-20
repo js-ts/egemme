@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 
+
 const reviewSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
@@ -128,6 +129,7 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
+    isCreated:{type:Boolean,default:false},
     countInStock: {
       type: Number,
       required: true,

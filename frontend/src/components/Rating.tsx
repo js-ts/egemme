@@ -1,6 +1,12 @@
 import React from 'react'
 
-const Rating = ({ value, text, color }) => {
+interface RatingComponent{
+  value:number;
+  text:string;
+  color:string;
+}
+
+const Rating = ({ value, text, color }:RatingComponent) => {
   return (
     <div className='rating'>
       <span>
