@@ -1,0 +1,11 @@
+#profile .tabs {
+  margin-top: 2rem;
+}
+
+#profile div.tab-content {
+  display: none;
+}
+
+.tabs li.is-active a {
+  color: var(--color-primary);
+}

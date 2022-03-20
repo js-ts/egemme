@@ -1,0 +1,1278 @@
+/*
+  Settings component Theme thumbnails
+*/
+
+.theme-1-thumb{
+  background-color: #39e09b;
+  flex-grow: 1;
+  border-radius: 10px;
+}
+
+.theme-1-thumb .dot {
+  background-color: #1f1c1c;
+}
+
+.theme-2-thumb{
+  background-color: #1f1c1c;
+  flex-grow: 1;
+  border-radius: 10px;
+}
+
+.theme-2-thumb .dot {
+  background-color: #39e09b;
+}
+
+.theme-3-thumb{
+  background-color: #39e09b;
+  flex-grow: 1;
+  border-radius: 10px;
+}
+
+.theme-3-thumb .dot {
+  background-color: white;
+}
+
+.theme-4-thumb{
+  background-color: #1f1c1c;
+  flex-grow: 1;
+  border-radius: 10px;
+}
+
+.theme-4-thumb .dot {
+  background-color: white;
+}
+
+.theme-5-thumb{
+  background: #654ea3;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #eaafc8, #654ea3);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #eaafc8, #654ea3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+  flex-grow: 1;
+  border-radius: 10px;
+}
+
+.theme-5-thumb .dot {
+  border: 2px solid white;
+  margin-top: 18.25px;
+}
+
+.theme-6-thumb{
+  background: #6441A5;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #2a0845, #bf94ff);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #2a0845, #bf94ff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+  flex-grow: 1;
+  border-radius: 10px;
+}
+
+.theme-6-thumb .dot {
+  border: 2px solid white;
+  margin-top: 18.25px;
+}
+
+.theme-7-thumb{
+  background: #283048;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #859398, #283048);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #859398, #283048); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+  flex-grow: 1;
+  border-radius: 10px;
+}
+
+.theme-7-thumb .dot {
+  border: 2px solid white;
+  margin-top: 18.25px;
+}
+
+.theme-8-thumb{
+  background: #2BC0E4;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #EAECC6, #2BC0E4);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #EAECC6, #2BC0E4); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+  flex-grow: 1;
+  border-radius: 10px;
+}
+
+.theme-8-thumb .dot {
+  border: 2px solid white;
+  margin-top: 18.25px;
+}
+
+.dot {
+  height: 50%;
+  width: 50%;
+  border-radius: 50%;
+  display: inline-block;
+  margin-top: 20.25px;
+}
+
+/*
+  Theme 1 is applied by default
+*/
+
+/*
+  Theme 2
+*/
+.theme-2 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #1f1c1c;
+  overflow: auto;
+}
+
+.theme-2 .link {
+  background-color: #39e09b;
+}
+
+.theme-2 .link:hover {
+  background-color: #1f1c1c;
+}
+
+.theme-2 .linkContainer {
+  border-color: #39e09b;
+  color: #1f1c1c;
+}
+
+.theme-2 .linkContainer:hover {
+  color: #39e09b;
+}
+
+.theme-2 h2  {
+  color: #39e09b;
+}
+
+/*
+  Theme 3
+*/
+.theme-3 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #39e09b;
+  overflow: auto;
+}
+
+.theme-3 .link {
+  background-color: white;
+}
+
+.theme-3 .link:hover {
+  background-color: #39e09b;
+}
+
+.theme-3 .linkContainer {
+  border-color: white;
+  color: #39e09b; 
+}
+
+.theme-3 .linkContainer:hover {
+  color: white;
+}
+
+.theme-3 h2  {
+  color: white;
+}
+
+/*
+  Theme 4
+*/
+.theme-4 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #1f1c1c;
+  overflow: auto;
+}
+
+.theme-4 .link {
+  background-color: white;
+}
+
+.theme-4 .link:hover {
+  background-color: #1f1c1c;
+}
+
+.theme-4 .linkContainer {
+  border-color: white;
+  color: #1f1c1c;
+}
+
+.theme-4 .linkContainer:hover {
+  color: white;
+}
+
+.theme-4 h2  {
+  color: white;
+}
+
+/*
+  Theme 5
+*/
+.theme-5 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background: #654ea3;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #eaafc8, #654ea3);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #eaafc8, #654ea3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */   
+  overflow: auto;
+}
+
+.theme-5 .link {
+  background-color: transparent;
+}
+
+.theme-5 .link:hover {
+  background-color: white;
+}
+
+.theme-5 .linkContainer {
+  border-color: white;
+  color: white;
+}
+
+.theme-5 .linkContainer:hover {
+  color: #eaafc8;
+}
+
+.theme-5 h2  {
+  color: white;
+}
+
+/*
+  Theme 6
+*/
+.theme-6 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background: #6441A5;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #2a0845, #bf94ff);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #2a0845, #bf94ff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+  overflow: auto;
+}
+
+.theme-6 .link {
+  background-color: transparent;
+}
+
+.theme-6 .link:hover {
+  background-color: white;
+}
+
+.theme-6 .linkContainer {
+  border-color: white;
+  color: white;
+}
+
+.theme-6 .linkContainer:hover {
+  color: #bf94ff;
+}
+
+.theme-6 h2  {
+  color: white;
+}
+
+/*
+  Theme 7
+*/
+.theme-7 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background: #283048;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #859398, #283048);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #859398, #283048); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ 
+  overflow: auto; 
+}
+
+.theme-7 .link {
+  background-color: transparent;
+}
+
+.theme-7 .link:hover {
+  background-color: white;
+}
+
+.theme-7 .linkContainer {
+  border-color: white;
+  color: white;
+}
+
+.theme-7 .linkContainer:hover {
+  color: #283048;
+}
+
+.theme-7 h2  {
+  color: white;
+}
+
+/*
+  Theme 8
+*/
+.theme-8 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background: #2BC0E4;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #EAECC6, #2BC0E4);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #EAECC6, #2BC0E4); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+  overflow: auto;
+}
+
+.theme-8 .link {
+  background-color: transparent;
+}
+
+.theme-8 .link:hover {
+  background-color: white;
+}
+
+.theme-8 .linkContainer {
+  border-color: white;
+  color: white;
+}
+
+.theme-8 .linkContainer:hover {
+  color: #2BC0E4;
+}
+
+.theme-8 h2  {
+  color: white;
+}
+
+.theme-9-thumb{
+  background-color:#1f1c1c;
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}
+.theme-9-thumb.dot{
+  background-color: #E6e6e6;
+  margin-top: 18.25px;
+}
+.theme-9 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color:#1C1C1C;
+  background: -webkit-linear-gradient(to bottom #39e09b,#E6E6E6);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,#39e09b,#E6E6E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+ 
+  overflow: auto;
+}
+
+.theme-9 .link {
+  background-color:#E6E6E6;
+  transition: all .25s cubic-bezier(.08,.59,.29,.99);
+
+}
+
+.theme-9 .link:hover {
+  background-color: #1C1C1C;
+}
+
+.theme-9 .linkContainer {
+  border-color: #e6e6e6;
+  color: #1c1c1c;
+}
+
+.theme-9 .linkContainer:hover {
+  color: #E6E6E6;
+}
+
+.theme-9 h2  {
+  color: #39e09b;
+}
+.theme-10-thumb{
+  background-color: #01A79B;
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}
+.theme-10-thumb.dot{
+  background-color: #01A79B;
+  margin-top: 18.25px;
+}
+.theme-10 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #01A79B;
+  background: -webkit-linear-gradient(to bottom,#01A79B,#fff);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,#01A79B,#fff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
+  overflow: auto;
+}
+
+.theme-10 .link {
+  background-color: #01A79B;
+  transition: all 0.15s;
+
+}
+
+.theme-10 .link:hover {
+  background-color: #01A79B;
+  box-shadow: 0px 8px #007569;
+}
+
+.theme-10 .linkContainer {
+  
+  color: #fff;;
+}
+
+.theme-10 .linkContainer:hover {
+  color:  #fff;
+}
+
+.theme-10 h2  {
+  color: #fff;
+}
+.theme-11-thumb{
+  background-color:#204051;
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}
+.theme-11-thumb.dot{
+  background-color: #204051;
+  margin-top: 18.25px;
+}
+.theme-11 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color:#204051;
+  background: -webkit-linear-gradient(to bottom,#eeeeee);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
+  overflow: auto;
+}
+
+.theme-11 .link {
+  background-color:#204051;
+  transition: all .25s cubic-bezier(.08,.59,.29,.99);
+
+}
+
+.theme-11 .link:hover {
+  background-color: #204051;
+  background-color: #3b6978;
+}
+
+.theme-11 .linkContainer {
+  border-color: #e6e6e6;
+  color: #eeeeee;
+}
+
+.theme-11 .linkContainer:hover {
+  color:#eeeeee;
+}
+
+.theme-11 h1  {
+  color: #204051;
+}
+.theme-12 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background: #2BC0E4;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #EAECC6, #2BC0E4);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #EAECC6, #2BC0E4); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+  overflow: auto;
+}
+
+.theme-12 .link {
+  background-color: rgb(0, 0, 0);
+  
+}
+
+.theme-12 .link:hover {
+  background-color: #E6E6E6;
+}
+
+.theme-12 .linkContainer {
+  border-color: white;
+  color: white;
+}
+
+.theme-12 .linkContainer:hover {
+  color: rgb(0, 0, 0);
+}
+
+.theme-12 h2  {
+  color: white;
+}
+.theme-13-thumb{
+  background-color:#282a36; margin-top: 18.25px;
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}
+.theme-13-thumb.dot{
+  background-color: #282a36;
+  margin-top: 18.25px;
+}
+.theme-13 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #01A79B;
+  background: -webkit-linear-gradient(to bottom,);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
+  overflow: auto;
+}
+
+.theme-13 .link {
+  background-color: #282a36;
+  transition: all 0.15s;
+
+}
+
+.theme-13 .link:hover {
+  background-color: #44475a;
+  box-shadow: 0px 8px #007569;
+}
+
+.theme-13 .linkContainer {
+  
+  color: #6272a4;
+}
+
+.theme-13 .linkContainer:hover {
+  color:  #6272a4;
+}
+
+.theme-13 h2  {
+  color: #ff79c6;
+}
+.theme-14-thumb{
+  background-color:rgb(119, 76, 76);
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}
+.theme-14-thumb.dot{
+  background-color:rgb(119, 76, 76);
+  margin-top: 18.25px;
+}
+.theme-14 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color:rgb(119, 76, 76);
+  background: -webkit-linear-gradient(to bottom,);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
+  overflow: auto;
+}
+
+.theme-14 .link {
+  background-color:rgb(119, 76, 76);
+  transition: all .6s ease-in-out;
+
+}
+
+.theme-14 .linkContainer {
+  color: #32275f;
+}
+
+.theme-14 .linkContainer:hover {
+  color:#32275f;
+}
+
+.theme-14 h2  {
+  color: #32275f;
+}
+.theme-15-thumb{
+  background-color:rgb(255, 230, 184);
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}
+.theme-15-thumb.dot{
+  background-color: rgb(255, 230, 184);
+  margin-top: 18.25px;
+}
+.theme-15 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color:rgb(255, 230, 184);
+  background: -webkit-linear-gradient(to bottom,);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
+  overflow: auto;
+}
+
+.theme-15 .link {
+  background-color:rgb(255, 230, 184);
+  transition: all .25s cubic-bezier(.08,.59,.29,.99);
+
+}
+
+.theme-15 .link:hover {
+  background-color: #2fc24f;
+}
+
+.theme-15 .linkContainer {
+  border-color: #2fc24f;
+  color: #2fc24f;
+}
+
+.theme-15 .linkContainer:hover {
+  color: rgb(255, 230, 184);
+}
+
+.theme-15 h2  {
+  color: #999;
+}
+.theme-16-thumb{
+  background-color:white;
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}
+.theme-16-thumb.dot{
+  background-color:white;
+  margin-top: 18.25px;
+}
+.theme-16 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color:white;
+  background: -webkit-linear-gradient(to bottom,);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
+  overflow: auto;
+}
+
+.theme-16 .link {
+  background-color:#363534;;
+  transition:  all .25s cubic-bezier(.08,.59,.29,.99);
+
+}
+
+.theme-16 .linkContainer {
+  color: #32275f;
+}
+
+.theme-16 .linkContainer:hover {
+  background-color:white;
+  color:#363534;
+}
+
+.theme-16 h2  {
+  color: #2577C1;;
+}
+.theme-17-thumb{
+  background-color:#ffffe6;
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}
+.theme-17-thumb.dot{
+  background-color: #ffffe6;
+  margin-top: 18.25px;
+}
+.theme-17 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color:#ffffe6;
+  background: -webkit-linear-gradient(to bottom,);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
+  overflow: auto;
+}
+
+.theme-17 .link {
+  background-color: #c71212;
+  transition: all .25s cubic-bezier(.08,.59,.29,.99);
+
+}
+
+.theme-17 .link:hover {
+  background-color:#ffffe6;
+}
+
+.theme-17 .linkContainer {
+  border-color: #e6e6e6;
+  color: #ffffe6;
+}
+
+.theme-17 .linkContainer:hover {
+  color: #c71212;
+}
+
+.theme-17 h2  {
+  color:#333;
+}
+.theme-18-thumb{
+  background-color:#000;
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}
+.theme-18-thumb.dot{
+  background-color:#000;
+  margin-top: 18.25px;
+}
+.theme-18 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color:#000;
+  background: -webkit-linear-gradient(to bottom,);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
+  overflow: auto;
+}
+
+.theme-18 .link {
+  background-color:#E6E6E6;
+  transition: all .25s cubic-bezier(.08,.59,.29,.99);
+
+}
+
+.theme-18 .link:hover {
+  background-color:#000;
+}
+
+.theme-18 .linkContainer {
+  border-color: #E6E6E6;
+  color: #000;;
+}
+
+.theme-18 .linkContainer:hover {
+  color: #E6E6E6;
+}
+
+.theme-18 h2  {
+  color:  #bbb;
+}
+.theme-19-thumb{
+  background-color:#fe59d7;
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}
+.theme-19-thumb.dot{
+  background-color:#fe59d7;
+  margin-top: 18.25px;
+}
+.theme-19 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color:#fe59d7;
+  background: -webkit-linear-gradient(to bottom,);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
+  overflow: auto;
+}
+
+.theme-19 .link {
+  background-color:#12cad6;
+  box-shadow: 0 0 10px 3px #fe59d7;
+}
+
+.theme-19 .linkContainer {
+  
+  box-shadow: 0 0 10px 3px #fe59d7;
+  color: white;
+}
+
+
+.theme-19 h1  {
+  color:  #12cad6;
+}
+.theme-20-thumb{
+  background-color:#130912;
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}
+.theme-20-thumb.dot{
+  background-color:#130912;
+}
+.theme-20 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color:#130912;
+  background: -webkit-linear-gradient(to bottom,);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
+  overflow: auto;
+}
+
+.theme-20 .link {
+
+  transition: all .25s cubic-bezier(.08,.59,.29,.99);
+
+}
+
+.theme-20 .link:hover {
+  background-color: #130912;
+  
+}
+
+.theme-20 .linkContainer {
+  border-color: #e6e6e6;
+  color: #eeeeee;
+}
+
+.theme-20 .linkContainer:hover {
+  color:#bbb;
+}
+
+.theme-20 h1  {
+  color:#3d1c33;
+}
+.theme-21-thumb{
+  background-color: #F4EED4;
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}
+.theme-21-thumb.dot{
+  background-color: #F4EED4;
+  margin-top: 18.25px;
+}
+.theme-21 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #F4EED4;
+  background: -webkit-linear-gradient(to bottom,);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
+  overflow: auto;
+}
+
+.theme-21 .link {
+  background-color:#F4EED4;
+  transition: all 0.15s;
+
+}
+
+.theme-21 .link:hover {
+  background-color: #963D96;
+  box-shadow: 0 0 3px #FF0000, 0 0 5px #009DDC;
+}
+
+.theme-21 .linkContainer {
+  
+  color: #E03A3E;
+}
+
+.theme-21 .linkContainer:hover {
+  color: #F4EED4;
+}
+
+.theme-21 h2  {
+  color: #fff;
+}
+
+.theme-22-thumb.dot{
+  background-color: #F4EED4;
+  margin-top: 18.25px;
+}
+.theme-22 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color:#F4EED4;
+  background: -webkit-linear-gradient(to bottom,);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
+  overflow: auto;
+}
+
+.theme-22 .link {
+  background-color:#E6E6E6;
+  transition: all .25s cubic-bezier(.08,.59,.29,.99);
+
+}
+
+.theme-22 .link:hover {
+  background-color: #963D96;
+}
+
+.theme-22 .linkContainer {
+  border-color: #e6e6e6;
+  color: #E03A3E;
+}
+
+.theme-22 .linkContainer:hover {
+  color: #F4EED4;
+}
+
+.theme-22 h2  {
+  color: #000000;
+}.theme-9-thumb{
+  background-color:#1f1c1c;
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}
+.theme-23-thumb.dot{
+  background-color:  rgb(38, 35, 53);
+  margin-top: 18.25px;
+}
+.theme-23 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(38, 35, 53);
+  background: -webkit-linear-gradient(to bottom,);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
+  overflow: auto;
+}
+
+.theme-23 .link {
+  background-color:#fff951 25%, #fc28a8;
+  transition: all .25s cubic-bezier(.08,.59,.29,.99);
+
+}
+
+.theme-23 .link:hover {
+  background-color:rgb(38, 35, 53);
+}
+
+.theme-23 .linkContainer {
+  border-color: #e6e6e6;
+  color:rgb(38, 35, 53);
+}
+
+.theme-23 .linkContainer:hover {
+  color: rgb(249, 42, 173)
+}
+
+.theme-23 h2  {
+  color:  #211b1c;
+}
+.theme-23-thumb{
+  background-color: rgb(38, 35, 53);
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}.theme-24-thumb{
+  background-color:#92a6f4;
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}
+.theme-24-thumb.dot{
+  background-color:#92a6f4;
+  margin-top: 18.25px;
+}
+.theme-24 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color:#92a6f4;
+  background: -webkit-linear-gradient(to bottom,);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
+  overflow: auto;
+}
+
+.theme-24 .link {
+  color:#92a6f4;
+  transition: all .25s cubic-bezier(.08,.59,.29,.99);
+
+}
+
+.theme-24 .link:hover {
+  background-color:#92a6f4;
+  
+}
+
+.theme-24 .linkContainer {
+  border-color: #92a6f4;
+  color:  #f9e4ed;
+}
+
+.theme-24 .linkContainer:hover {
+  color: #f9e4ed;
+}
+
+.theme-24 h1  {
+  color:#f9e4ed;
+}
+.theme-25-thumb{
+  background-color:#fff;
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}
+.theme-25-thumb.dot{
+  background-color: #fff;
+  margin-top: 18.25px;
+}
+.theme-25 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color:#fff;
+  background: -webkit-linear-gradient(to bottom,);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
+  overflow: auto;
+}
+
+.theme-25 .link {
+  background-color: #5d37f8;
+  transition: all .25s cubic-bezier(.08,.59,.29,.99);
+
+}
+
+.theme-25 .linkContainer {
+  border-color: #e6e6e6;
+  color: #eeeeee;
+  text-decoration: underline;
+  
+}
+
+.theme-25 .linkContainer:hover {
+  color:#eeeeee;
+  text-decoration: underline;
+}
+
+.theme-25 h2  {
+  color:#5d37f8;
+  transition: all .6s ease-in-out;
+}
+.theme-26-thumb{
+  background-color:#FFDFDC;
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}
+.theme-26-thumb.dot{
+  background-color:#FFDFDC;
+  margin-top: 18.25px;
+}
+.theme-26 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color:#FFDFDC;
+  background: -webkit-linear-gradient(to bottom,);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
+  overflow: auto;
+}
+
+.theme-26 .link {
+
+  transition: all .25s cubic-bezier(.08,.59,.29,.99);
+
+}
+
+.theme-26 .link:hover {
+  background-color:#FFDFDC;
+  
+}
+
+.theme-26 .linkContainer {
+  border-color: #FFFFFF;
+  color: #FFDFDC;
+}
+
+.theme-26 .linkContainer:hover {
+  color:#FF7272;
+}
+
+.theme-26 h1  {
+  color:#FF7272;
+}
+.theme-27-thumb.dot{
+  background-color: #F4EED4;
+  margin-top: 18.25px;
+}
+.theme-27 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color:#F4EED4;
+  background: -webkit-linear-gradient(to bottom,);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
+  overflow: auto;
+}
+
+.theme-27 .link {
+  background-color:#F4EED4;
+  transition: all .25s cubic-bezier(.08,.59,.29,.99);
+
+}
+
+.theme-27 .link:hover {
+  background-color: #963D96;
+}
+
+.theme-27 .linkContainer {
+  border-color: #e6e6e6;
+  color: #E03A3E;
+}
+
+.theme-27 .linkContainer:hover {
+  color: #F4EED4;
+}
+
+.theme-27 h2  {
+  color: #000000;
+}
+.theme-27-thumb{
+  background-color: #F4EED4;
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}.theme-28-thumb{
+  background-color:beige;
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}
+.theme-28-thumb.dot{
+  background-color:beige;
+  margin-top: 18.25px;
+}
+.theme-28 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color:#92a6f4;
+  background: -webkit-linear-gradient(to bottom,);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
+  overflow: auto;
+}
+
+.theme-28 .link {
+  color:beige;
+  transition: all .25s cubic-bezier(.08,.59,.29,.99);
+
+}
+
+.theme-28 .link:hover {
+  background-color: beige;
+  
+}
+
+.theme-28 .linkContainer {
+  border-color: #ff0000;
+  color:   beige;
+}
+
+.theme-28 .linkContainer:hover {
+  color:#ff0000;
+}
+
+.theme-28 h1  {
+  color: #ffe600;
+}
+.theme-29-thumb{
+  background-color:white;
+  flex-grow: 1;
+  border-radius: 10px;
+  
+}
+.theme-29-thumb.dot{
+  background-color: white;
+  margin-top: 18.25px;
+}
+.theme-29 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color:white;
+  background: -webkit-linear-gradient(to bottom,);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+
+  overflow: auto;
+}
+
+.theme-29 .link {
+  background-color:#39e09b;
+  transition: all .25s cubic-bezier(.08,.59,.29,.99);
+
+}
+
+.theme-29 .link:hover {
+  background-color: white;
+}
+
+.theme-29 .linkContainer {
+  border-color: #39e09b;
+  color: white;;
+}
+
+.theme-29 .linkContainer:hover {
+  color:#39e09b;
+}
+
+.theme-29 h2  {
+  color: #bbb;
+}
+
+

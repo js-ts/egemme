@@ -1,0 +1,12 @@
+.image-map__content {
+	position: relative;
+	width: 100%;
+  }
+  .image-map__content img {
+	width: 100%;
+	user-select: none;
+  }
+  .image-map__content span {
+	position: absolute;
+  }
+  

@@ -1,0 +1,304 @@
+p {
+    margin-top: 0;
+    margin-bottom: 0.1rem;
+    box-shadow: 0px 0px 20px #00000020;
+    padding: 0px;
+    border-radius: 8px;
+    /* width: 10vw; */
+    max-width: 25vw;
+    font-size: 1vw;
+}
+
+li {
+    list-style-type:none;
+  }
+  
+/* .tooltip-content .arrow {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 10px solid transparent;
+    border-bottom-color: rgb(255, 255, 255);
+    padding-right: calc(5px+1vw);
+    top: 85px;
+    left: 70%;
+    transform: translate(-130%, -150%) rotate(180deg);
+} */
+/* 
+.thumbimg img{
+  height:9vh;
+  width: 6vw;
+} */
+
+  
+ 
+  .pblack p:hover {
+    color: white;
+    display: block;
+    background-color: black;
+    text-decoration: underline;
+  }
+ 
+input[type="submit"] {
+  background:red;
+  color: white;
+  text-transform: uppercase;
+  border: none;
+  margin-top: 40px;
+  padding: 20px;
+  font-size: 16px;
+  font-weight: 100;
+  letter-spacing: 10px;
+}
+
+
+input[type="submit"]:hover {
+  background: #bf1650;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.all-tooltip {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
+
+.tooltip-content {
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  transform: translate(-40%, -110%) rotate(0deg);
+  box-shadow: 0px 0px 20px #00000020;
+  padding: 0px;
+  border-radius: 8px;
+  width: 15vw;
+  max-width: 25vw;
+  opacity: 0;
+  pointer-events: none;
+  /* left: -50%; */
+  z-index: 2;
+}
+
+/* .tooltip-content .arrow {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 10px solid transparent;
+  border-bottom-color: rgb(255, 255, 255);
+  padding-right: calc(5px+1vw);
+  top: 85px;
+  left: 70%;
+  transform: translate(-130%, -150%) rotate(180deg);
+} */
+
+.pin {
+  position: absolute;
+  content: "";
+  top: 20%;
+  left: 70%;
+  height: 50px;
+  width: 25px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 50%;
+  cursor: pointer;
+
+}
+
+.pin:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  border-radius: 100%;
+  animation: puls-effect 1s ease infinite;
+}
+
+.tooltip-content {
+  opacity: 1;
+  pointer-events: all;
+  transform: translate(-25%, -95%) rotate(0deg);
+  display: block;
+}
+
+.anker {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
+
+
+
+
+.tooltip .pin {
+
+  height: 15px;
+  width: 15px;
+
+}
+
+
+.av-image-hotspot-pulse {
+  display: block;
+  background: #fff;
+  border-radius: 100px;
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  -webkit-animation: av_pulsate 2s ease-out infinite;
+  animation: av_pulsate 2s linear infinite;
+  opacity: 0;
+  /* z-index: 1; */
+
+  height: 54px;
+  width: 54px;
+  top: -15px;
+  left: -15px;
+}
+
+.av-image-hotspot {
+  height: 24px;
+  width: 24px;
+  line-height: 24px;
+  font-size: 11px;
+
+  text-align: center;
+  position: absolute;
+  /* z-index: 1;  */
+  margin: -9px 0 0 -9px;
+
+  top: 50%;
+  left: 50%;
+}
+
+
+
+/*image hotspot pulse*/
+@keyframes av_pulsate {
+  0% {
+      transform: scale(0.1);
+      opacity: 0.0;
+  }
+
+  50% {
+      opacity: 0.7;
+  }
+
+  100% {
+      transform: scale(1);
+      opacity: 0.0;
+  }
+}
+
+@keyframes puls-effect {
+  0% {
+      transform: scale(1);
+      opacity: 1;
+  }
+
+  100% {
+      transform: scale(3);
+      opacity: 0;
+  }
+}
+
+#strike{
+  text-decoration: line-through;
+}
+
+#outerdiv 
+{ 
+width:120vw; 
+height:80vh; 
+overflow:hidden; 
+position:relative; 
+
+}
+
+#innerIframe 
+{ 
+position:absolute; 
+top:-400px; 
+left:-800px; 
+width:1500px; 
+height:1425px; 
+overflow:hidden; 
+zoom: 0.5;
+}
+
+
+
+#cell img{
+  height:9vh;
+  width: 6vw;
+ 
+}
+
+@media screen and (max-width: 768px) {
+  /* #cell{
+    width:80vw;
+    height:20vh
+  } */
+#cell img{
+  width:20vw;
+  height:20vh
+}
+}
+
+@media screen and (max-width: 512px) {
+  /* #cell{
+    width:80vw;
+    height:20vh
+  } */
+  #cell img{
+    width:20vw;
+    height:15vh
+}
+}
+
+
+#Pinch {
+  width:60vw;
+  height:50vh
+}
+
+@media screen and (max-width: 768px) {
+#Pinch {
+  width:80vw;
+  height:40vh
+}
+}
+
+@media screen and (max-width: 512px) {
+  #Pinch {
+  width:80vw;
+  height:40vh
+}
+}
